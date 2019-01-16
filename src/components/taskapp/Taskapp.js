@@ -9,6 +9,19 @@ const util = {
   retrieveLocalStorage: () => JSON.parse(localStorage.getItem('localTodos'))
 }
 
+const Navigation = (props) => {
+  return (
+    <nav className='navigation'>
+      <form onSubmit={props.submitTask}>
+        <input onChange={props.updateInput} id='task-text' value={props.inputValue} placeholder='add a task' />
+        <input type='submit' value='submit'/>
+      </form>
+      <button onClick={props.handleToggleAll}>Toggle All</button>
+      <button onClick={props.handleDeleteAll}>Delete All</button>
+    </nav>
+  )
+}
+
 const Tasks = (props) => {
   if(props.tasks) {
     return (
@@ -115,7 +128,7 @@ export default class Taskapp extends React.Component {
     })
   }
 
-  HandleDeleteAllTasks = () => {
+  handleDeleteAllTasks = () => {
     this.setState((currentState) => {
       return {
         tasks: currentState.tasks.filter((task) => task.active === true)
@@ -197,14 +210,13 @@ export default class Taskapp extends React.Component {
           <div className='tasks_container'>
             <h1 style={{textAlign: 'center'}}>TaskApp</h1>
             <div>
-              <nav className='navigation'>
-                <form onSubmit={this.submitTask}>
-                  <input onChange={this.updateInput} id='task-text' value={this.state.input} placeholder='add a task' />
-                  <input type='submit' value='submit'/>
-                </form>
-                <button onClick={this.handleToggleAll}>Toggle All</button>
-                <button onClick={this.HandleDeleteAllTasks}>Delete All</button>
-              </nav>
+              <Navigation
+                submitTask = {this.submitTask}
+                updateInput = {this.updateInput}
+                inputValue = {this.state.input}
+                handleToggleAll = {this.handleToggleAll}
+                handleDeleteAll = {this.handleDeleteAllTasks}
+              />
             </div>
             <Tasks
               tasks={this.state.tasks}

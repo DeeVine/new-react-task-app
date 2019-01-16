@@ -1,7 +1,10 @@
 TODO:
 
-[ ] Make content editable
+[ ] Move individual components into module exports
+[x] Make content editable
+  [ ] Make editable text area vs simple input field
 [x] Add Task
+  [create nested-tasks]
  [ ] Add additional fields to form field
  [x] Input Validation
    [ ] More robust input check than just checking for " "
@@ -9,12 +12,13 @@ TODO:
 [ ] Filters --> All, Active, Completed
 [x] Toggle all tasks
 [x] Delete task
-[ ] Delete all inactive task
+[x] Delete all inactive task
 [ ] Move to 'recycle'
 [ ] Permanently remove
 [ ] React Router Filters
-[ ] Utilize local storage
+[x] Utilize local storage
 [ ] Utilize database storage
+[x] Add scrollable
 
 Backlog:
 

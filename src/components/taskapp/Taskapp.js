@@ -4,9 +4,9 @@ const uuidv4 = require('uuid/v4');
 
 const util = {
   updateLocalStorage: (tasks) => {
-    localStorage.setItem('localTodos', JSON.stringify(tasks))
+    localStorage.setItem('localTaskStorage', JSON.stringify(tasks))
   },
-  retrieveLocalStorage: () => JSON.parse(localStorage.getItem('localTodos'))
+  retrieveTasksFromLocalStorage: () => JSON.parse(localStorage.getItem('localTaskStorage'))
 }
 
 const Navigation = (props) => {
@@ -65,7 +65,7 @@ export default class Taskapp extends React.Component {
       editiable: false,
       input: '',
       focusedTask: {},
-      tasks: null
+      tasks: []
       //task structure
       // tasks: [
       //   {
@@ -80,8 +80,9 @@ export default class Taskapp extends React.Component {
   }
 
   componentDidMount = () => {
+    const tasks = util.retrieveTasksFromLocalStorage()
     this.setState({
-      tasks: util.retrieveLocalStorage()
+      tasks: tasks ? tasks : []
     })
   }
 
@@ -139,8 +140,6 @@ export default class Taskapp extends React.Component {
   submitTask = (e) => {
     e.preventDefault()
     const text = this.state.input
-
-    console.log('this.state.tasks', this.state.tasks)
     if (this.state.tasks && text !== '') {
       this.setState({
         input: '',

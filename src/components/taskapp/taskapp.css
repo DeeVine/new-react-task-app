@@ -10,3 +10,7 @@
   margin: auto;
   width: 50%;
 }
+
+.task_inactive {
+  text-decoration: line-through;
+}

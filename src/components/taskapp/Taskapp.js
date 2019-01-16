@@ -2,27 +2,6 @@ import React from 'react'
 import './taskapp.css'
 const uuidv4 = require('uuid/v4');
 
-// [ ] log hours to tasks
-// [ ] tag tasks
-// [ ] add timer to tasks
-  // [ ] add notifications for timers
-// [ ] Make content editable
-  // [ ] Timestamp last edit
-// [x] Add Task
-  // [ ] Add additional fields to form field
-  // [x] Input Validation
-    // [ ] More robust input check than just checking for " "
-// [x] Toggle task
-// [ ] Filters --> All, Active, Completed
-// [x] Toggle all tasks
-// [x] Delete task
-// [ ] Delete all inactive task
-// [ ] Move to 'recycle'
-//  [ ] Permanantely remove
-// [ ] React Router Filters
-// [ ] Utilize local storage
-// [ ] Utilize database storage
-
 const Tasks = (props) => {
   return (
     <div >
@@ -30,9 +9,12 @@ const Tasks = (props) => {
       <ul id='inactive-tasks'>
         {props.tasks.map((task) => {
           return (
-            <li key={uuidv4()} >
-              <input readOnly type="checkbox" checked={!task.active} onClick={() => props.onToggleTask(task.text)} />
-              <span contentEditable>{task.text}</span>
+            <li
+              className={(task.active ? 'task_active' : 'task_inactive')}
+              key={task.id}
+              id={task.id}>
+              <input readOnly type="checkbox" defaultChecked={!task.active} onClick={() => props.onToggleTask(task.id)} />
+              <input onChange={props.updateTask} value={task.text} />
               <button onClick={() => props.onRemoveTask(task.text)}>Delete</button>
             </li>
           )
@@ -47,22 +29,32 @@ export default class Taskapp extends React.Component {
     super(props)
 
     this.state = {
+      editiable: false,
       input: '',
       tasks: [
         {
           text:'first task',
-          active: true
+          active: true,
+          id: uuidv4()
         },
         {
           text:'second task',
-          active: true
+          active: true,
+          id: uuidv4()
         },
         {
           text:'third task',
-          active: false
+          active: false,
+          id: uuidv4()
         },
       ]
     }
+    //create a reference for focus
+    this.myRef = React.createRef();
+  }
+
+  focusTextInput = () => {
+    this.textInput.current.focus();
   }
 
   updateInput = (e) => {
@@ -72,10 +64,32 @@ export default class Taskapp extends React.Component {
     })
   }
 
-  handleRemoveTask = (text) => {
+  updateTaskInput = (e) => {
+    const taskId = e.target.closest('li').id
+    console.log('taskId', taskId)
+    const text = e.target.value;
+    this.setState((currentState) => {
+      const currentTasks = currentState.tasks
+      const taskIndex = currentState.tasks.map(function(task) { return task.id }).indexOf(taskId);
+      currentTasks[taskIndex].text = text;
+      return {
+        tasks: currentTasks
+      }
+    })
+  }
+
+  handleDeleteTask = (text) => {
     this.setState((currentState) => {
       return {
         tasks: currentState.tasks.filter((task) => task.text !== text)
+      }
+    })
+  }
+
+  HandleDeleteAllTasks = () => {
+    this.setState((currentState) => {
+      return {
+        tasks: currentState.tasks.filter((task) => task.active === true)
       }
     })
   }
@@ -89,23 +103,21 @@ export default class Taskapp extends React.Component {
         input: '',
         tasks: this.state.tasks.concat([{
           text,
-          active: true
+          active: true,
+          id: uuidv4()
         }])
       })
     }
   }
 
   //toggle the active value of a task and sets it back into it's original array index before setting state
-  handleToggleTask = (text) => {
+  handleToggleTask = (taskId) => {
     this.setState((currentState) => {
-      const taskIndex = currentState.tasks.map(function(e) { return e.text }).indexOf(text);
-      const inactiveTask = currentState.tasks.find((task) => task.text === text)
-      const newArray = currentState.tasks.filter((task) => {
-        return task.text !== text
-      })
-      newArray.splice(taskIndex, 0, { text, active: !inactiveTask.active })
+      const currentTasks = currentState.tasks
+      const taskIndex = currentState.tasks.map(function(task) { return task.id }).indexOf(taskId);
+      currentTasks[taskIndex].active = !currentTasks[taskIndex].active;
       return {
-        tasks: newArray
+        tasks: currentTasks
       }
     })
   }
@@ -125,11 +137,7 @@ export default class Taskapp extends React.Component {
     const inactiveCount = this.getInactiveCount()
     const tasks = this.state.tasks
     const setActive = () => {
-      if (inactiveCount === tasks.length) {
-        return true
-      } else {
-        return false
-      }
+      return inactiveCount === tasks.length ? true : false
     }
 
     this.setState({
@@ -153,10 +161,12 @@ export default class Taskapp extends React.Component {
               <input type='submit' value='submit'/>
             </form>
             <button onClick={this.handleToggleAll}>Toggle All</button>
+            <button onClick={this.HandleDeleteAllTasks}>Delete All</button>
             <Tasks
               tasks={this.state.tasks}
+              updateTask={this.updateTaskInput}
               onToggleTask={this.handleToggleTask}
-              onRemoveTask={this.handleRemoveTask}
+              onRemoveTask={this.handleDeleteTask}
             />
           </div>
         </div>

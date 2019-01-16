@@ -1,5 +1,6 @@
 .main {
-  width: 600px;
+  display: flex;
+  width: 70%;
   padding: 10px;
   margin: auto;
   border: 1px solid black;
@@ -9,6 +10,22 @@
   padding: 20px;
   margin: auto;
   width: 50%;
+}
+
+.tasks_list {
+  overflow: auto;
+  max-height: 200px;
+  width: 50%;
+  background-color: #e0eeff;
+}
+
+.task_display {
+  width: 50%;
+  background-color: #f4fff8
+}
+
+.tasks_list, .task_display {
+  float: left;
 }
 
 .task_inactive {

@@ -2,24 +2,44 @@ import React from 'react'
 import './taskapp.css'
 const uuidv4 = require('uuid/v4');
 
+const util = {
+  updateLocalStorage: (tasks) => {
+    localStorage.setItem('localTodos', JSON.stringify(tasks))
+  },
+  retrieveLocalStorage: () => JSON.parse(localStorage.getItem('localTodos'))
+}
+
 const Tasks = (props) => {
-  return (
-    <div >
-      <h4>Tasks</h4>
-      <ul id='inactive-tasks'>
-        {props.tasks.map((task) => {
-          return (
-            <li
-              className={(task.active ? 'task_active' : 'task_inactive')}
-              key={task.id}
-              id={task.id}>
-              <input readOnly type="checkbox" defaultChecked={!task.active} onClick={() => props.onToggleTask(task.id)} />
-              <input onChange={props.updateTask} value={task.text} />
-              <button onClick={() => props.onRemoveTask(task.text)}>Delete</button>
-            </li>
-          )
-        })}
-      </ul>
+  if(props.tasks) {
+    return (
+      <div className='tasks_list'>
+        <h4>Tasks</h4>
+        <ul id='inactive-tasks'>
+          {props.tasks.map((task) => {
+            return (
+              <li
+                className={(task.active === true ? 'task_active' : 'task_inactive')}
+                key={task.id}
+                id={task.id}>
+                <input readOnly type="checkbox" checked={!task.active} onClick={() => props.onToggleTask(task.id)} />
+                <input onChange={props.updateTask} value={task.text} onFocus={props.onFocusTask}/>
+                <button onClick={() => props.onRemoveTask(task.text)}>Delete</button>
+              </li>
+            )
+          })}
+        </ul>
+      </div>
+    )
+  } else {
+    return <div>No Tasks</div>
+  }
+}
+
+const TaskDisplay = (props) => {
+  return(
+    <div className='task_display'>
+      <h4>Display</h4>
+      <span>{props.focusedTask.text}</span>
     </div>
   )
 }
@@ -31,30 +51,40 @@ export default class Taskapp extends React.Component {
     this.state = {
       editiable: false,
       input: '',
-      tasks: [
-        {
-          text:'first task',
-          active: true,
-          id: uuidv4()
-        },
-        {
-          text:'second task',
-          active: true,
-          id: uuidv4()
-        },
-        {
-          text:'third task',
-          active: false,
-          id: uuidv4()
-        },
-      ]
+      focusedTask: {},
+      tasks: null
+      //task structure
+      // tasks: [
+      //   {
+      //     text:'first task',
+      //     active: true,
+      //     id: uuidv4()
+      //   },
+      // ]
     }
     //create a reference for focus
     this.myRef = React.createRef();
   }
 
-  focusTextInput = () => {
-    this.textInput.current.focus();
+  componentDidMount = () => {
+    this.setState({
+      tasks: util.retrieveLocalStorage()
+    })
+  }
+
+  componentDidUpdate = () => {
+    util.updateLocalStorage(this.state.tasks)
+  }
+
+  handleFocusTask = (e) => {
+    const taskId = e.target.closest('li').id
+    this.setState((currentState) => {
+      return {
+        focusedTask: currentState.tasks.find((task) => {
+          return task.id === taskId
+        })
+      }
+    })
   }
 
   updateInput = (e) => {
@@ -66,7 +96,6 @@ export default class Taskapp extends React.Component {
 
   updateTaskInput = (e) => {
     const taskId = e.target.closest('li').id
-    console.log('taskId', taskId)
     const text = e.target.value;
     this.setState((currentState) => {
       const currentTasks = currentState.tasks
@@ -98,7 +127,8 @@ export default class Taskapp extends React.Component {
     e.preventDefault()
     const text = this.state.input
 
-    if (text !== '') {
+    console.log('this.state.tasks', this.state.tasks)
+    if (this.state.tasks && text !== '') {
       this.setState({
         input: '',
         tasks: this.state.tasks.concat([{
@@ -106,6 +136,15 @@ export default class Taskapp extends React.Component {
           active: true,
           id: uuidv4()
         }])
+      })
+    } else if (text !== '') {
+      this.setState({
+        input: '',
+        tasks: [{
+          text,
+          active: true,
+          id: uuidv4()
+        }]
       })
     }
   }
@@ -140,13 +179,14 @@ export default class Taskapp extends React.Component {
       return inactiveCount === tasks.length ? true : false
     }
 
-    this.setState({
-      tasks: tasks.map((task) => {
-        return ({
-          text: task.text,
-          active: setActive()
-        })
+    this.setState((currentState) => {
+      const currentTasks = currentState.tasks
+      currentTasks.forEach((task) => {
+        task.active = setActive()
       })
+      return {
+        tasks: currentTasks
+      }
     })
   }
 
@@ -155,19 +195,25 @@ export default class Taskapp extends React.Component {
       <div >
         <div className='main' style={{margin: 'auto'}}>
           <div className='tasks_container'>
-            <h1 style={{textAlign: 'center'}}>Tasks</h1>
-            <form onSubmit={this.submitTask}>
-              <input onChange={this.updateInput} id='task-text' value={this.state.input} placeholder='add a task' />
-              <input type='submit' value='submit'/>
-            </form>
-            <button onClick={this.handleToggleAll}>Toggle All</button>
-            <button onClick={this.HandleDeleteAllTasks}>Delete All</button>
+            <h1 style={{textAlign: 'center'}}>TaskApp</h1>
+            <div>
+              <nav className='navigation'>
+                <form onSubmit={this.submitTask}>
+                  <input onChange={this.updateInput} id='task-text' value={this.state.input} placeholder='add a task' />
+                  <input type='submit' value='submit'/>
+                </form>
+                <button onClick={this.handleToggleAll}>Toggle All</button>
+                <button onClick={this.HandleDeleteAllTasks}>Delete All</button>
+              </nav>
+            </div>
             <Tasks
               tasks={this.state.tasks}
               updateTask={this.updateTaskInput}
               onToggleTask={this.handleToggleTask}
               onRemoveTask={this.handleDeleteTask}
+              onFocusTask={this.handleFocusTask}
             />
+            <TaskDisplay focusedTask={this.state.focusedTask}/>
           </div>
         </div>
       </div>

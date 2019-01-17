@@ -1,6 +1,9 @@
 import React from 'react'
-import TaskApp from './taskapp'
+import SidePanel from './sidePanel'
+import TaskApp from '../tasks/taskapp'
+import '../main.css'
 const uuidv4 = require('uuid/v4');
+
 
 const util = {
   updateLocalStorage: (namespace, storedData) => {
@@ -17,18 +20,21 @@ export default class Main extends React.Component {
       input: '',
       taskList: [
         {
-          name: 'taskname1',
-          tags: ['fun', 'productive', 'cool']
+          taskName: 'taskname1',
+          taskId: 'temp1',
+          tags: ['fun', 'productive', 'cool'],
+          percentComplete: '25'
         },
         {
-          name: 'taskname2',
-          tags: ['tasty', 'filling', 'pricey']
+          taskName: 'taskname2',
+          taskId: 'temp2',
+          tags: ['tasty', 'filling', 'pricey'],
+          percentComplete: '40'
         }]
       }
     }
 
   componentDidMount = () => {
-    console.log('componentdidmount')
     const taskList = util.retrieveTasksFromLocalStorage('main-data')
     this.setState({
       taskList: taskList ? taskList : []
@@ -36,7 +42,6 @@ export default class Main extends React.Component {
   }
 
   componentDidUpdate = () => {
-    console.log('compoentdidupdate')
     util.updateLocalStorage('main-data', this.state.taskList)
   }
 
@@ -48,24 +53,19 @@ export default class Main extends React.Component {
     })
   }
 
-  updateTagInput = (e) => {
-    const value = e.target.value;
-    this.setState({
-      tagInput: value
-    })
-  }
-
   handleCreateNewTask = (e) => {
     e.preventDefault()
-    const name = this.state.input.trim()
+    const taskName = this.state.input.trim()
     this.setState((currentState) => {
       return {
         input: '',
         tagInput: '',
         taskList: currentState.taskList.concat([
           {
-            name,
-            tags: []
+            taskName,
+            taskId: uuidv4(),
+            tags: [],
+            percentComplete: 25
           }])
       }
     })
@@ -82,10 +82,16 @@ export default class Main extends React.Component {
       })
       const taskIndex = taskList.map((task) => { return task.name }).indexOf(currentTask.name);
       currentState.taskList[taskIndex].tags.push(tagText)
-      console.log('hey man', taskList[taskIndex].tags)
-      console.log('newTaskList', taskList)
       return {
         taskList: currentState.taskList
+      }
+    })
+  }
+
+  handleDeleteTaskApp = (name) => {
+    this.setState((currentState) => {
+      return {
+        taskList: currentState.taskList.filter((task) => task.taskName !== name)
       }
     })
   }
@@ -96,12 +102,25 @@ export default class Main extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className='main-container'>
         <form onSubmit={this.handleCreateNewTask}>
           <input onChange={this.updateInput} id='task-text' value={this.state.input} placeholder='create new task' />
           <input type='submit' value='submit'/>
         </form>
-        <h1>I'm main</h1>
+        <h1>Main Screen</h1>
+        <div>
+          <h4>Side Panel</h4>
+          {this.state.taskList.map((task) => {
+            return (
+              <div key={uuidv4()}>
+                <SidePanel
+                  task={task}
+                  onHandleDeleteTask={()=> this.handleDeleteTaskApp(task.taskName)}
+                />
+              </div>
+            )
+          })}
+        </div>
         {this.state.taskList.map((task) => {
           return (
             <div key={uuidv4()}>

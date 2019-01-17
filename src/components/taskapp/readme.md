@@ -8,6 +8,8 @@ MVP:
 
 TODO:
 
+[ ] utilize sidepanel to control active task
+[ ] figure out where to store state --> move all back to taskApp?
 [ ] validation to check if task name exists already
 [ ] Add testing framework
 [x] Move individual components into module exports

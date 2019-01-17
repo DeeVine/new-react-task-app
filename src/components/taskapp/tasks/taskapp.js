@@ -2,7 +2,6 @@ import React from 'react'
 import Navigation from './components/navigation'
 import TaskList from './components/taskList'
 import TaskDisplay from './components/taskDisplay'
-import './taskapp.css'
 const uuidv4 = require('uuid/v4');
 
 const util = {
@@ -15,10 +14,6 @@ const util = {
 export default class Taskapp extends React.Component {
   constructor(props){
     super(props)
-
-    // console.log('props', props)
-    // const state = props.taskInfo
-    // // console.log('state', state)
 
     this.state = {
       input: '',
@@ -39,14 +34,14 @@ export default class Taskapp extends React.Component {
   }
 
   componentDidMount = () => {
-    const tasks = util.retrieveTasksFromLocalStorage(this.props.taskName)
+    const tasks = util.retrieveTasksFromLocalStorage(this.props.taskInfo.taskName)
     this.setState({
       tasks: tasks ? tasks : []
     })
   }
 
   componentDidUpdate = () => {
-    util.updateLocalStorage(this.props.taskName, this.state.tasks)
+    util.updateLocalStorage(this.props.taskInfo.taskName, this.state.tasks)
   }
 
   handleFocusTask = (e) => {
@@ -174,7 +169,7 @@ export default class Taskapp extends React.Component {
       <div >
         <div className='main' style={{margin: 'auto'}}>
           <div className='tasks_container'>
-            <h1 style={{textAlign: 'center'}}>{this.props.taskInfo.name}</h1>
+            <h1 style={{textAlign: 'center'}}>{this.props.taskInfo.taskName}</h1>
             <div>
               <Navigation
                 taskInfo = {this.props.taskInfo}

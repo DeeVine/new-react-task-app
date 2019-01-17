@@ -1,10 +1,11 @@
 import React from 'react'
 
 const TaskList = (props) => {
+  console.log('props in TaskList', props.tasks)
   if(props.tasks) {
     return (
       <div className='tasks_list'>
-        <h4>TaskList</h4>
+        <h4>SubTasks</h4>
         <ul>
           {props.tasks.map((task) => {
             return (

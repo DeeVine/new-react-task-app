@@ -9,6 +9,11 @@ const Navigation = (props) => {
       </form>
       <button onClick={props.handleToggleAll}>Toggle All</button>
       <button onClick={props.handleDeleteAll}>Delete All</button>
+      <form onSubmit={props.handleCreateNewTag(props.taskInfo.name)}>
+        <input onChange={props.updateTagInput} id='add-tag' value={props.tagInputValue} placeholder='add a tag' />
+        <input type='submit' value='submit'/>
+      </form>
+      <button onClick={props.letsConsoleLog}>Let's console log</button>
     </nav>
   )
 }

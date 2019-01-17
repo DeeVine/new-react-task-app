@@ -6,23 +6,22 @@ import './taskapp.css'
 const uuidv4 = require('uuid/v4');
 
 const util = {
-  updateLocalStorage: (namespace, storedData) => {
-    localStorage.setItem(namespace, JSON.stringify(storedData))
+  updateLocalStorage: (namespace, tasks) => {
+    localStorage.setItem(namespace, JSON.stringify(tasks))
   },
   retrieveTasksFromLocalStorage: (namespace) => JSON.parse(localStorage.getItem(namespace))
 }
 
-export default class Taskapp extends React.Component {
+export default class NewTasks extends React.Component {
   constructor(props){
     super(props)
 
-    // console.log('props', props)
-    // const state = props.taskInfo
-    // // console.log('state', state)
+    const state = props.taskInfo
+    console.log('state', state)
 
     this.state = {
+      editiable: false,
       input: '',
-      tagInput: '',
       focusedTask: {},
       tasks: []
       /*************************************
@@ -67,20 +66,12 @@ export default class Taskapp extends React.Component {
     })
   }
 
-  updateTagInput = (e) => {
-    const value = e.target.value;
-    this.setState({
-      tagInput: value
-    })
-  }
-
-
   updateTaskInput = (e) => {
     const taskId = e.target.closest('li').id
     const text = e.target.value;
     this.setState((currentState) => {
       const currentTasks = currentState.tasks
-      const taskIndex = currentState.tasks.map((task) => { return task.id }).indexOf(taskId);
+      const taskIndex = currentState.tasks.map(function(task) { return task.id }).indexOf(taskId);
       currentTasks[taskIndex].text = text;
       return {
         tasks: currentTasks
@@ -177,16 +168,11 @@ export default class Taskapp extends React.Component {
             <h1 style={{textAlign: 'center'}}>{this.props.taskInfo.name}</h1>
             <div>
               <Navigation
-                taskInfo = {this.props.taskInfo}
                 submitTask = {this.submitTask}
                 updateInput = {this.updateInput}
-                updateTagInput = {this.updateTagInput}
                 inputValue = {this.state.input}
-                tagInputValue = {this.state.tagInput}
                 handleToggleAll = {this.handleToggleAll}
                 handleDeleteAll = {this.handleDeleteAllTasks}
-                handleCreateNewTag = {this.props.handleCreateNewTag}
-                letsConsoleLog = {this.props.letsConsoleLog}
               />
             </div>
             <TaskList
@@ -196,10 +182,7 @@ export default class Taskapp extends React.Component {
               onRemoveTask={this.handleDeleteTask}
               onFocusTask={this.handleFocusTask}
             />
-            <TaskDisplay
-              focusedTask={this.state.focusedTask}
-              tags={this.props.taskInfo.tags}
-            />
+            <TaskDisplay focusedTask={this.state.focusedTask}/>
           </div>
         </div>
       </div>

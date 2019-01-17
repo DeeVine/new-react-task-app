@@ -4,7 +4,8 @@ import Home from './bootcamp/Home'
 import About from './bootcamp/About'
 import Topics from './bootcamp/Topics'
 import Bootcamp from './bootcamp/Bootcamp'
-import Taskapp from './taskapp/Taskapp.js'
+import Taskapp from './taskapp/taskapp.js'
+import Main from './taskapp/main.js'
 import {
   BrowserRouter,
   Route,
@@ -24,6 +25,7 @@ class App extends Component {
             <li><Link to='/Bootcamp'>Bootcamp</Link></li>
             <li><Link to='/Topics'>Topics</Link></li>
             <li><Link to='/Taskapp'>Task App</Link></li>
+            <li><Link to='/Main'>Main</Link></li>
           </ul>
 
           <hr />
@@ -33,6 +35,7 @@ class App extends Component {
           <Route path='/bootcamp' component={Bootcamp} />
           <Route path='/topics' component={Topics} />
           <Route path='/taskapp' component={Taskapp} />
+          <Route path='/main' component={Main} />
         </div>
       </BrowserRouter>
     )

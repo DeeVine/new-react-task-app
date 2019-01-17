@@ -1,93 +1,51 @@
 import React from 'react'
+import Navigation from './components/navigation'
+import TaskList from './components/taskList'
+import TaskDisplay from './components/taskDisplay'
 import './taskapp.css'
 const uuidv4 = require('uuid/v4');
 
 const util = {
-  updateLocalStorage: (tasks) => {
-    localStorage.setItem('localTaskStorage', JSON.stringify(tasks))
+  updateLocalStorage: (namespace, tasks) => {
+    localStorage.setItem(namespace, JSON.stringify(tasks))
   },
-  retrieveTasksFromLocalStorage: () => JSON.parse(localStorage.getItem('localTaskStorage'))
-}
-
-const Navigation = (props) => {
-  return (
-    <nav className='navigation'>
-      <form onSubmit={props.submitTask}>
-        <input onChange={props.updateInput} id='task-text' value={props.inputValue} placeholder='add a task' />
-        <input type='submit' value='submit'/>
-      </form>
-      <button onClick={props.handleToggleAll}>Toggle All</button>
-      <button onClick={props.handleDeleteAll}>Delete All</button>
-    </nav>
-  )
-}
-
-const Tasks = (props) => {
-  if(props.tasks) {
-    return (
-      <div className='tasks_list'>
-        <h4>Tasks</h4>
-        <ul id='inactive-tasks'>
-          {props.tasks.map((task) => {
-            return (
-              <li
-                className={(task.active === true ? 'task_active' : 'task_inactive')}
-                key={task.id}
-                id={task.id}>
-                <input readOnly type="checkbox" checked={!task.active} onClick={() => props.onToggleTask(task.id)} />
-                <input onChange={props.updateTask} value={task.text} onFocus={props.onFocusTask}/>
-                <button onClick={() => props.onRemoveTask(task.text)}>Delete</button>
-              </li>
-            )
-          })}
-        </ul>
-      </div>
-    )
-  } else {
-    return <div>No Tasks</div>
-  }
-}
-
-const TaskDisplay = (props) => {
-  return(
-    <div className='task_display'>
-      <h4>Display</h4>
-      <span>{props.focusedTask.text}</span>
-    </div>
-  )
+  retrieveTasksFromLocalStorage: (namespace) => JSON.parse(localStorage.getItem(namespace))
 }
 
 export default class Taskapp extends React.Component {
   constructor(props){
     super(props)
 
+    const state = props.taskInfo
+    console.log('state', state)
+
     this.state = {
       editiable: false,
       input: '',
       focusedTask: {},
       tasks: []
-      //task structure
-      // tasks: [
-      //   {
-      //     text:'first task',
-      //     active: true,
-      //     id: uuidv4()
-      //   },
-      // ]
+      /*************************************
+      task object structure
+      tasks: [
+        {
+          text:'first task',
+          active: true,
+          id: uuidv4()
+        },
+      ]
+      **************************************/
     }
-    //create a reference for focus
-    this.myRef = React.createRef();
   }
 
   componentDidMount = () => {
-    const tasks = util.retrieveTasksFromLocalStorage()
+    const tasks = util.retrieveTasksFromLocalStorage(this.props.taskName)
     this.setState({
       tasks: tasks ? tasks : []
     })
   }
 
   componentDidUpdate = () => {
-    util.updateLocalStorage(this.state.tasks)
+    util.updateLocalStorage(this.props.taskName, this.state.tasks)
   }
 
   handleFocusTask = (e) => {
@@ -139,7 +97,7 @@ export default class Taskapp extends React.Component {
 
   submitTask = (e) => {
     e.preventDefault()
-    const text = this.state.input
+    const text = this.state.input.trim()
     if (this.state.tasks && text !== '') {
       this.setState({
         input: '',
@@ -207,7 +165,7 @@ export default class Taskapp extends React.Component {
       <div >
         <div className='main' style={{margin: 'auto'}}>
           <div className='tasks_container'>
-            <h1 style={{textAlign: 'center'}}>TaskApp</h1>
+            <h1 style={{textAlign: 'center'}}>{this.props.taskInfo.name}</h1>
             <div>
               <Navigation
                 submitTask = {this.submitTask}
@@ -217,7 +175,7 @@ export default class Taskapp extends React.Component {
                 handleDeleteAll = {this.handleDeleteAllTasks}
               />
             </div>
-            <Tasks
+            <TaskList
               tasks={this.state.tasks}
               updateTask={this.updateTaskInput}
               onToggleTask={this.handleToggleTask}

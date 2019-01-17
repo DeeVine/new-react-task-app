@@ -1,6 +1,16 @@
+MVP:
+**Create task/goal --> Add sub tasks/goals**
+**Log time on tasks**
+**Tag tasks**
+**Search tasks based on tags**
+
+
+
 TODO:
 
-[ ] Move individual components into module exports
+[ ] validation to check if task name exists already
+[ ] Add testing framework
+[x] Move individual components into module exports
 [x] Make content editable
   [ ] Make editable text area vs simple input field
 [x] Add Task
@@ -17,6 +27,7 @@ TODO:
 [ ] Permanently remove
 [ ] React Router Filters
 [x] Utilize local storage
+[ ] Seperate namespace for each task
 [ ] Utilize database storage
 [x] Add scrollable
 

@@ -1,7 +1,6 @@
 import React from 'react'
 
 const TaskList = (props) => {
-  console.log('props in TaskList', props.tasks)
   if(props.tasks) {
     return (
       <div className='tasks_list'>

@@ -18,6 +18,7 @@ export default class Main extends React.Component {
 
     this.state = {
       input: '',
+      tagInput: '',
       taskList: [
         {
           taskName: 'taskname1',
@@ -53,6 +54,22 @@ export default class Main extends React.Component {
     })
   }
 
+  updateTaskInput = (e) => {
+    e.preventDefault()
+    const value = e.target.value;
+    this.setState({
+      taskInput: value
+    })
+  }
+
+  updateTagInput = (e) => {
+    e.preventDefault()
+    const value = e.target.value;
+    this.setState({
+      tagInput: value
+    })
+  }
+
   handleCreateNewTask = (e) => {
     e.preventDefault()
     const taskName = this.state.input.trim()
@@ -75,12 +92,15 @@ export default class Main extends React.Component {
     e.preventDefault()
     const tagText = 'placeholder for now'
 
+    console.log('taskName', taskName)
+
     this.setState((currentState) => {
       const taskList = currentState.taskList
       const currentTask = taskList.find((task) => {
-        return task.name === taskName
+        return task.taskName === taskName
       })
-      const taskIndex = taskList.map((task) => { return task.name }).indexOf(currentTask.name);
+      const taskIndex = taskList.map((task) => { return task.taskName }).indexOf(currentTask.taskName);
+      console.log('taskIndex', taskIndex)
       currentState.taskList[taskIndex].tags.push(tagText)
       return {
         taskList: currentState.taskList
@@ -129,6 +149,7 @@ export default class Main extends React.Component {
                 letsConsoleLog={this.letsConsoleLog}
                 handleCreateNewTag={this.handleCreateNewTag}
                 updateTagInput={this.updateTagInput}
+                tagInputValue={this.state.tagInput}
               />
             </div>
           )

@@ -174,10 +174,10 @@ export default class Taskapp extends React.Component {
               <Navigation
                 taskInfo = {this.props.taskInfo}
                 submitTask = {this.submitTask}
-                updateInput = {this.updateInput}
-                updateTagInput = {this.updateTagInput}
                 inputValue = {this.state.input}
+                updateInput = {this.updateInput}
                 tagInputValue = {this.state.tagInput}
+                updateTagInput = {this.updateTagInput}
                 handleToggleAll = {this.handleToggleAll}
                 handleDeleteAll = {this.handleDeleteAllTasks}
                 handleCreateNewTag = {this.props.handleCreateNewTag}

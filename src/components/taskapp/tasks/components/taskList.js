@@ -4,7 +4,7 @@ const TaskList = (props) => {
   if(props.tasks) {
     return (
       <div className='tasks_list'>
-        <h4>SubTasks</h4>
+        <h4>Tasks</h4>
         <ul>
           {props.tasks.map((task) => {
             return (
@@ -13,8 +13,8 @@ const TaskList = (props) => {
                 key={task.id}
                 id={task.id}>
                 <input readOnly type="checkbox" checked={!task.active} onClick={() => props.onToggleTask(task.id)} />
-                <input onChange={props.updateTask} value={task.text} onFocus={props.onFocusTask}/>
-                <button onClick={() => props.onRemoveTask(task.text)}>Delete</button>
+                <input onChange={props.updateTask} value={task.text} onFocus={props.handleFocusTask}/>
+                <button onClick={() => props.handleDeleteSubTask(task.text)}>Delete</button>
               </li>
             )
           })}

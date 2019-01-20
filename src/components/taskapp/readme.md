@@ -4,7 +4,11 @@ MVP:
 **Tag tasks**
 **Search tasks based on tags**
 
+IDEAS:
+*subtasks should could be tasks/links/notes/goals*
 
+DEBUG:
+[ ] component remounts if you pass in update input function as a prop to child component 'i.e main-->taskapp-->navigation'
 
 TODO:
 
@@ -29,7 +33,7 @@ TODO:
 [ ] Permanently remove
 [ ] React Router Filters
 [x] Utilize local storage
-[ ] Seperate namespace for each task
+[ ] Separate namespace for each task
 [ ] Utilize database storage
 [x] Add scrollable
 

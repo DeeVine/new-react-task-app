@@ -1,6 +1,7 @@
 import React from 'react'
 import SidePanel from './sidePanel'
 import TaskApp from '../tasks/taskapp'
+import { Grid, Row, Col, Button } from 'react-bootstrap'
 import '../main.css'
 const uuidv4 = require('uuid/v4');
 
@@ -17,8 +18,10 @@ export default class Main extends React.Component {
     super(props)
 
     this.state = {
-      input: '',
+      inputNewTask: '',
+      subTaskInput: '',
       tagInput: '',
+      focusedTask: {},
       taskList: [
         {
           taskName: 'taskname1',
@@ -31,34 +34,38 @@ export default class Main extends React.Component {
           taskId: 'temp2',
           tags: ['tasty', 'filling', 'pricey'],
           percentComplete: '40'
-        }]
+        }],
+        tasks: [],
       }
     }
 
   componentDidMount = () => {
-    const taskList = util.retrieveTasksFromLocalStorage('main-data')
+    const taskList = util.retrieveTasksFromLocalStorage('taskList-data')
+    const tasks = util.retrieveTasksFromLocalStorage('tasks-data')
     this.setState({
-      taskList: taskList ? taskList : []
+      taskList: taskList ? taskList : [],
+      tasks: tasks ? tasks : []
     })
   }
 
   componentDidUpdate = () => {
-    util.updateLocalStorage('main-data', this.state.taskList)
+    util.updateLocalStorage('taskList-data', this.state.taskList)
+    util.updateLocalStorage('tasks-data', this.state.tasks)
   }
 
-  updateInput = (e) => {
+  updateNewTaskInput = (e) => {
     e.preventDefault()
     const value = e.target.value;
     this.setState({
-      input: value
+      inputNewTask: value
     })
   }
 
-  updateTaskInput = (e) => {
+  updateSubTaskInput = (e) => {
     e.preventDefault()
     const value = e.target.value;
     this.setState({
-      taskInput: value
+      subTaskInput: value
     })
   }
 
@@ -72,10 +79,10 @@ export default class Main extends React.Component {
 
   handleCreateNewTask = (e) => {
     e.preventDefault()
-    const taskName = this.state.input.trim()
+    const taskName = this.state.inputNewTask.trim()
     this.setState((currentState) => {
       return {
-        input: '',
+        inputNewTask: '',
         tagInput: '',
         taskList: currentState.taskList.concat([
           {
@@ -88,19 +95,38 @@ export default class Main extends React.Component {
     })
   }
 
+  handleCreateSubTask = (e) => {
+    e.preventDefault()
+    const text = this.state.subTaskInput.trim()
+    if (text !== '') {
+      this.setState({
+        subTaskInput: '',
+        tasks: this.state.tasks.concat([{
+          text,
+          active: true,
+          id: uuidv4()
+        }])
+      })
+    }
+  }
+
+  handleDeleteSubTask = (text) => {
+    this.setState((currentState) => {
+      return {
+        tasks: currentState.tasks.filter((task) => task.text !== text)
+      }
+    })
+  }
+
   handleCreateNewTag = taskName => (e) => {
     e.preventDefault()
     const tagText = 'placeholder for now'
-
-    console.log('taskName', taskName)
-
     this.setState((currentState) => {
       const taskList = currentState.taskList
       const currentTask = taskList.find((task) => {
         return task.taskName === taskName
       })
       const taskIndex = taskList.map((task) => { return task.taskName }).indexOf(currentTask.taskName);
-      console.log('taskIndex', taskIndex)
       currentState.taskList[taskIndex].tags.push(tagText)
       return {
         taskList: currentState.taskList
@@ -116,46 +142,133 @@ export default class Main extends React.Component {
     })
   }
 
+  handleToggleAll = () => {
+    const tasks = this.state.tasks
+    const getInactiveCount = () => {
+      let inactiveCounter = 0;
+      tasks.forEach((task) => {
+        if (!task.active) {
+          inactiveCounter++
+        }
+      })
+      return inactiveCounter
+    }
+    const inactiveCount = getInactiveCount()
+    const setActive = () => {
+      return inactiveCount === tasks.length ? true : false
+    }
+
+    this.setState((currentState) => {
+      const currentTasks = currentState.tasks
+      currentTasks.forEach((task) => {
+        task.active = setActive()
+      })
+      return {
+        tasks: currentTasks
+      }
+    })
+  }
+
+  handleToggleTask = (taskId) => {
+    this.setState((currentState) => {
+      const currentTasks = currentState.tasks
+      const taskIndex = currentState.tasks.map(function(task) { return task.id }).indexOf(taskId);
+      currentTasks[taskIndex].active = !currentTasks[taskIndex].active;
+      return {
+        tasks: currentTasks
+      }
+    })
+  }
+
+  handleDeleteAllTasks = () => {
+    this.setState((currentState) => {
+      return {
+        tasks: currentState.tasks.filter((task) => task.active === true)
+      }
+    })
+  }
+
+  handleFocusTask = (e) => {
+    const taskId = e.target.closest('li').id
+    console.log('taskId', taskId)
+    this.setState((currentState) => {
+
+      const foundVal = currentState.tasks.find((task) => {
+        return task.id === taskId
+      })
+
+      console.log('foundVal', foundVal)
+
+      return {
+        focusedTask: currentState.tasks.find((task) => {
+          return task.id === taskId
+        })
+      }
+    })
+  }
+
   letsConsoleLog = () => {
     console.log('hey we\'re here!')
   }
 
   render() {
     return (
-      <div className='main-container'>
-        <form onSubmit={this.handleCreateNewTask}>
-          <input onChange={this.updateInput} id='task-text' value={this.state.input} placeholder='create new task' />
-          <input type='submit' value='submit'/>
-        </form>
+      <Grid className='main-grid' fluid={true}>
         <h1>Main Screen</h1>
-        <div>
-          <h4>Side Panel</h4>
-          {this.state.taskList.map((task) => {
-            return (
-              <div key={uuidv4()}>
-                <SidePanel
-                  task={task}
-                  onHandleDeleteTask={()=> this.handleDeleteTaskApp(task.taskName)}
-                />
-              </div>
-            )
-          })}
-        </div>
-        {this.state.taskList.map((task) => {
-          return (
-            <div key={uuidv4()}>
-              <TaskApp
-                taskInfo={task}
-                letsConsoleLog={this.letsConsoleLog}
-                handleCreateNewTag={this.handleCreateNewTag}
-                updateTagInput={this.updateTagInput}
-                tagInputValue={this.state.tagInput}
-              />
-            </div>
-          )
-        })}
-
-      </div>
+        <Row className='show-grid main-display'>
+          <Col xs={12} sm={3} md={3} className='sidenav'>
+            <form onSubmit={this.handleCreateNewTask}>
+              <input onChange={this.updateNewTaskInput} id='task-text' value={this.state.inputNewTask} placeholder='create new task' />
+              <input type='submit' value='submit'/>
+            </form>
+            <h4>Side Panel</h4>
+            {this.state.taskList.map((task) => {
+              return (
+                <div key={uuidv4()}>
+                  <SidePanel
+                    task={task}
+                    onHandleDeleteTask={()=> this.handleDeleteTaskApp(task.taskName)}
+                  />
+                </div>
+              )
+            })}
+          </Col>
+          <Col xs={12} sm={9} md={9} className='task-center'>
+            {typeof this.state.taskList[0] !== 'undefined' ?
+            <TaskApp
+              taskInfo={this.state.taskList[0]}
+              tasks={this.state.tasks}
+              handleDeleteSubTask={this.handleDeleteSubTask}
+              letsConsoleLog={this.letsConsoleLog}
+              handleCreateNewTag={this.handleCreateNewTag}
+              updateSubTaskInput={this.updateSubTaskInput}
+              subTaskInput={this.state.subTaskInput}
+              handleCreateSubTask={this.handleCreateSubTask}
+              updateTagInput={this.updateTagInput}
+              tagInputValue={this.state.tagInput}
+              handleToggleAll={this.handleToggleAll}
+              handleDeleteAllTasks={this.handleDeleteAllTasks}
+              handleToggleTask={this.handleToggleTask}
+              handleFocusTask={this.handleFocusTask}
+              focusedTask={this.state.focusedTask}
+            />
+            : <h1>Add a task and click on task in the left panel</h1>}
+            {/* {this.state.taskList.map((task) => {
+              return (
+                <div className='taskapp_container' key={uuidv4()}>
+                  <TaskApp
+                    taskInfo={task}
+                    letsConsoleLog={this.letsConsoleLog}
+                    handleCreateNewTag={this.handleCreateNewTag}
+                    updateTagInput={this.updateTagInput}
+                    tagInputValue={this.state.tagInput}
+                  />
+                </div>
+              )
+            })} */}
+          </Col>
+        </Row>
+      </Grid>
     )
   }
 }

@@ -1,6 +1,30 @@
-.main-container {
+body, html {height: 100%; }
+
+.task-center {
+  height: 100vh;
+  background-color: #ededed;
+  padding-left: 0px;
+  padding-right: 0px;
 }
 
+.sidenav {
+  height: 100vh;
+  background-color: #b5d1ff;
+}
+
+.taskapp_container {
+  background-color: #ededed;
+}
+
+.tasks_container {
+  padding: 20px;
+}
+
+.taskapp-header {
+  margin: 0;
+  text-align: center;
+}
+/*
 .main {
   display: flex;
   width: 70%;
@@ -9,28 +33,6 @@
   border: 1px solid black;
 }
 
-.tasks_container {
-  padding: 20px;
-  margin: auto;
-  width: 50%;
-}
-
-.tasks_list {
-  overflow: auto;
-  max-height: 200px;
-  width: 50%;
-  background-color: #e0eeff;
-}
-
-.task_display {
-  width: 50%;
-  background-color: #f4fff8
-}
-
-.tasks_list, .task_display {
-  float: left;
-}
-
-.task_inactive {
-  text-decoration: line-through;
-}
+.navigation {
+  background-color: #e3ddff;
+} */

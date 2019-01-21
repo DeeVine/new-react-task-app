@@ -15,8 +15,6 @@ export default class Taskapp extends React.Component {
   constructor(props){
     super(props)
 
-    console.log('this.props', this.props)
-
     this.state = {
       input: '',
       tagInput: '',
@@ -35,6 +33,7 @@ export default class Taskapp extends React.Component {
     }
   }
   componentDidMount = () => {
+    console.log('this.props.tasks', this.props.tasks)
     const tasks = util.retrieveTasksFromLocalStorage(this.props.taskInfo.taskName)
     this.setState({
       tasks: tasks ? tasks : []
@@ -43,7 +42,7 @@ export default class Taskapp extends React.Component {
 
   componentDidUpdate = () => {
     util.updateLocalStorage(this.props.taskInfo.taskName, this.state.tasks)
-    console.log('this.props in componentdidUpdate', this.props)
+    console.log('this.props.tasks', this.props.tasks)
   }
 
   render() {

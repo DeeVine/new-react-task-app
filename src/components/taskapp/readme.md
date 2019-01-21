@@ -11,8 +11,12 @@ DEBUG:
 [ ] component remounts if you pass in update input function as a prop to child component 'i.e main-->taskapp-->navigation'
 
 TODO:
-
-[ ] utilize sidepanel to control active task
+[ ] determine when/if necessary to use functional set state of 'currentState' vs simply this.setState
+[ ] refactor name of 'tasks' to 'subTasks' so we can clearly differentiate between taskList and tasks
+[ ] refactor tasks under taskList
+  [ ] check that components are taking correct props after refactor
+[ ] add delete button to tags
+[ ] utilize sidePanel to control active task
 [ ] figure out where to store state --> move all back to taskApp?
 [ ] validation to check if task name exists already
 [ ] Add testing framework

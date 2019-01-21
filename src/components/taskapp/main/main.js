@@ -1,7 +1,7 @@
 import React from 'react'
 import SidePanel from './sidePanel'
 import TaskApp from '../tasks/taskapp'
-import { Grid, Row, Col, Button } from 'react-bootstrap'
+import { Grid, Row, Col} from 'react-bootstrap'
 import '../main.css'
 const uuidv4 = require('uuid/v4');
 
@@ -22,12 +22,14 @@ export default class Main extends React.Component {
       subTaskInput: '',
       tagInput: '',
       focusedTask: {},
+      sidePanelFocus: 0, //may not need this
+      sidePanelIndex: 0,
       taskList: [
         {
           taskName: 'taskname1',
           taskId: 'temp1',
           tags: ['fun', 'productive', 'cool'],
-          percentComplete: '25'
+          percentComplete: '25',
         },
         {
           taskName: 'taskname2',
@@ -43,6 +45,7 @@ export default class Main extends React.Component {
     const taskList = util.retrieveTasksFromLocalStorage('taskList-data')
     const tasks = util.retrieveTasksFromLocalStorage('tasks-data')
     this.setState({
+      sidePanelIndex: 0,
       taskList: taskList ? taskList : [],
       tasks: tasks ? tasks : []
     })
@@ -69,6 +72,19 @@ export default class Main extends React.Component {
     })
   }
 
+  updateTaskInput = (e) => {
+    const taskId = e.target.closest('li').id
+    const text = e.target.value;
+    this.setState((currentState) => {
+      const currentTasks = currentState.tasks
+      const taskIndex = currentState.tasks.map((task) => { return task.id }).indexOf(taskId);
+      currentTasks[taskIndex].text = text;
+      return {
+        tasks: currentTasks
+      }
+    })
+  }
+
   updateTagInput = (e) => {
     e.preventDefault()
     const value = e.target.value;
@@ -89,38 +105,41 @@ export default class Main extends React.Component {
             taskName,
             taskId: uuidv4(),
             tags: [],
-            percentComplete: 25
+            percentComplete: 25,
+            tasks: []
           }])
       }
     })
   }
 
+  //need to create the tasks under the taskList
   handleCreateSubTask = (e) => {
     e.preventDefault()
     const text = this.state.subTaskInput.trim()
     if (text !== '') {
+
+      const sidePanelIndex = this.state.sidePanelIndex
+      const taskList = this.state.taskList
+      const currentTask = taskList[sidePanelIndex]
+      //update taskList with new tasks
+      const newTasks = currentTask.tasks.concat([{
+        text,
+        active: true,
+        id: uuidv4()
+      }])
+
+      taskList[sidePanelIndex].tasks = newTasks
+
       this.setState({
         subTaskInput: '',
-        tasks: this.state.tasks.concat([{
-          text,
-          active: true,
-          id: uuidv4()
-        }])
+        taskList: taskList
       })
     }
   }
 
-  handleDeleteSubTask = (text) => {
-    this.setState((currentState) => {
-      return {
-        tasks: currentState.tasks.filter((task) => task.text !== text)
-      }
-    })
-  }
-
   handleCreateNewTag = taskName => (e) => {
     e.preventDefault()
-    const tagText = 'placeholder for now'
+    const tagText = this.state.tagInput
     this.setState((currentState) => {
       const taskList = currentState.taskList
       const currentTask = taskList.find((task) => {
@@ -129,6 +148,7 @@ export default class Main extends React.Component {
       const taskIndex = taskList.map((task) => { return task.taskName }).indexOf(currentTask.taskName);
       currentState.taskList[taskIndex].tags.push(tagText)
       return {
+        tagInput: '',
         taskList: currentState.taskList
       }
     })
@@ -143,7 +163,7 @@ export default class Main extends React.Component {
   }
 
   handleToggleAll = () => {
-    const tasks = this.state.tasks
+    const tasks = this.state.taskList[this.state.sidePanelIndex].tasks
     const getInactiveCount = () => {
       let inactiveCounter = 0;
       tasks.forEach((task) => {
@@ -159,56 +179,79 @@ export default class Main extends React.Component {
     }
 
     this.setState((currentState) => {
-      const currentTasks = currentState.tasks
+      const currentTaskList = currentState.taskList
+      const taskIndex = currentState.sidePanelIndex
+      const currentTasks = currentState.taskList[taskIndex].tasks
       currentTasks.forEach((task) => {
         task.active = setActive()
       })
+      currentTaskList[taskIndex].tasks = currentTasks
       return {
-        tasks: currentTasks
+        taskList: currentTaskList
       }
     })
   }
 
   handleToggleTask = (taskId) => {
     this.setState((currentState) => {
-      const currentTasks = currentState.tasks
-      const taskIndex = currentState.tasks.map(function(task) { return task.id }).indexOf(taskId);
-      currentTasks[taskIndex].active = !currentTasks[taskIndex].active;
+      const taskList = this.state.taskList
+      const taskIndex = this.state.sidePanelIndex
+      const currentSubTask = currentState.taskList[this.state.sidePanelIndex].tasks
+      const subTaskIndex = currentSubTask.map(function(task) { return task.id }).indexOf(taskId);
+      const subTask = taskList[taskIndex].tasks[subTaskIndex]
+      subTask.active = !subTask.active;
       return {
-        tasks: currentTasks
+        taskList: taskList
+      }
+    })
+  }
+
+  handleDeleteSubTask = (text) => {
+    this.setState((currentState) => {
+      const taskList = currentState.taskList
+      const taskIndex = [currentState.sidePanelIndex]
+      const tasks = currentState.taskList[currentState.sidePanelIndex].tasks
+      taskList[taskIndex].tasks = tasks.filter((task) => task.text !== text)
+      return {
+        taskList: taskList
       }
     })
   }
 
   handleDeleteAllTasks = () => {
     this.setState((currentState) => {
+      const taskList = currentState.taskList
+      const taskIndex = [currentState.sidePanelIndex]
+      const tasks = currentState.taskList[currentState.sidePanelIndex].tasks
+      taskList[taskIndex].tasks = tasks.filter((task) => task.active === true)
       return {
-        tasks: currentState.tasks.filter((task) => task.active === true)
+        taskList: taskList
       }
     })
   }
 
   handleFocusTask = (e) => {
     const taskId = e.target.closest('li').id
-    console.log('taskId', taskId)
     this.setState((currentState) => {
-
-      const foundVal = currentState.tasks.find((task) => {
-        return task.id === taskId
-      })
-
-      console.log('foundVal', foundVal)
-
       return {
-        focusedTask: currentState.tasks.find((task) => {
+        focusedTask: currentState.taskList[this.state.sidePanelIndex].tasks.find((task) => {
           return task.id === taskId
         })
       }
     })
   }
 
-  letsConsoleLog = () => {
-    console.log('hey we\'re here!')
+  sidePanelFocus = (e) => {
+    const taskName = e.target.getAttribute('data-sidepanelid')
+    const sidePanelIndex =   this.state.taskList.map((task) => { return task.taskName }).indexOf(taskName);
+    this.setState((currentState) => {
+      return {
+        sidePanelIndex: sidePanelIndex,
+        sidePanelFocus: currentState.taskList.find((task) => {
+          return task.taskName === taskName
+        })
+      }
+    })
   }
 
   render() {
@@ -227,6 +270,7 @@ export default class Main extends React.Component {
                 <div key={uuidv4()}>
                   <SidePanel
                     task={task}
+                    sidePanelFocus={this.sidePanelFocus}
                     onHandleDeleteTask={()=> this.handleDeleteTaskApp(task.taskName)}
                   />
                 </div>
@@ -236,8 +280,13 @@ export default class Main extends React.Component {
           <Col xs={12} sm={9} md={9} className='task-center'>
             {typeof this.state.taskList[0] !== 'undefined' ?
             <TaskApp
-              taskInfo={this.state.taskList[0]}
-              tasks={this.state.tasks}
+              taskInfo={
+                this.state.sidePanelIndex !== '' ?
+                this.state.taskList[this.state.sidePanelIndex] :
+                this.state.taskList[0]
+              }
+              //update to this.state.taskList[this.state.sidePanelIndex].tasks
+              tasks={this.state.taskList[this.state.sidePanelIndex].tasks}
               handleDeleteSubTask={this.handleDeleteSubTask}
               letsConsoleLog={this.letsConsoleLog}
               handleCreateNewTag={this.handleCreateNewTag}
@@ -245,12 +294,14 @@ export default class Main extends React.Component {
               subTaskInput={this.state.subTaskInput}
               handleCreateSubTask={this.handleCreateSubTask}
               updateTagInput={this.updateTagInput}
-              tagInputValue={this.state.tagInput}
+              tagInput={this.state.tagInput}
               handleToggleAll={this.handleToggleAll}
               handleDeleteAllTasks={this.handleDeleteAllTasks}
               handleToggleTask={this.handleToggleTask}
               handleFocusTask={this.handleFocusTask}
               focusedTask={this.state.focusedTask}
+              updateTaskInput={this.updateTaskInput}
+              sidePanelIndex={this.state.sidePanelIndex}
             />
             : <h1>Add a task and click on task in the left panel</h1>}
             {/* {this.state.taskList.map((task) => {

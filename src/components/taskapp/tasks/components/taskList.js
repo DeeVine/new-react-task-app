@@ -13,7 +13,7 @@ const TaskList = (props) => {
                 key={task.id}
                 id={task.id}>
                 <input readOnly type="checkbox" checked={!task.active} onClick={() => props.onToggleTask(task.id)} />
-                <input onChange={props.updateTask} value={task.text} onFocus={props.handleFocusTask}/>
+                <input onChange={props.updateTaskInput} value={task.text} onFocus={props.handleFocusTask}/>
                 <button onClick={() => props.handleDeleteSubTask(task.text)}>Delete</button>
               </li>
             )

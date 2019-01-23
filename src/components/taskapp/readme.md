@@ -5,12 +5,13 @@ MVP:
 **Search tasks based on tags**
 
 IDEAS:
-*subtasks should could be tasks/links/notes/goals*
+*subtasks should/could be tasks/links/notes/goals*
 
 DEBUG:
-[ ] component remounts if you pass in update input function as a prop to child component 'i.e main-->taskapp-->navigation'
+[ ] find out why delete Button in sidePanel component bugs out when moved inside the above div class='task-item-title'
 
 TODO:
+[ ] highlight active task in sidepanel
 [ ] determine when/if necessary to use functional set state of 'currentState' vs simply this.setState
 [ ] refactor name of 'tasks' to 'subTasks' so we can clearly differentiate between taskList and tasks
 [ ] refactor tasks under taskList

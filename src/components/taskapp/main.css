@@ -1,15 +1,14 @@
 body, html {height: 100%; }
 
+.task-navigation-form {
+  display: flex;
+}
+
 .task-center {
   height: 100vh;
   background-color: #ededed;
   padding-left: 0px;
   padding-right: 0px;
-}
-
-.sidenav {
-  height: 100vh;
-  background-color: #b5d1ff;
 }
 
 .taskapp_container {
@@ -22,17 +21,48 @@ body, html {height: 100%; }
 
 .taskapp-header {
   margin: 0;
-  text-align: center;
-}
-/*
-.main {
-  display: flex;
-  width: 70%;
-  padding: 10px;
-  margin: auto;
-  border: 1px solid black;
 }
 
-.navigation {
-  background-color: #e3ddff;
-} */
+.tasks_list {
+  /* overflow: scroll */
+}
+
+/************************ sidePanel CSS  ***************************/
+
+.sidenav {
+  height: 100vh;
+  padding: 0px;
+  background-color: #b5d1ff;
+}
+
+.side-panel {
+  height: 100vh;
+  overflow: scroll;
+}
+
+.task-item {
+ height: 120px;
+ background-color: #f2f2f2;
+ border-bottom: 1px solid black;
+}
+
+.task-item-delete-button {
+  float: right;
+}
+
+.task-item:hover {
+  background-color: #c1c1c1;
+}
+
+.task-item-content {
+  position: relative;
+  top: 5%;
+  margin: auto;
+  width: 90%;
+  height: 90%;
+}
+
+.task-item-updated-date {
+  position: absolute;
+  bottom: 0px;
+}

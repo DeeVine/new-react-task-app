@@ -4,7 +4,7 @@ const TaskList = (props) => {
   if(props.tasks) {
     return (
       <div className='tasks_list'>
-        <h4>Tasks</h4>
+        <h4>Subtasks</h4>
         <ul>
           {props.tasks.map((task) => {
             return (

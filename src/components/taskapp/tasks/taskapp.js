@@ -4,18 +4,11 @@ import TaskList from './components/taskList'
 import TaskDisplay from './components/taskDisplay'
 import { Grid, Row} from 'react-bootstrap'
 
-const util = {
-  updateLocalStorage: (namespace, storedData) => {
-    localStorage.setItem(namespace, JSON.stringify(storedData))
-  },
-  retrieveTasksFromLocalStorage: (namespace) => JSON.parse(localStorage.getItem(namespace))
-}
-
 export default class Taskapp extends React.Component {
   constructor(props){
     super(props)
 
-    console.log('this.props', this.props)
+    console.log('this.props in Taskapp', this.props)
 
     this.state = {
       input: '',
@@ -35,15 +28,11 @@ export default class Taskapp extends React.Component {
     }
   }
   componentDidMount = () => {
-    const tasks = util.retrieveTasksFromLocalStorage(this.props.taskInfo.taskName)
-    this.setState({
-      tasks: tasks ? tasks : []
-    })
+
   }
 
   componentDidUpdate = () => {
-    util.updateLocalStorage(this.props.taskInfo.taskName, this.state.tasks)
-    console.log('this.props in componentdidUpdate', this.props)
+
   }
 
   render() {

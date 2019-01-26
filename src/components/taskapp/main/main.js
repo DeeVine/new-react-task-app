@@ -21,8 +21,9 @@ export default class Main extends React.Component {
       inputNewTask: '',
       subTaskInput: '',
       tagInput: '',
+      hoursInput: '',
       focusedTask: {},
-      sidePanelFocus: '', //currently set in sidePanelFocus function, not currently in use though
+      sidePanelFocus: '', //set sidepanel focus to taskName
       taskListIndex: 0, //may want to target by ID instead of index
       taskList: [
         {
@@ -30,34 +31,33 @@ export default class Main extends React.Component {
           taskId: 'temp1',
           tags: ['fun', 'productive', 'cool'],
           percentComplete: '25',
+          tasks: []
         },
         {
           taskName: 'taskname2',
           taskId: 'temp2',
           tags: ['tasty', 'filling', 'pricey'],
-          percentComplete: '40'
+          percentComplete: '40',
+          tasks: []
         }],
-        tasks: [],
       }
     }
 
   componentDidMount = () => {
     const taskList = util.retrieveTasksFromLocalStorage('taskList-data')
-    const tasks = util.retrieveTasksFromLocalStorage('tasks-data')
     this.setState({
       taskListIndex: 0, //may want to store and retrieve preiovus index
       taskList: taskList ? taskList : [],
-      tasks: tasks ? tasks : []
+      // sidePanelFocus: this.state.taskList[0]
     })
   }
 
   componentDidUpdate = () => {
     util.updateLocalStorage('taskList-data', this.state.taskList)
-    util.updateLocalStorage('tasks-data', this.state.tasks)
+    console.log('this.state', this.state)
   }
 
   updateNewTaskInput = (e) => {
-    e.preventDefault()
     const value = e.target.value;
     this.setState({
       inputNewTask: value
@@ -76,20 +76,31 @@ export default class Main extends React.Component {
     const taskId = e.target.closest('li').id
     const text = e.target.value;
     this.setState((currentState) => {
-      const currentTasks = currentState.tasks
-      const taskIndex = currentState.tasks.map((task) => { return task.id }).indexOf(taskId);
-      currentTasks[taskIndex].text = text;
+
+      //need to find task in taskList
+      const taskListIndex = currentState.taskListIndex
+      const taskList = currentState.taskList
+      const subTasks = taskList[taskListIndex].tasks
+      const taskIndex = subTasks.map((task) => { return task.id }).indexOf(taskId);
+      subTasks[taskIndex].text = text;
       return {
-        tasks: currentTasks
+        tasks: subTasks
       }
     })
   }
 
   updateTagInput = (e) => {
-    e.preventDefault()
     const value = e.target.value;
     this.setState({
       tagInput: value
+    })
+  }
+
+  updateHoursInput = (e) => {
+    const value = e.target.value;
+    console.log('value')
+    this.setState({
+      hoursInput: value
     })
   }
 
@@ -107,7 +118,8 @@ export default class Main extends React.Component {
               tags: [],
               percentComplete: 25,
               tasks: [],
-              lastUpdated: Date()
+              lastUpdated: Date(),
+              hours: 0
             }])
         }
       })
@@ -138,19 +150,42 @@ export default class Main extends React.Component {
 
   handleCreateNewTag = taskName => (e) => {
     e.preventDefault()
-    const tagText = this.state.tagInput
-    this.setState((currentState) => {
-      const taskList = currentState.taskList
-      const currentTask = taskList.find((task) => {
-        return task.taskName === taskName
+    const tagText = this.state.tagInput.trim()
+    if (tagText !== '') {
+      this.setState((currentState) => {
+        const taskList = currentState.taskList
+        const currentTask = taskList.find((task) => {
+          return task.taskName === taskName
+        })
+        const taskIndex = taskList.map((task) => { return task.taskName }).indexOf(currentTask.taskName)
+        currentState.taskList[taskIndex].tags.push(tagText)
+        return {
+          tagInput: '',
+          taskList: currentState.taskList
+        }
       })
-      const taskIndex = taskList.map((task) => { return task.taskName }).indexOf(currentTask.taskName);
-      currentState.taskList[taskIndex].tags.push(tagText)
-      return {
-        tagInput: '',
-        taskList: currentState.taskList
-      }
-    })
+    }
+  }
+
+  handleAddHours = taskName => (e) => {
+    e.preventDefault()
+    const hours = parseInt(this.state.hoursInput.trim())
+    console.log('typeof hours', typeof hours)
+    var isnum = /^\d+$/.test(hours)
+    if (hours !== '' && isnum) {
+      this.setState((currentState) => {
+        const taskList = currentState.taskList
+        const currentTask = taskList.find((task) => {
+          return task.taskName === taskName
+        })
+        const taskIndex = taskList.map((task) => { return task.taskName }).indexOf(currentTask.taskName)
+        currentState.taskList[taskIndex].hours += hours
+        return {
+          hoursInput: '',
+          taskList: currentState.taskList
+        }
+      })
+    } else {alert('must input numbers only')}
   }
 
   handleDeleteTaskApp = (name) => {
@@ -158,7 +193,8 @@ export default class Main extends React.Component {
       return {
         taskList: currentState.taskList.filter((task) => {
           return task.taskName !== name
-        })
+        }),
+        taskListIndex: 0
       }
     })
   }
@@ -243,11 +279,12 @@ export default class Main extends React.Component {
   }
 
   sidePanelFocus = (e) => {
-    const taskName = e.target.getAttribute('data-sidepanelid')
+    // e.preventDefault()
+    const taskName = e.target.closest('.task-item').getAttribute('data-sidepanelid')
     const taskListIndex =   this.state.taskList.map((task) => { return task.taskName }).indexOf(taskName);
     this.setState((currentState) => {
       return {
-        taskListIndex: taskListIndex,
+        taskListIndex: taskListIndex === -1 ? 0 : taskListIndex,
         sidePanelFocus: currentState.taskList.find((task) => {
           return task.taskName === taskName
         })
@@ -267,10 +304,11 @@ export default class Main extends React.Component {
             </form>
             <h4>All Tasks</h4>
             <div className='side-panel'>
-              {this.state.taskList.map((task) => {
+              {this.state.taskList.map((task, index) => {
                 return (
                   <div key={uuidv4()}>
                     <SidePanel
+                      className={this.state.taskListIndex === index? 'side-panel-active': ''}
                       task={task}
                       sidePanelFocus={this.sidePanelFocus}
                       onHandleDeleteTask={()=> this.handleDeleteTaskApp(task.taskName)}
@@ -282,8 +320,6 @@ export default class Main extends React.Component {
 
           </Col>
           <Col xs={12} sm={9} md={9} className='task-center'>
-            {/* {console.log('this.state.taskList[this.state.taskListIndex].tasks', this.state.taskList[this.state.taskListIndex].tasks)}
-            {console.log('this.state.taskList[0]')} */}
             {typeof this.state.taskList[0] !== 'undefined' ?
             <TaskApp
               taskInfo={
@@ -291,21 +327,26 @@ export default class Main extends React.Component {
                 this.state.taskList[this.state.taskListIndex] :
                 this.state.taskList[0]
               }
-              tasks={this.state.taskList[this.state.taskListIndex].tasks}
-              handleDeleteSubTask={this.handleDeleteSubTask}
-              handleCreateNewTag={this.handleCreateNewTag}
-              updateSubTaskInput={this.updateSubTaskInput}
-              subTaskInput={this.state.subTaskInput}
-              handleCreateSubTask={this.handleCreateSubTask}
-              updateTagInput={this.updateTagInput}
-              tagInput={this.state.tagInput}
-              handleToggleAll={this.handleToggleAll}
-              handleDeleteAllTasks={this.handleDeleteAllTasks}
-              handleToggleTask={this.handleToggleTask}
-              handleFocusTask={this.handleFocusTask}
-              focusedTask={this.state.focusedTask}
-              updateTaskInput={this.updateTaskInput}
-              taskListIndex={this.state.taskListIndex}
+              appState = {this.state}
+              tasks = {this.state.taskList[this.state.taskListIndex].tasks}
+              subTaskInput = {this.state.subTaskInput}
+              updateSubTaskInput = {this.updateSubTaskInput}
+              handleCreateSubTask = {this.handleCreateSubTask}
+              handleDeleteSubTask = {this.handleDeleteSubTask}
+              tagInput = {this.state.tagInput}
+              updateTagInput = {this.updateTagInput}
+              handleCreateNewTag = {this.handleCreateNewTag}
+              hoursInput = {this.state.hoursInput}
+              updateHoursInput = {this.updateHoursInput}
+              handleAddHours = {this.handleAddHours}
+              handleToggleAll = {this.handleToggleAll}
+              handleDeleteAllTasks = {this.handleDeleteAllTasks}
+              handleDeleteTaskApp = {()=> this.handleDeleteTaskApp(this.state.sidePanelFocus.taskName)}
+              handleToggleTask = {this.handleToggleTask}
+              handleFocusTask = {this.handleFocusTask}
+              focusedTask = {this.state.focusedTask}
+              updateTaskInput = {this.updateTaskInput}
+              taskListIndex = {this.state.taskListIndex}
             />
             : <h1>Add a task and click on task in the left panel</h1>}
           </Col>

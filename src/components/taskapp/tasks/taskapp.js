@@ -8,8 +8,6 @@ export default class Taskapp extends React.Component {
   constructor(props){
     super(props)
 
-    console.log('this.props in Taskapp', this.props)
-
     this.state = {
       input: '',
       tagInput: '',
@@ -41,18 +39,20 @@ export default class Taskapp extends React.Component {
           <h1 className='taskapp-header'>{this.props.taskInfo.taskName}</h1>
           <Row>
             <Navigation
+              appState = {this.props.appState}
               taskInfo = {this.props.taskInfo}
-              submitTask = {this.submitTask}
               tagInput = {this.props.tagInput}
-              updateSubTaskInput={this.props.updateSubTaskInput}
-              subTaskInput={this.props.subTaskInput}
               updateTagInput = {this.props.updateTagInput}
-              tagInputValue = {this.props.tagInput}
+              handleCreateSubTask={this.props.handleCreateSubTask}
+              subTaskInput={this.props.subTaskInput}
+              updateSubTaskInput={this.props.updateSubTaskInput}
               handleToggleAll = {this.props.handleToggleAll}
               handleDeleteAll = {this.props.handleDeleteAllTasks}
+              handleDeleteTaskApp = {this.props.handleDeleteTaskApp}
               handleCreateNewTag = {this.props.handleCreateNewTag}
-              letsConsoleLog = {this.props.letsConsoleLog}
-              handleCreateSubTask={this.props.handleCreateSubTask}
+              hoursInput={this.props.hoursInput}
+              updateHoursInput={this.props.updateHoursInput}
+              handleAddHours={this.props.handleAddHours}
             />
           </Row>
           <Row>

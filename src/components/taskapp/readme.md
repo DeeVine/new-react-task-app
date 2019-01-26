@@ -8,9 +8,14 @@ IDEAS:
 *subtasks should/could be tasks/links/notes/goals*
 
 DEBUG:
-[ ] find out why delete Button in sidePanel component bugs out when moved inside the above div class='task-item-title'
+[ ] find out why sidepanel rerenders due to 'sidePanelFocus' click handler
 
 TODO:
+[ ] hours calculations
+  [ ] attach date/time to hours
+  [ ] put times into chartable format utilizing moment.js
+[ ] handle delete tag
+[ ] handle add hours
 [ ] highlight active task in sidepanel
 [ ] determine when/if necessary to use functional set state of 'currentState' vs simply this.setState
 [ ] refactor name of 'tasks' to 'subTasks' so we can clearly differentiate between taskList and tasks
@@ -43,7 +48,6 @@ TODO:
 [x] Add scrollable
 
 Backlog:
-
 [ ] log hours to tasks
 [ ] Timestamp last edit
 [ ] tag tasks
@@ -51,6 +55,10 @@ Backlog:
 [ ] add timer to tasks
 [ ] Implement hi-charts/d3 to visualize data (hours spent, categories)
 [ ] Setup sql database
+
+Optimizations:
+[ ] refactor 'taskInfo' to be more idiomatic
+[ ] refactor individual state items into passing one state variable
 
 Ideas/Advanced features:
 [ ] Searchable/sortable categories/tags

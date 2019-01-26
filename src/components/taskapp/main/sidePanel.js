@@ -1,19 +1,21 @@
 import React from 'react'
-import { Button } from 'react-bootstrap'
-
+import { Button, ProgressBar } from 'react-bootstrap'
 
 const SidePanel = (props) => {
   const task = props.task
   return (
-    <div className='task-item'>
+    <div className={'task-item ' + props.className} onClick={props.sidePanelFocus} data-sidepanelid={task.taskName}>
       <div className='task-item-content'>
-        <div className='task-item-title' onClick={props.sidePanelFocus} data-sidepanelid={task.taskName}>
-          {task.taskName}
+        <div className='task-item-title' >
+          {task.taskName} <Button className='task-item-delete-button' onClick={props.onHandleDeleteTask}>Delete</Button>
         </div>
-        <Button className='task-item-delete-button' onClick={props.onHandleDeleteTask}>Delete</Button>
         <div className='task-item-summary'>
-          Content Summary Goes Here{task.percentComplete}% Complete
+          Content Summary Goes Here
         </div>
+        <ProgressBar>
+          <ProgressBar className='task-item-percent-complete' bsStyle="info" now={parseInt(task.percentComplete)} />
+        </ProgressBar>
+        <div>{task.hours} hours</div>
         <div className='task-item-updated-date'>
           {task.lastUpdated}
         </div>

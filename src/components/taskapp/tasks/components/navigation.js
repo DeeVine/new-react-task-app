@@ -11,13 +11,18 @@ const Navigation = (props) => {
           <input type='submit' value='Add Subtask'/>
         </form>
         <form onSubmit={props.handleCreateNewTag(props.taskInfo.taskName)}>
-          <input onChange={props.updateTagInput} id='add-tag' value={props.tagInputValue} placeholder='add a tag' />
+          <input onChange={props.updateTagInput} id='add-tag' value={props.tagInput} placeholder='Add a tag' />
           <input type='submit' value='Add Tag'/>
+        </form>
+        <form onSubmit={props.handleAddHours(props.taskInfo.taskName)}>
+          <input onChange={props.updateHoursInput} id='add-tag' value={props.hoursInput} placeholder='Add Hours' />
+          <input type='submit' value='Add Hours'/>
         </form>
       </div>
       <div className='task-navigation-buttons'>
         <button onClick={props.handleToggleAll}>Toggle All</button>
         <button onClick={props.handleDeleteAll}>Delete All</button>
+        <button onClick={props.handleDeleteTaskApp}>Delete Task</button>
       </div>
     </nav>
   )

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, ProgressBar } from 'react-bootstrap'
+import { ProgressBar } from 'react-bootstrap'
 
 const SidePanel = (props) => {
   const task = props.task
@@ -7,7 +7,7 @@ const SidePanel = (props) => {
     <div className={'task-item ' + props.className} onClick={props.sidePanelFocus} data-sidepanelid={task.taskName}>
       <div className='task-item-content'>
         <div className='task-item-title' >
-          {task.taskName} <Button className='task-item-delete-button' onClick={props.onHandleDeleteTask}>Delete</Button>
+          {task.taskName}
         </div>
         <div className='task-item-summary'>
           Content Summary Goes Here

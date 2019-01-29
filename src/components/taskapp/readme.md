@@ -12,30 +12,34 @@ DEBUG:
 
 TODO:
 [ ] hours calculations
-  [ ] attach date/time to hours
-  [ ] put times into chartable format utilizing moment.js
+  [x] total hours
+    [x] include array with hours and timestamps
 [ ] handle delete tag
-[ ] handle add hours
-[ ] highlight active task in sidepanel
+[x] handle add hours
+[x] highlight active task in sidepanel
+[ ] handle percent complete
 [ ] determine when/if necessary to use functional set state of 'currentState' vs simply this.setState
 [ ] refactor name of 'tasks' to 'subTasks' so we can clearly differentiate between taskList and tasks
 [ ] refactor tasks under taskList
   [ ] check that components are taking correct props after refactor
-[ ] add delete button to tags
-[ ] utilize sidePanel to control active task
-[ ] figure out where to store state --> move all back to taskApp?
+[ ] Filters --> All, Active, Completed
+[x] utilize sidePanel to control active task
+[x] figure out where to store state --> move all back to taskApp?
 [ ] validation to check if task name exists already
 [ ] Add testing framework
 [x] Move individual components into module exports
 [x] Make content editable
   [ ] Make editable text area vs simple input field
+[ ] Added in richTextEditor TinyMce
+    [ ] Finesse onChange event, currently unreliably changes and can cause onchange event to update task
+    [ ] Need to properly parse out getContent from TinyMce component,
+        'enter keys' are not parsing correctly due to additional <p> tags
 [x] Add Task
   [create nested-tasks]
  [ ] Add additional fields to form field
  [x] Input Validation
    [ ] More robust input check than just checking for " "
 [x] Toggle task
-[ ] Filters --> All, Active, Completed
 [x] Toggle all tasks
 [x] Delete task
 [x] Delete all inactive task

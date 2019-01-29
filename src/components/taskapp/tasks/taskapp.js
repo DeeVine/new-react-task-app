@@ -2,6 +2,7 @@ import React from 'react'
 import Navigation from './components/navigation'
 import TaskList from './components/taskList'
 import TaskDisplay from './components/taskDisplay'
+import TinyMce from './components/tinymce'
 import { Grid, Row} from 'react-bootstrap'
 
 export default class Taskapp extends React.Component {
@@ -53,6 +54,14 @@ export default class Taskapp extends React.Component {
               hoursInput={this.props.hoursInput}
               updateHoursInput={this.props.updateHoursInput}
               handleAddHours={this.props.handleAddHours}
+            />
+          </Row>
+          <Row>
+            <TinyMce
+              taskInfo = {this.props.taskInfo}
+              textEditorContent = {this.props.appState.textEditorContentTest}
+              handleUpdateTextEditor = {this.props.handleUpdateTextEditor}
+              textEditorPrimaryContent = {this.props.textEditorContent}
             />
           </Row>
           <Row>

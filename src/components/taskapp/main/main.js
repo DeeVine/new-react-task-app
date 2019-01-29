@@ -25,13 +25,15 @@ export default class Main extends React.Component {
       focusedTask: {},
       sidePanelFocus: '', //set sidepanel focus to taskName
       taskListIndex: 0, //may want to target by ID instead of index
+      textEditorContentTest: 'testing testing',
       taskList: [
         {
           taskName: 'taskname1',
           taskId: 'temp1',
           tags: ['fun', 'productive', 'cool'],
           percentComplete: '25',
-          tasks: []
+          tasks: [],
+          textEditorContent: ''
         },
         {
           taskName: 'taskname2',
@@ -98,7 +100,6 @@ export default class Main extends React.Component {
 
   updateHoursInput = (e) => {
     const value = e.target.value;
-    console.log('value')
     this.setState({
       hoursInput: value
     })
@@ -119,7 +120,9 @@ export default class Main extends React.Component {
               percentComplete: 25,
               tasks: [],
               lastUpdated: Date(),
-              hours: 0
+              hours: 0,
+              hoursLog: [],
+              textEditorContent: 'Go ahead, write some notes'
             }])
         }
       })
@@ -167,11 +170,29 @@ export default class Main extends React.Component {
     }
   }
 
+  handleUpdateTextEditor = (taskName, textEditorContent) => {
+    console.log('taskName', taskName)
+    console.log('textEditorContent', textEditorContent)
+
+    this.setState((currentState) => {
+      const taskList = currentState.taskList
+      const currentTask = taskList.find((task) => {
+        return task.taskName === taskName
+      })
+      const taskIndex = taskList.map((task) => { return task.taskName }).indexOf(currentTask.taskName)
+      currentState.taskList[taskIndex].textEditorContent = textEditorContent
+      return {
+        tagInput: '',
+        taskList: currentState.taskList
+      }
+    })
+
+  }
+
   handleAddHours = taskName => (e) => {
     e.preventDefault()
-    const hours = parseInt(this.state.hoursInput.trim())
-    console.log('typeof hours', typeof hours)
-    var isnum = /^\d+$/.test(hours)
+    const hours = parseFloat(parseFloat(this.state.hoursInput.trim()).toFixed(2))
+    var isnum = /^[+]?([0-9]+(?:[.][0-9]*)?|\.[0-9]+)$/.test(hours) //check to accept positive integers and decimals
     if (hours !== '' && isnum) {
       this.setState((currentState) => {
         const taskList = currentState.taskList
@@ -180,6 +201,11 @@ export default class Main extends React.Component {
         })
         const taskIndex = taskList.map((task) => { return task.taskName }).indexOf(currentTask.taskName)
         currentState.taskList[taskIndex].hours += hours
+        const hoursObj = {
+          hours,
+          updated: Date()
+        }
+        currentState.taskList[taskIndex].hoursLog.push(hoursObj)
         return {
           hoursInput: '',
           taskList: currentState.taskList
@@ -329,6 +355,7 @@ export default class Main extends React.Component {
               }
               appState = {this.state}
               tasks = {this.state.taskList[this.state.taskListIndex].tasks}
+              textEditorContent = {this.state.taskList[this.state.taskListIndex].textEditorContent}
               subTaskInput = {this.state.subTaskInput}
               updateSubTaskInput = {this.updateSubTaskInput}
               handleCreateSubTask = {this.handleCreateSubTask}
@@ -344,6 +371,7 @@ export default class Main extends React.Component {
               handleDeleteTaskApp = {()=> this.handleDeleteTaskApp(this.state.sidePanelFocus.taskName)}
               handleToggleTask = {this.handleToggleTask}
               handleFocusTask = {this.handleFocusTask}
+              handleUpdateTextEditor = {this.handleUpdateTextEditor}
               focusedTask = {this.state.focusedTask}
               updateTaskInput = {this.updateTaskInput}
               taskListIndex = {this.state.taskListIndex}

@@ -5,7 +5,6 @@ import { Grid, Row, Col} from 'react-bootstrap'
 import '../main.css'
 const uuidv4 = require('uuid/v4');
 
-
 const util = {
   updateLocalStorage: (namespace, storedData) => {
     localStorage.setItem(namespace, JSON.stringify(storedData))
@@ -56,7 +55,7 @@ export default class Main extends React.Component {
 
   componentDidUpdate = () => {
     util.updateLocalStorage('taskList-data', this.state.taskList)
-    console.log('this.state', this.state)
+    // console.log('this.state', this.state)
   }
 
   updateNewTaskInput = (e) => {
@@ -64,6 +63,30 @@ export default class Main extends React.Component {
     this.setState({
       inputNewTask: value
     })
+  }
+
+  handleCreateNewTask = (e) => {
+    e.preventDefault()
+    const taskName = this.state.inputNewTask.trim()
+    if (taskName !== '') {
+      this.setState((currentState) => {
+        return {
+          inputNewTask: '',
+          taskList: currentState.taskList.concat([
+            {
+              taskName,
+              taskId: uuidv4(),
+              tags: [],
+              percentComplete: 25,
+              tasks: [],
+              lastUpdated: Date(),
+              hours: 0,
+              hoursLog: [],
+              textEditorContent: 'Go ahead, write some notes'
+            }])
+        }
+      })
+    }
   }
 
   updateSubTaskInput = (e) => {
@@ -103,30 +126,6 @@ export default class Main extends React.Component {
     this.setState({
       hoursInput: value
     })
-  }
-
-  handleCreateNewTask = (e) => {
-    e.preventDefault()
-    const taskName = this.state.inputNewTask.trim()
-    if (taskName !== '') {
-      this.setState((currentState) => {
-        return {
-          inputNewTask: '',
-          taskList: currentState.taskList.concat([
-            {
-              taskName,
-              taskId: uuidv4(),
-              tags: [],
-              percentComplete: 25,
-              tasks: [],
-              lastUpdated: Date(),
-              hours: 0,
-              hoursLog: [],
-              textEditorContent: 'Go ahead, write some notes'
-            }])
-        }
-      })
-    }
   }
 
   //need to create the tasks under the taskList

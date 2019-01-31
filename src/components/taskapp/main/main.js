@@ -74,6 +74,7 @@ export default class Main extends React.Component {
     .catch((error) => {
       // console.log(error);
     });
+    console.log('componentDidUpdate')
     /******* Fallback code utlizing local storage *******/
     // util.updateLocalStorage('taskList-data', this.state.taskList)
   }

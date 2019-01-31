@@ -389,7 +389,7 @@ export default class Main extends React.Component {
               handleAddHours = {this.handleAddHours}
               handleToggleAll = {this.handleToggleAll}
               handleDeleteAllTasks = {this.handleDeleteAllTasks}
-              handleDeleteTaskApp = {()=> this.handleDeleteTaskApp(this.state.sidePanelFocus.taskName)}
+              handleDeleteTaskApp = {() => this.handleDeleteTaskApp(this.state.sidePanelFocus.taskName)}
               handleToggleTask = {this.handleToggleTask}
               handleFocusTask = {this.handleFocusTask}
               handleUpdateTextEditor = {this.handleUpdateTextEditor}

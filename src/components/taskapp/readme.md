@@ -14,6 +14,8 @@ TODO:
 [ ] hours calculations
   [x] total hours
     [x] include array with hours and timestamps
+[ ] save data to server
+    [ ] throttle post request, currently fires on every componentDidUpdate and causes server error since file write takes time
 [ ] handle delete tag
 [x] handle add hours
 [x] highlight active task in sidepanel

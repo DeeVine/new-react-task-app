@@ -3,6 +3,7 @@ import SidePanel from './sidePanel'
 import TaskApp from '../tasks/taskapp'
 import { Grid, Row, Col} from 'react-bootstrap'
 import '../main.css'
+import axios from 'axios'
 const uuidv4 = require('uuid/v4');
 
 const util = {
@@ -26,36 +27,55 @@ export default class Main extends React.Component {
       taskListIndex: 0, //may want to target by ID instead of index
       textEditorContentTest: 'testing testing',
       taskList: [
-        {
-          taskName: 'taskname1',
-          taskId: 'temp1',
-          tags: ['fun', 'productive', 'cool'],
-          percentComplete: '25',
-          tasks: [],
-          textEditorContent: ''
-        },
-        {
-          taskName: 'taskname2',
-          taskId: 'temp2',
-          tags: ['tasty', 'filling', 'pricey'],
-          percentComplete: '40',
-          tasks: []
-        }],
+        // {
+        //   taskName: 'taskname1',
+        //   taskId: 'temp1',
+        //   tags: ['fun', 'productive', 'cool'],
+        //   percentComplete: '25',
+        //   tasks: [],
+        //   textEditorContent: ''
+        // },
+        // {
+        //   taskName: 'taskname2',
+        //   taskId: 'temp2',
+        //   tags: ['tasty', 'filling', 'pricey'],
+        //   percentComplete: '40',
+        //   tasks: []
+        // }
+      ],
       }
     }
 
   componentDidMount = () => {
-    const taskList = util.retrieveTasksFromLocalStorage('taskList-data')
-    this.setState({
-      taskListIndex: 0, //may want to store and retrieve preiovus index
-      taskList: taskList ? taskList : [],
-      // sidePanelFocus: this.state.taskList[0]
+    axios.get('/getfile')
+    .then( (response) => {
+      const taskList = response.data
+      this.setState({
+        taskListIndex: 0, //may want to store and retrieve preiovus index
+        taskList: taskList ? taskList : [],
+        // sidePanelFocus: this.state.taskList[0]
+      })
     })
+    .catch(function (error) {
+      console.log(error);
+    });
+
+    /******* Fallback code utlizing local storage *******/
+    // const taskList = util.retrieveTasksFromLocalStorage('taskList-data')
+    // this.setState({
+    //   taskListIndex: 0, //may want to store and retrieve preiovus index
+    //   taskList: taskList ? taskList : [],
+    //   // sidePanelFocus: this.state.taskList[0]
+    // })
   }
 
   componentDidUpdate = () => {
-    util.updateLocalStorage('taskList-data', this.state.taskList)
-    // console.log('this.state', this.state)
+    axios.post('/updatefile', this.state.taskList)
+    .catch((error) => {
+      // console.log(error);
+    });
+    /******* Fallback code utlizing local storage *******/
+    // util.updateLocalStorage('taskList-data', this.state.taskList)
   }
 
   updateNewTaskInput = (e) => {
@@ -318,6 +338,7 @@ export default class Main extends React.Component {
   }
 
   render() {
+
     return (
       <Grid className='main-grid' fluid={true}>
         <h1>Main TaskApp Screen</h1>

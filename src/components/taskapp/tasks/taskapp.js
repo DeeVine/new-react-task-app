@@ -3,6 +3,7 @@ import Navigation from './components/navigation'
 import TaskList from './components/taskList'
 import TaskDisplay from './components/taskDisplay'
 import TinyMce from './components/tinymce'
+import BarChart from './components/d3'
 import { Grid, Row} from 'react-bootstrap'
 
 export default class Taskapp extends React.Component {
@@ -39,6 +40,7 @@ export default class Taskapp extends React.Component {
       <Grid className='tasks_container'>
           <h1 className='taskapp-header'>{this.props.taskInfo.taskName}</h1>
           <Row>
+            <BarChart />
             <Navigation
               appState = {this.props.appState}
               taskInfo = {this.props.taskInfo}
@@ -71,6 +73,7 @@ export default class Taskapp extends React.Component {
             />
           </Row>
           <Row>
+            <h4>Subtasks</h4>
             <TaskList
               tasks={this.props.tasks}
               updateTaskInput={this.props.updateTaskInput}

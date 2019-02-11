@@ -1,5 +1,9 @@
 body, html {height: 100%; }
 
+.bar:hover {
+  fill: brown;
+}
+
 .task-navigation-form {
   display: flex;
 }
@@ -24,7 +28,8 @@ body, html {height: 100%; }
 }
 
 .tasks_list {
-  /* overflow: scroll */
+  max-height: 200px;
+  overflow: scroll;
 }
 
 /************************ sidePanel CSS  ***************************/

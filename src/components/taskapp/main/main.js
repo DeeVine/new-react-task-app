@@ -342,15 +342,15 @@ export default class Main extends React.Component {
 
     return (
       <Grid className='main-grid' fluid={true}>
-        <h1>Main TaskApp Screen</h1>
         <Row className='show-grid main-display'>
           <Col xs={12} sm={3} md={3} className='sidenav'>
-            <form onSubmit={this.handleCreateNewTask}>
-              <input onChange={this.updateNewTaskInput} id='task-text' value={this.state.inputNewTask} placeholder='create new task' />
-              <input type='submit' value='submit'/>
-            </form>
-            <h4>All Tasks</h4>
+
             <div className='side-panel'>
+              <form onSubmit={this.handleCreateNewTask}>
+                <input onChange={this.updateNewTaskInput} id='task-text' value={this.state.inputNewTask} placeholder='create new task' />
+                <input type='submit' value='submit'/>
+              </form>
+              <h4>All Tasks</h4>
               {this.state.taskList.map((task, index) => {
                 return (
                   <div key={uuidv4()}>

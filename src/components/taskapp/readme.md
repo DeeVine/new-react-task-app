@@ -11,15 +11,17 @@ DEBUG:
 [ ] find out why sidepanel rerenders due to 'sidePanelFocus' click handler
 
 TODO:
+[ ] handle percent complete
+[ ] validation to check if task name exists already
 [ ] hours calculations
+[ ] Add testing framework
   [x] total hours
     [x] include array with hours and timestamps
-[ ] save data to server
-    [ ] throttle post request, currently fires on every componentDidUpdate and causes server error since file write takes time
+[x] save data to server *(utilizing node fs)*
+    [x] throttle post request, currently fires on every componentDidUpdate and causes server error since file write takes time
 [ ] handle delete tag
 [x] handle add hours
 [x] highlight active task in sidepanel
-[ ] handle percent complete
 [ ] determine when/if necessary to use functional set state of 'currentState' vs simply this.setState
 [ ] refactor name of 'tasks' to 'subTasks' so we can clearly differentiate between taskList and tasks
 [ ] refactor tasks under taskList
@@ -27,8 +29,6 @@ TODO:
 [ ] Filters --> All, Active, Completed
 [x] utilize sidePanel to control active task
 [x] figure out where to store state --> move all back to taskApp?
-[ ] validation to check if task name exists already
-[ ] Add testing framework
 [x] Move individual components into module exports
 [x] Make content editable
   [ ] Make editable text area vs simple input field

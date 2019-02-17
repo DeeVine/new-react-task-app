@@ -11,7 +11,16 @@ DEBUG:
 [ ] find out why sidepanel rerenders due to 'sidePanelFocus' click handler
 
 TODO:
+[ ] calculate hours per day
+  [ ] filter tasks by day
+  [ ] filter hours by activity
+[ ] handle delete tag
+[x] add react-json-tree to view all data per task for development purposes
 [ ] handle percent complete
+  [ ] assign percentage based on subtasks
+    [ ] segment out percentage to related subtasks on hover
+[ ] allow adding of time associated with tasks/sub-tasks
+  [ ] filter by time of sub-tasks
 [ ] validation to check if task name exists already
 [ ] hours calculations
 [ ] Add testing framework
@@ -19,7 +28,7 @@ TODO:
     [x] include array with hours and timestamps
 [x] save data to server *(utilizing node fs)*
     [x] throttle post request, currently fires on every componentDidUpdate and causes server error since file write takes time
-[ ] handle delete tag
+
 [x] handle add hours
 [x] highlight active task in sidepanel
 [ ] determine when/if necessary to use functional set state of 'currentState' vs simply this.setState

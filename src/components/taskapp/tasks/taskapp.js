@@ -5,6 +5,7 @@ import TaskDisplay from './components/taskDisplay'
 import TinyMce from './components/tinymce'
 import BarChart from './components/d3'
 import { Grid, Row} from 'react-bootstrap'
+import JSONTree from 'react-json-tree'
 
 export default class Taskapp extends React.Component {
   constructor(props){
@@ -38,9 +39,10 @@ export default class Taskapp extends React.Component {
   render() {
     return (
       <Grid className='tasks_container'>
-          <h1 className='taskapp-header'>{this.props.taskInfo.taskName}</h1>
+          {/* <h1 className='taskapp-header'>{this.props.taskInfo.taskName}</h1> */}
+          <input onChange={this.props.updateTaskTitle} id='task-text' value={this.props.taskInfo.taskName} placeholder='add a subtask' />
           <Row>
-            <BarChart />
+            {/* <BarChart /> */}
             <Navigation
               appState = {this.props.appState}
               taskInfo = {this.props.taskInfo}
@@ -57,6 +59,9 @@ export default class Taskapp extends React.Component {
               updateHoursInput={this.props.updateHoursInput}
               handleAddHours={this.props.handleAddHours}
             />
+          </Row>
+          <Row>
+            <JSONTree data={this.props.taskInfo} shouldExpandNode={() => false} />
           </Row>
           <Row>
             <TinyMce

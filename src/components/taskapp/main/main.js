@@ -1,9 +1,10 @@
 import React from 'react'
-import SidePanel from './sidePanel'
+import SidePanel from '../sidepanel/sidePanel'
 import TaskApp from '../tasks/taskapp'
 import { Grid, Row, Col} from 'react-bootstrap'
 import '../main.css'
 import axios from 'axios'
+import moment from 'moment'
 const uuidv4 = require('uuid/v4');
 
 const util = {
@@ -67,6 +68,8 @@ export default class Main extends React.Component {
     //   taskList: taskList ? taskList : [],
     //   // sidePanelFocus: this.state.taskList[0]
     // })
+
+
   }
 
   componentDidUpdate = () => {
@@ -77,6 +80,7 @@ export default class Main extends React.Component {
     console.log('componentDidUpdate')
     /******* Fallback code utlizing local storage *******/
     // util.updateLocalStorage('taskList-data', this.state.taskList)
+    this.runMoment(this.state.taskList)
   }
 
   updateNewTaskInput = (e) => {
@@ -108,6 +112,18 @@ export default class Main extends React.Component {
         }
       })
     }
+  }
+
+  updateTaskTitle = (e) => {
+    const text = e.target.value;
+    this.setState((currentState) => {
+      const taskListIndex = currentState.taskListIndex
+      const taskList = currentState.taskList
+      taskList[taskListIndex].taskName = text
+      return {
+        tasks: taskList
+      }
+    })
   }
 
   updateSubTaskInput = (e) => {
@@ -338,13 +354,69 @@ export default class Main extends React.Component {
     })
   }
 
+  runMoment = (taskList) => {
+
+    //iterrate over taskList and create hoursLog object for specific days
+    const filterByDate = (arr, date) => {
+      // console.log('arr in filterByDate: ', arr)
+      // console.log('dateinFilter: ', date)
+      console.log('date', date)
+      return arr.filter((hoursLog) => {
+        const format = "MMM Do YYYY"
+        return moment(hoursLog.updated).format(format) === date
+      })
+    }
+
+    const filterByDateHoursLog = () => {
+        const calculatedHoursByDay = [];
+        taskList.forEach((arr) => {
+          const taskName = arr.taskName
+          const hoursLog = arr.hoursLog
+          const date = moment("Sat Feb 16 2019 18:45:35 GMT-0800 (Pacific Standard Time)").format("MMM Do YYYY")
+          const filteredHoursByDay = filterByDate(hoursLog, date)
+          const hoursObj = {
+            taskName,
+            filteredHoursByDay,
+            date
+          }
+          calculatedHoursByDay.push(hoursObj)
+        })
+        return calculatedHoursByDay
+        // console.log('calculatedHoursByDay: ', calculatedHoursByDay)
+    }
+
+    const addHours = (arr) => {
+      let totalHours = 0
+      arr.forEach((item) => {
+        totalHours+= item.hours
+      })
+      return totalHours
+    }
+
+    const addUpHours = () => {
+      const totalHoursByDate = filterByDateHoursLog().map((arr) => {
+        const taskName = arr.taskName
+        const totalHours = addHours(arr.filteredHoursByDay)
+        const date = arr.date
+        return {
+          taskName,
+          totalHours,
+          date
+        }
+      })
+      return totalHoursByDate
+    }
+
+    console.log('filterByDateHoursLog: ', filterByDateHoursLog())
+    console.log('addUpHours', addUpHours())
+  }
+
   render() {
 
     return (
       <Grid className='main-grid' fluid={true}>
         <Row className='show-grid main-display'>
           <Col xs={12} sm={3} md={3} className='sidenav'>
-
             <div className='side-panel'>
               <form onSubmit={this.handleCreateNewTask}>
                 <input onChange={this.updateNewTaskInput} id='task-text' value={this.state.inputNewTask} placeholder='create new task' />
@@ -376,6 +448,7 @@ export default class Main extends React.Component {
               }
               appState = {this.state}
               tasks = {this.state.taskList[this.state.taskListIndex].tasks}
+              updateTaskTitle = {this.updateTaskTitle}
               textEditorContent = {this.state.taskList[this.state.taskListIndex].textEditorContent}
               subTaskInput = {this.state.subTaskInput}
               updateSubTaskInput = {this.updateSubTaskInput}

@@ -15,8 +15,12 @@ const Navigation = (props) => {
           <input type='submit' value='Add Tag'/>
         </form>
         <form onSubmit={props.handleAddHours(props.taskInfo.taskName)}>
-          <input onChange={props.updateHoursInput} id='add-tag' value={props.hoursInput} placeholder='Add Hours' />
+          <input onChange={props.updateHoursInput} id='add-hours' value={props.appState.hoursInput} placeholder='Add Hours' />
           <input type='submit' value='Add Hours'/>
+        </form>
+        <form onSubmit={props.handleAddNote(props.taskInfo.taskName)}>
+          <input onChange={props.updateAddNoteInput} id='add-note' value={props.appState.addNoteInput} placeholder='Add Note' />
+          <input type='submit'/>
         </form>
       </div>
       <div className='task-navigation-buttons'>

@@ -5,9 +5,11 @@ import { Grid, Row, Col} from 'react-bootstrap'
 import '../main.css'
 import axios from 'axios'
 import moment from 'moment'
+import JSONTree from 'react-json-tree'
 const uuidv4 = require('uuid/v4');
 
 const util = {
+  dateNow: () => moment().format('MMMM Do YYYY, h:mm:ss a'),
   updateLocalStorage: (namespace, storedData) => {
     localStorage.setItem(namespace, JSON.stringify(storedData))
   },
@@ -21,6 +23,7 @@ export default class Main extends React.Component {
     this.state = {
       inputNewTask: '',
       subTaskInput: '',
+      addNoteInput: '',
       tagInput: '',
       hoursInput: '',
       focusedTask: {},
@@ -104,9 +107,10 @@ export default class Main extends React.Component {
               tags: [],
               percentComplete: 25,
               tasks: [],
-              lastUpdated: Date(),
+              lastUpdated: util.dateNow(),
               hours: 0,
               hoursLog: [],
+              notes: [],
               textEditorContent: 'Go ahead, write some notes'
             }])
         }
@@ -131,6 +135,14 @@ export default class Main extends React.Component {
     const value = e.target.value;
     this.setState({
       subTaskInput: value
+    })
+  }
+
+  updateAddNoteInput = (e) => {
+    e.preventDefault()
+    const value = e.target.value;
+    this.setState({
+      addNoteInput: value
     })
   }
 
@@ -182,6 +194,28 @@ export default class Main extends React.Component {
       taskList[taskListIndex].tasks = newTasks
       this.setState({
         subTaskInput: '',
+        taskList: taskList
+      })
+    }
+  }
+
+  handleAddNote = taskName => (e) => {
+    e.preventDefault()
+    console.log('handleAddnote')
+    const text = this.state.addNoteInput.trim()
+    if (text !== '') {
+      const textObject = {
+        text,
+        updated: util.dateNow()
+      }
+      const taskListIndex = this.state.taskListIndex
+      const taskList = this.state.taskList
+      const currentTask = taskList[taskListIndex]
+      //update taskList with new notes
+      const newNotes = currentTask.notes.concat([textObject])
+      taskList[taskListIndex].notes = newNotes
+      this.setState({
+        addNoteInput: '',
         taskList: taskList
       })
     }
@@ -239,7 +273,7 @@ export default class Main extends React.Component {
         currentState.taskList[taskIndex].hours += hours
         const hoursObj = {
           hours,
-          updated: Date()
+          updated: util.dateNow
         }
         currentState.taskList[taskIndex].hoursLog.push(hoursObj)
         return {
@@ -360,7 +394,7 @@ export default class Main extends React.Component {
     const filterByDate = (arr, date) => {
       // console.log('arr in filterByDate: ', arr)
       // console.log('dateinFilter: ', date)
-      console.log('date', date)
+      // console.log('date', date)
       return arr.filter((hoursLog) => {
         const format = "MMM Do YYYY"
         return moment(hoursLog.updated).format(format) === date
@@ -382,7 +416,6 @@ export default class Main extends React.Component {
           calculatedHoursByDay.push(hoursObj)
         })
         return calculatedHoursByDay
-        // console.log('calculatedHoursByDay: ', calculatedHoursByDay)
     }
 
     const addHours = (arr) => {
@@ -407,8 +440,8 @@ export default class Main extends React.Component {
       return totalHoursByDate
     }
 
-    console.log('filterByDateHoursLog: ', filterByDateHoursLog())
-    console.log('addUpHours', addUpHours())
+    // console.log('filterByDateHoursLog: ', filterByDateHoursLog())
+    // console.log('addUpHours', addUpHours())
   }
 
   render() {
@@ -417,6 +450,7 @@ export default class Main extends React.Component {
       <Grid className='main-grid' fluid={true}>
         <Row className='show-grid main-display'>
           <Col xs={12} sm={3} md={3} className='sidenav'>
+            <JSONTree data={this.state} shouldExpandNode={() => false} />
             <div className='side-panel'>
               <form onSubmit={this.handleCreateNewTask}>
                 <input onChange={this.updateNewTaskInput} id='task-text' value={this.state.inputNewTask} placeholder='create new task' />
@@ -460,6 +494,8 @@ export default class Main extends React.Component {
               hoursInput = {this.state.hoursInput}
               updateHoursInput = {this.updateHoursInput}
               handleAddHours = {this.handleAddHours}
+              updateAddNoteInput = {this.updateAddNoteInput}
+              handleAddNote = {this.handleAddNote}
               handleToggleAll = {this.handleToggleAll}
               handleDeleteAllTasks = {this.handleDeleteAllTasks}
               handleDeleteTaskApp = {() => this.handleDeleteTaskApp(this.state.sidePanelFocus.taskName)}

@@ -58,6 +58,8 @@ export default class Taskapp extends React.Component {
               hoursInput={this.props.hoursInput}
               updateHoursInput={this.props.updateHoursInput}
               handleAddHours={this.props.handleAddHours}
+              updateAddNoteInput={this.props.updateAddNoteInput}
+              handleAddNote={this.props.handleAddNote}
             />
           </Row>
           <Row>

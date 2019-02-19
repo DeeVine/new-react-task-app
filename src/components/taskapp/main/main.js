@@ -22,6 +22,7 @@ export default class Main extends React.Component {
 
     this.state = {
       inputNewTask: '',
+      inputTaskFilter: '',
       subTaskInput: '',
       addNoteInput: '',
       tagInput: '',
@@ -63,7 +64,6 @@ export default class Main extends React.Component {
     .catch(function (error) {
       console.log(error);
     });
-
     /******* Fallback code utlizing local storage *******/
     // const taskList = util.retrieveTasksFromLocalStorage('taskList-data')
     // this.setState({
@@ -84,12 +84,20 @@ export default class Main extends React.Component {
     /******* Fallback code utlizing local storage *******/
     // util.updateLocalStorage('taskList-data', this.state.taskList)
     this.runMoment(this.state.taskList)
+    console.log('this.filterByTaskName: ', this.filterByTaskName(this.state.taskList))
   }
 
   updateNewTaskInput = (e) => {
     const value = e.target.value;
     this.setState({
       inputNewTask: value
+    })
+  }
+
+  updateInputTaskFilter = (e) => {
+    const value = e.target.value;
+    this.setState({
+      inputTaskFilter: value
     })
   }
 
@@ -388,6 +396,16 @@ export default class Main extends React.Component {
     })
   }
 
+  filterByTaskName = (taskList, taskName) => {
+    if (!taskName) {
+      return taskList
+    } else {
+      return taskList.filter((task) => {
+        return task.taskName === taskName
+      })
+    }
+  }
+
   runMoment = (taskList) => {
 
     //iterrate over taskList and create hoursLog object for specific days
@@ -456,8 +474,12 @@ export default class Main extends React.Component {
                 <input onChange={this.updateNewTaskInput} id='task-text' value={this.state.inputNewTask} placeholder='create new task' />
                 <input type='submit' value='submit'/>
               </form>
+              <form>
+                <input onChange={this.updateInputTaskFilter} id='task-filter' value={this.state.inputTaskFilter} placeholder='filter by task name' />
+                {/* <input type='submit' value='submit'/> */}
+              </form>
               <h4>All Tasks</h4>
-              {this.state.taskList.map((task, index) => {
+              {this.filterByTaskName(this.state.taskList, this.state.inputTaskFilter).map((task, index) => {
                 return (
                   <div key={uuidv4()}>
                     <SidePanel

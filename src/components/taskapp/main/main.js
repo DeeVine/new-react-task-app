@@ -1,7 +1,8 @@
 import React from 'react'
 import SidePanel from '../sidepanel/sidePanel'
+import DropdownFilter from '../dropdownFilter/dropdownFilter'
 import TaskApp from '../tasks/taskapp'
-import { Grid, Row, Col} from 'react-bootstrap'
+import { Container, Row, Col} from 'reactstrap'
 import '../main.css'
 import axios from 'axios'
 import moment from 'moment'
@@ -9,7 +10,7 @@ import JSONTree from 'react-json-tree'
 const uuidv4 = require('uuid/v4');
 
 const util = {
-  dateNow: () => moment().format('MMMM Do YYYY, h:mm:ss a'),
+  dateNow: () => moment().format(),
   updateLocalStorage: (namespace, storedData) => {
     localStorage.setItem(namespace, JSON.stringify(storedData))
   },
@@ -78,14 +79,15 @@ export default class Main extends React.Component {
   componentDidUpdate = () => {
     axios.post('/updatefile', this.state.taskList)
     .catch((error) => {
-      // console.log(error);
+      console.log(error);
     });
-    console.log('componentDidUpdate')
     /******* Fallback code utlizing local storage *******/
     // util.updateLocalStorage('taskList-data', this.state.taskList)
     this.runMoment(this.state.taskList)
-    console.log('this.filterByTaskName: ', this.filterByTaskName(this.state.taskList))
+    // this.filterByDateHoursLog()
   }
+
+
 
   updateNewTaskInput = (e) => {
     const value = e.target.value;
@@ -158,7 +160,6 @@ export default class Main extends React.Component {
     const taskId = e.target.closest('li').id
     const text = e.target.value;
     this.setState((currentState) => {
-
       //need to find task in taskList
       const taskListIndex = currentState.taskListIndex
       const taskList = currentState.taskList
@@ -281,9 +282,15 @@ export default class Main extends React.Component {
         currentState.taskList[taskIndex].hours += hours
         const hoursObj = {
           hours,
-          updated: util.dateNow
+          updated: util.dateNow()
         }
-        currentState.taskList[taskIndex].hoursLog.push(hoursObj)
+        const hoursLog = currentState.taskList[taskIndex].hoursLog
+        //check if hoursLog object is defined since some older tasks may not have had this data object
+        if(!hoursLog) {
+          currentState.taskList[taskIndex].hoursLog = [hoursObj]
+        } else {
+          hoursLog.push(hoursObj)
+        }
         return {
           hoursInput: '',
           taskList: currentState.taskList
@@ -424,7 +431,8 @@ export default class Main extends React.Component {
         taskList.forEach((arr) => {
           const taskName = arr.taskName
           const hoursLog = arr.hoursLog
-          const date = moment("Sat Feb 16 2019 18:45:35 GMT-0800 (Pacific Standard Time)").format("MMM Do YYYY")
+          const date = moment("2019-02-19T23:20:55-08:00").format("MMM Do YYYY")
+          console.log('date', date)
           const filteredHoursByDay = filterByDate(hoursLog, date)
           const hoursObj = {
             taskName,
@@ -458,26 +466,24 @@ export default class Main extends React.Component {
       return totalHoursByDate
     }
 
-    // console.log('filterByDateHoursLog: ', filterByDateHoursLog())
+    console.log('filterByDateHoursLog: ', filterByDateHoursLog())
     // console.log('addUpHours', addUpHours())
   }
 
   render() {
 
     return (
-      <Grid className='main-grid' fluid={true}>
+      <Container className='main-grid' fluid={true}>
         <Row className='show-grid main-display'>
           <Col xs={12} sm={3} md={3} className='sidenav'>
             <JSONTree data={this.state} shouldExpandNode={() => false} />
+            <DropdownFilter />
             <div className='side-panel'>
               <form onSubmit={this.handleCreateNewTask}>
                 <input onChange={this.updateNewTaskInput} id='task-text' value={this.state.inputNewTask} placeholder='create new task' />
                 <input type='submit' value='submit'/>
               </form>
-              <form>
-                <input onChange={this.updateInputTaskFilter} id='task-filter' value={this.state.inputTaskFilter} placeholder='filter by task name' />
-                {/* <input type='submit' value='submit'/> */}
-              </form>
+              <input onChange={this.updateInputTaskFilter} id='task-filter' value={this.state.inputTaskFilter} placeholder='filter by task name' />
               <h4>All Tasks</h4>
               {this.filterByTaskName(this.state.taskList, this.state.inputTaskFilter).map((task, index) => {
                 return (
@@ -531,7 +537,7 @@ export default class Main extends React.Component {
             : <h1>Add a task and click on task in the left panel</h1>}
           </Col>
         </Row>
-      </Grid>
+      </Container>
     )
   }
 }

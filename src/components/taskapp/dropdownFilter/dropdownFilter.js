@@ -15,7 +15,7 @@ export default class DropdownFilter extends React.Component {
       dropdownOpen: !prevState.dropdownOpen
     }));
   }
-s
+
   render () {
     return (
       <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
@@ -24,10 +24,10 @@ s
         </DropdownToggle>
         <DropdownMenu>
           <DropdownItem header>Header</DropdownItem>
-          <DropdownItem>Some Action</DropdownItem>
+          <DropdownItem onClick={() => this.props.sortFilter('ascending')}>Sort Ascending</DropdownItem>
           <DropdownItem disabled>Action (disabled)</DropdownItem>
           <DropdownItem divider />
-          <DropdownItem>Foo Action</DropdownItem>
+          <DropdownItem onClick={() => this.props.sortFilter('descending')}>Sort Descending</DropdownItem>
           <DropdownItem>Bar Action</DropdownItem>
           <DropdownItem>Quo Action</DropdownItem>
         </DropdownMenu>

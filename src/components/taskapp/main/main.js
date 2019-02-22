@@ -10,7 +10,7 @@ import JSONTree from 'react-json-tree'
 const uuidv4 = require('uuid/v4');
 
 const util = {
-  dateNow: () => moment().format(),
+  dateNow: () => new Date().toISOString(),
   updateLocalStorage: (namespace, storedData) => {
     localStorage.setItem(namespace, JSON.stringify(storedData))
   },
@@ -87,7 +87,26 @@ export default class Main extends React.Component {
     // this.filterByDateHoursLog()
   }
 
-
+  //pass in ascending/descending argument
+  sortTaskList = (filterBy) => {
+    this.setState((currentState) => {
+      const taskList = currentState.taskList
+      const sortedAscending = taskList.sort(function(a,b) {
+        const date1 = moment(a.lastUpdated).valueOf()
+        const date2 = moment(b.lastUpdated).valueOf()
+        if(filterBy === 'ascending') {
+          return date1-date2
+        } else if (filterBy === 'descending') {
+          return date2-date1
+        } else {
+          return date1-date2
+        }
+      })
+      return {
+        taskList: sortedAscending
+      }
+    })
+  }
 
   updateNewTaskInput = (e) => {
     const value = e.target.value;
@@ -477,7 +496,9 @@ export default class Main extends React.Component {
         <Row className='show-grid main-display'>
           <Col xs={12} sm={3} md={3} className='sidenav'>
             <JSONTree data={this.state} shouldExpandNode={() => false} />
-            <DropdownFilter />
+            <DropdownFilter
+              sortFilter = {this.sortTaskList}
+            />
             <div className='side-panel'>
               <form onSubmit={this.handleCreateNewTask}>
                 <input onChange={this.updateNewTaskInput} id='task-text' value={this.state.inputNewTask} placeholder='create new task' />

@@ -11,8 +11,14 @@ DEBUG:
 [ ] find out why sidepanel rerenders due to 'sidePanelFocus' click handler
 
 TODO:
-[ ] filter tasks by name
+[ ] view report of hours per task for specific date(s)
+  [ ] comparison report of days
+    [ ] clickable calendar to select comparison ranges
+[ ] ability to update/modify hour entries
+[ ] last updated should change every time task is modified/added to
+[+] filter tasks by name
   [ ] utilize router to load filtered state
+  [ ] use regex/fuzzysearch so 'exact' taskName isn't required'
 [ ] export saved file
 [ ] architect ability to add additional datasets without affecting previous notes
   [ ] create default variable type if doesn't exist (i.e array, object)

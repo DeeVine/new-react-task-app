@@ -2,6 +2,7 @@ import React from 'react'
 import SidePanel from '../sidepanel/sidePanel'
 import DropdownFilter from '../dropdownFilter/dropdownFilter'
 import TaskApp from '../tasks/taskapp'
+import Timer from '../timer/timer'
 import { Container, Row, Col} from 'reactstrap'
 import '../main.css'
 import axios from 'axios'
@@ -493,6 +494,7 @@ export default class Main extends React.Component {
 
     return (
       <Container className='main-grid' fluid={true}>
+        <Timer />
         <Row className='show-grid main-display'>
           <Col xs={12} sm={3} md={3} className='sidenav'>
             <JSONTree data={this.state} shouldExpandNode={() => false} />
@@ -505,7 +507,7 @@ export default class Main extends React.Component {
                 <input type='submit' value='submit'/>
               </form>
               <input onChange={this.updateInputTaskFilter} id='task-filter' value={this.state.inputTaskFilter} placeholder='filter by task name' />
-              <h4>All Tasks</h4>
+              <h4>Activities & Tasks</h4>
               {this.filterByTaskName(this.state.taskList, this.state.inputTaskFilter).map((task, index) => {
                 return (
                   <div key={uuidv4()}>

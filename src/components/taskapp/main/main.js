@@ -486,7 +486,7 @@ export default class Main extends React.Component {
       return totalHoursByDate
     }
 
-    console.log('filterByDateHoursLog: ', filterByDateHoursLog())
+    // console.log('filterByDateHoursLog: ', filterByDateHoursLog())
     // console.log('addUpHours', addUpHours())
   }
 

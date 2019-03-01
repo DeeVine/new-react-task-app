@@ -12,6 +12,7 @@ DEBUG:
 [ ] cannot store moment objects in localStorage or fsFile --> moment object somehow converts to string date
 
 TODO:
+[ ] handleAddHours should check if taskName exists in taskList, else create a newTask and then add hours
 [ ] view report of hours per task for specific date(s)
   [ ] comparison report of days
     [ ] today vs yesterday

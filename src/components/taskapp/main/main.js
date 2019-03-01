@@ -123,28 +123,32 @@ export default class Main extends React.Component {
     })
   }
 
+  createNewTask = (taskName, optionalHoursObj) => {
+    this.setState((currentState) => {
+      return {
+        inputNewTask: '',
+        taskList: currentState.taskList.concat([
+          {
+            taskName,
+            taskId: uuidv4(),
+            tags: [],
+            percentComplete: 25,
+            tasks: [],
+            lastUpdated: util.dateNow(),
+            hours: 0,
+            hoursLog: optionalHoursObj ? [optionalHoursObj] : [],
+            notes: [],
+            textEditorContent: 'Go ahead, write some notes'
+          }])
+      }
+    })
+  }
+
   handleCreateNewTask = (e) => {
     e.preventDefault()
     const taskName = this.state.inputNewTask.trim()
     if (taskName !== '') {
-      this.setState((currentState) => {
-        return {
-          inputNewTask: '',
-          taskList: currentState.taskList.concat([
-            {
-              taskName,
-              taskId: uuidv4(),
-              tags: [],
-              percentComplete: 25,
-              tasks: [],
-              lastUpdated: util.dateNow(),
-              hours: 0,
-              hoursLog: [],
-              notes: [],
-              textEditorContent: 'Go ahead, write some notes'
-            }])
-        }
-      })
+      this.createNewTask(taskName)
     }
   }
 
@@ -287,16 +291,52 @@ export default class Main extends React.Component {
     })
   }
 
-  addHourLog = taskTimeObject => (e) => {
+  addHoursLog = taskTimeObject => (e) => {
+    e.preventDefault()
+    //TODO: milisecond conversion for hours from startTime and stopTime
     const { taskName, startTime, stopTime } = taskTimeObject
-    console.log(
-      'taskName:', taskName,
-      'startTime:', startTime,
-      'stopTime:', stopTime
-      )
+    const timeInMiliseconds = {
+      startTime: moment(startTime).valueOf(),
+      stopTime: moment(stopTime).valueOf()
+    }
+
+    console.log('timeInMiliseconds', timeInMiliseconds)
+
+    const hoursObj = {
+      taskName,
+      startTime: JSON.stringify(startTime),
+      stopTime: JSON.stringify(stopTime)
+    }
+    const currentTask = this.state.taskList.find((task) => {
+      return task.taskName === taskName
+    })
+    //check if task exists, otherwise create a new task
+      //TODO: add hour along with new task
+    if (!currentTask) {
+      this.createNewTask(taskName, hoursObj)
+    } else {
+      this.setState((currentState) => {
+        const taskList = currentState.taskList
+        const currentTask = taskList.find((task) => {
+          return task.taskName === taskName
+        })
+        const taskIndex = taskList.map((task) => { return task.taskName }).indexOf(currentTask.taskName)
+        const hoursLog = currentState.taskList[taskIndex].hoursLog
+        //check if hoursLog object is defined since some older tasks may not have had this data object
+        if(!hoursLog) {
+          currentState.taskList[taskIndex].hoursLog = [hoursObj]
+        } else {
+          hoursLog.push(hoursObj)
+        }
+        return {
+          hoursInput: '',
+          taskList: currentState.taskList
+        }
+      })
+    }
   }
 
-  handleAddHours = taskName => (e) => {
+  handleAddHours = (taskName) => (e) => {
     e.preventDefault()
     const hours = parseFloat(parseFloat(this.state.hoursInput.trim()).toFixed(2))
     var isnum = /^[+]?([0-9]+(?:[.][0-9]*)?|\.[0-9]+)$/.test(hours) //check to accept positive integers and decimals

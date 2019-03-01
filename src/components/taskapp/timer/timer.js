@@ -3,6 +3,8 @@ import moment from 'moment'
 import './timer.css'
 import { Container, Row, Col, Button } from 'reactstrap'
 
+//LeftOff --> figuring out way to utilize callback/promise to createTaskTimeObject after stopTime setsState
+
 //TODO:
 
 //start time, end time
@@ -16,7 +18,8 @@ import { Container, Row, Col, Button } from 'reactstrap'
 //make input field span majority of width
 //add tag icon with dropwdown
 //convert buttons to play and stop icons
-//timer vs manual mode
+// [ ] timer vs manual mode
+//  [ ] calculate hours in manual mode from start and end time
 const util = {
   dateNow: () => new Date().toISOString(),
   updateLocalStorage: (namespace, storedData) => {
@@ -42,12 +45,12 @@ export default class Timer extends React.Component {
     const savedState = util.retrieveTasksFromLocalStorage('timer-data')
     const timeStarted = savedState.timeStarted ? savedState.timeStarted : false
     const currentTime = savedState.currentTime
-    this.setState(() => ({
+    this.setState({
       timeStarted: timeStarted,
       startTime: savedState.startTime,
       stopTime: savedState.stopTime,
       currentTime: currentTime ? moment(currentTime) : moment().startOf("day")
-    }), () => {
+    }, () => {
       //callback after set set to set interval if timer has been started
       if(this.state.timeStarted) {
         this.interval = window.setInterval(() => {this.setTimer()}, 1000)
@@ -86,12 +89,19 @@ export default class Timer extends React.Component {
     this.interval = window.setInterval(() => {this.setTimer()}, 1000)
   }
 
+  combinedStopFunctions = () => {
+    this.stopTime()
+  }
+
   stopTime = () => {
+    console.log('stopTime')
     this.toggleTimer()
     this.setState({
       workingOnInput: '',
       stopTime: moment(),
       currentTime: moment().startOf("day"),
+    }, () => {
+      console.log('callback after')
     })
     window.clearInterval(this.interval);
   }
@@ -109,18 +119,15 @@ export default class Timer extends React.Component {
     return (
       <Container className='timer-grid' fluid={true}>
         <Row>
-          <Col className='timer-nav' sm={12}>
+          <Col sm={12} className='timer-nav' >
             <input id='working-on-input' onChange={this.updateInput} value={this.state.workingOnInput} placeholder={'What are you working on?'}/>
             <span>{this.state.currentTime.format('HH:mm:ss')}</span>
             {!this.state.timeStarted
               ? <Button onClick={this.startTime} color="success">Start</Button>
-              : <Button onClick={this.stopTime} color="danger">Stop</Button>
+              : <Button onClick={this.combinedStopFunctions} color="danger">Stop</Button>
             }
           </Col>
-          <Col className='timer-time'>
-            Timer Section
-          </Col>
-          <Col className='timer-time'>
+          <Col sm={12} className='timer-time'>
             Timed activities/tasks
           </Col>
         </Row>

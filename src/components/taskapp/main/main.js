@@ -285,7 +285,15 @@ export default class Main extends React.Component {
         taskList: currentState.taskList
       }
     })
+  }
 
+  addHourLog = taskTimeObject => (e) => {
+    const { taskName, startTime, stopTime } = taskTimeObject
+    console.log(
+      'taskName:', taskName,
+      'startTime:', startTime,
+      'stopTime:', stopTime
+      )
   }
 
   handleAddHours = taskName => (e) => {
@@ -494,7 +502,9 @@ export default class Main extends React.Component {
 
     return (
       <Container className='main-grid' fluid={true}>
-        <Timer />
+        <Timer
+          addHoursLog = {this.addHoursLog}
+        />
         <Row className='show-grid main-display'>
           <Col xs={12} sm={3} md={3} className='sidenav'>
             <JSONTree data={this.state} shouldExpandNode={() => false} />

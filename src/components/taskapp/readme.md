@@ -9,13 +9,16 @@ IDEAS:
 
 DEBUG:
 [ ] find out why sidepanel rerenders due to 'sidePanelFocus' click handler
+[ ] cannot store moment objects in localStorage or fsFile --> moment object somehow converts to string date
 
 TODO:
 [ ] view report of hours per task for specific date(s)
   [ ] comparison report of days
+    [ ] today vs yesterday
     [ ] clickable calendar to select comparison ranges
 [ ] ability to update/modify hour entries
 [ ] last updated should change every time task is modified/added to
+[ ] implement timer vs manual mode
 [+] filter tasks by name
   [ ] utilize router to load filtered state
   [ ] use regex/fuzzysearch so 'exact' taskName isn't required'
@@ -25,6 +28,11 @@ TODO:
 [+] calculate hours per day
   [ ] filter tasks by day
   [ ] filter hours by activity
+**[x] Added in richTextEditor TinyMce**
+    [ ] current buggy enter button, fix or try draft.js
+    [ ] Finesse onChange event, currently unreliably changes and can cause onchange event to update task
+    [ ] Need to properly parse out getContent from TinyMce component,
+        'enter keys' are not parsing correctly due to additional <p> tags
 [ ] bar chart for hour allocation
 [ ] handle delete tag
 [x] add react-json-tree to view all data per task for development purposes
@@ -53,10 +61,6 @@ TODO:
 [x] Move individual components into module exports
 [x] Make content editable
   [ ] Make editable text area vs simple input field
-[x] Added in richTextEditor TinyMce
-    [ ] Finesse onChange event, currently unreliably changes and can cause onchange event to update task
-    [ ] Need to properly parse out getContent from TinyMce component,
-        'enter keys' are not parsing correctly due to additional <p> tags
 [x] Add Task
   [ ] create nested-tasks
  [ ] Add additional fields to form field

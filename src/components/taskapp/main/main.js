@@ -80,8 +80,8 @@ export default class Main extends React.Component {
   componentDidUpdate = () => {
     axios.post('/updatefile', this.state.taskList)
     .catch((error) => {
-      console.log(error);
-    });
+      console.log(error)
+    })
     /******* Fallback code utlizing local storage *******/
     // util.updateLocalStorage('taskList-data', this.state.taskList)
     this.runMoment(this.state.taskList)
@@ -292,7 +292,8 @@ export default class Main extends React.Component {
   }
 
   addHoursLog = taskTimeObject => (e) => {
-    e.preventDefault()
+    console.log('are we in here?')
+    // e.preventDefault()
     //TODO: milisecond conversion for hours from startTime and stopTime
     const { taskName, startTime, stopTime } = taskTimeObject
     const timeInMiliseconds = {
@@ -304,8 +305,8 @@ export default class Main extends React.Component {
 
     const hoursObj = {
       taskName,
-      startTime: JSON.stringify(startTime),
-      stopTime: JSON.stringify(stopTime)
+      startTime: startTime,
+      stopTime: stopTime
     }
     const currentTask = this.state.taskList.find((task) => {
       return task.taskName === taskName
@@ -544,6 +545,7 @@ export default class Main extends React.Component {
       <Container className='main-grid' fluid={true}>
         <Timer
           addHoursLog = {this.addHoursLog}
+          taskList = {this.state.taskList}
         />
         <Row className='show-grid main-display'>
           <Col xs={12} sm={3} md={3} className='sidenav'>

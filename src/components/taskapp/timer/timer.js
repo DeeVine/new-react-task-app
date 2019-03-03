@@ -1,5 +1,6 @@
 import React from 'react'
 import moment from 'moment'
+import TimerList from './timerList'
 import './timer.css'
 import { Container, Row, Col, Button } from 'reactstrap'
 
@@ -111,7 +112,9 @@ export default class Timer extends React.Component {
       // currentTime: moment().startOf("day"),
     }, () => {
       console.log('callback after', this.createTaskTimeObject())
-      return this.createTaskTimeObject()
+      //addHours after time stops
+      this.props.addHoursLog(this.createTaskTimeObject())()
+      // return this.createTaskTimeObject()
     })
     window.clearInterval(this.interval);
   }
@@ -139,6 +142,7 @@ export default class Timer extends React.Component {
             <Button onClick={this.props.addHoursLog(this.createTaskTimeObject())} color="info">AddHoursLog</Button>
           </Col>
           <Col sm={12} className='timer-time'>
+            <TimerList taskList = {this.props.taskList}/>
             Timed activities/tasks
           </Col>
         </Row>

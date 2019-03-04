@@ -13,11 +13,13 @@ DEBUG:
 
 TODO:
 [ ] calculate hours difference from start and end utilizing miliseconds conversion valueOf()
-[ ] display tasks with in toggle format
-  [ ] collapsable time events like toggle
-    [ ] add tags from events
-    [ ] add notes from events
-    [ ] chart out activity
+[ ] display tasks in toggle format
+  [ ] collapsable time events like toggl
+    [ ] delete time event
+    [ ] add tags to events
+    [ ] add notes to events
+  [ ] group events by date
+  [ ] chart out events activity by date
 [x] handleAddHours should check if taskName exists in taskList, else create a newTask and then add hours
 [ ] view report of hours per task for specific date(s)
   [ ] comparison report of days

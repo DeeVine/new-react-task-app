@@ -39,19 +39,21 @@ export default class Timer extends React.Component {
 
   componentDidMount = () => {
     const savedState = util.retrieveTasksFromLocalStorage('timer-data')
-    const timeStarted = savedState.timeStarted ? savedState.timeStarted : false
-    const currentTime = savedState.currentTime
-    this.setState({
-      timeStarted: timeStarted,
-      startTime: savedState.startTime,
-      stopTime: savedState.stopTime,
-      currentTime: currentTime ? moment(currentTime) : moment().startOf("day")
-    }, () => {
-      //callback after set set to set interval if timer has been started
-      if(this.state.timeStarted) {
-        this.interval = window.setInterval(() => {this.setTimer()}, 1000)
-      }
-    })
+    if (savedState) {
+      const timeStarted = savedState.timeStarted ? savedState.timeStarted : false
+      const currentTime = savedState.currentTime
+      this.setState({
+        timeStarted: timeStarted,
+        startTime: savedState.startTime,
+        stopTime: savedState.stopTime,
+        currentTime: currentTime ? moment(currentTime) : moment().startOf("day")
+      }, () => {
+        //callback after set set to set interval if timer has been started
+        if(this.state.timeStarted) {
+          this.interval = window.setInterval(() => {this.setTimer()}, 1000)
+        }
+      })
+    }  
   }
 
   componentDidUpdate = () => {

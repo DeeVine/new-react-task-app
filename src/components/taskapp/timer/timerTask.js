@@ -1,5 +1,7 @@
 import React from 'react'
 import moment from 'moment'
+import TimerTaskDropdown from './timerTaskDropdown'
+import { Badge } from 'reactstrap';
 
 class TimerTask extends React.Component {
   constructor(props) {
@@ -30,15 +32,22 @@ class TimerTask extends React.Component {
     return (
       <div>
         <div className='timer-task' id={'timer-' + this.props.task.taskName}>
-            <div onClick={this.toggleList}>{this.props.task.taskName}</div>
+            <div onClick={this.toggleList}><Badge color='info'>{this.props.task.hoursLog.length}</Badge> {this.props.task.taskName} </div>
             {!this.state.isHidden ?
               <ul>
-                {this.props.task.hoursLog.map((log) => {
-                return (
-                  <li>
-                    {moment(log.startTime).format('lll')} - {moment(log.stopTime).format('lll')} {this.convertMillisecondsToDigitalClock(moment(log.stopTime).valueOf() - moment(log.startTime).valueOf())}
-                  </li>
-                )
+                {this.props.task.hoursLog.map((log, i) => {
+                  const startTime = moment(log.startTime)
+                  // console.log('startTime inside', JSON.stringify(startTime))                
+                  const stopTime = moment(log.stopTime)
+                  const milisecondsTimeDifference = this.convertMillisecondsToDigitalClock(moment(log.stopTime).valueOf() - moment(log.startTime).valueOf())
+                  return (
+                    <li className = 'timer-task-hourslog'>
+                      <i class="fas fa-tag"></i>
+                      {startTime.format('lll')} - {stopTime.format('lll')}
+                      {milisecondsTimeDifference}
+                      <TimerTaskDropdown />
+                    </li>
+                  )
               })}
               </ul>
               : ''

@@ -1,3 +1,7 @@
 #working-on-input {
     width: 300px;
 }
+
+.timer-task-hourslog {
+  display: flex;
+}

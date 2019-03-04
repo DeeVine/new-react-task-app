@@ -8,15 +8,8 @@ import '../main.css'
 import axios from 'axios'
 import moment from 'moment'
 import JSONTree from 'react-json-tree'
+import util from '../util.js'
 const uuidv4 = require('uuid/v4');
-
-const util = {
-  dateNow: () => new Date().toISOString(),
-  updateLocalStorage: (namespace, storedData) => {
-    localStorage.setItem(namespace, JSON.stringify(storedData))
-  },
-  retrieveTasksFromLocalStorage: (namespace) => JSON.parse(localStorage.getItem(namespace))
-}
 
 export default class Main extends React.Component {
   constructor(props){

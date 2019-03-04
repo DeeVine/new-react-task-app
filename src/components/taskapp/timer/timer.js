@@ -1,6 +1,7 @@
 import React from 'react'
 import moment from 'moment'
 import TimerList from './timerList'
+import util from '../util.js'
 import './timer.css'
 import { Container, Row, Col, Button } from 'reactstrap'
 
@@ -21,13 +22,6 @@ import { Container, Row, Col, Button } from 'reactstrap'
 //convert buttons to play and stop icons
 // [ ] timer vs manual mode
 //  [ ] calculate hours in manual mode from start and end time
-const util = {
-  dateNow: () => new Date().toISOString(),
-  updateLocalStorage: (namespace, storedData) => {
-    localStorage.setItem(namespace, JSON.stringify(storedData))
-  },
-  retrieveTasksFromLocalStorage: (namespace) => JSON.parse(localStorage.getItem(namespace))
-}
 
 export default class Timer extends React.Component {
   constructor(props){

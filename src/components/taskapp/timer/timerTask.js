@@ -2,14 +2,30 @@ import React from 'react'
 import moment from 'moment'
 import TimerTaskDropdown from './timerTaskDropdown'
 import { Badge } from 'reactstrap';
+import util from '../util'
 const uuidv4 = require('uuid/v4');
 
 class TimerTask extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      taskName: this.props.taskName,
       isHidden: true
     }
+  }
+
+  componentDidMount = () => {
+    const savedState = util.retrieveTasksFromLocalStorage('timer-task-'+this.props.task.taskName)
+    if (savedState) {
+      const isHidden = savedState.isHidden ? true : false
+      this.setState({
+        isHidden: isHidden
+      })
+    }
+  }
+
+  componentDidUpdate = () => {
+    util.updateLocalStorage('timer-task-'+this.props.task.taskName, this.state)
   }
 
   toggleList = () => {

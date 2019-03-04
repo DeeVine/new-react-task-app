@@ -4,6 +4,7 @@ import TimerList from './timerList'
 import util from '../util.js'
 import './timer.css'
 import { Container, Row, Col, Button } from 'reactstrap'
+const uuidv4 = require('uuid/v4');
 
 //LeftOff --> figuring out way to utilize callback/promise to createTaskTimeObject after stopTime setsState
 
@@ -136,7 +137,7 @@ export default class Timer extends React.Component {
             <Button onClick={this.props.addHoursLog(this.createTaskTimeObject())} color="info">AddHoursLog</Button>
           </Col>
           <Col sm={12} className='timer-time'>
-            <TimerList taskList = {this.props.taskList}/>
+            <TimerList key={uuidv4()} taskList = {this.props.taskList}/>
             Timed activities/tasks
           </Col>
         </Row>

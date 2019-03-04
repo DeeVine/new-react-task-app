@@ -2,6 +2,7 @@ import React from 'react'
 import moment from 'moment'
 import TimerTaskDropdown from './timerTaskDropdown'
 import { Badge } from 'reactstrap';
+const uuidv4 = require('uuid/v4');
 
 class TimerTask extends React.Component {
   constructor(props) {
@@ -37,12 +38,12 @@ class TimerTask extends React.Component {
               <ul>
                 {this.props.task.hoursLog.map((log, i) => {
                   const startTime = moment(log.startTime)
-                  // console.log('startTime inside', JSON.stringify(startTime))                
+                  // console.log('startTime inside', JSON.stringify(startTime))
                   const stopTime = moment(log.stopTime)
                   const milisecondsTimeDifference = this.convertMillisecondsToDigitalClock(moment(log.stopTime).valueOf() - moment(log.startTime).valueOf())
                   return (
-                    <li className = 'timer-task-hourslog'>
-                      <i class="fas fa-tag"></i>
+                    <li key={uuidv4()} className = 'timer-task-hourslog'>
+                      <i className="fas fa-tag"></i>
                       {startTime.format('lll')} - {stopTime.format('lll')}
                       {milisecondsTimeDifference}
                       <TimerTaskDropdown />

@@ -12,9 +12,9 @@ DEBUG:
 [ ] cannot store moment objects in localStorage or fsFile --> moment object somehow converts to string date
 
 TODO:
-[ ] calculate hours difference from start and end utilizing miliseconds conversion valueOf()
+[x] calculate hours difference from start and end utilizing miliseconds conversion valueOf()
 [ ] display tasks in toggle format
-  [ ] collapsable time events like toggl
+  [x] collapsable time events like toggl
     [ ] delete time event
     [ ] add tags to events
     [ ] add notes to events

@@ -137,8 +137,11 @@ export default class Timer extends React.Component {
             <Button onClick={this.props.addHoursLog(this.createTaskTimeObject())} color="info">AddHoursLog</Button>
           </Col>
           <Col sm={12} className='timer-time'>
-            <TimerList key={uuidv4()} taskList = {this.props.taskList}/>
-            Timed activities/tasks
+            <TimerList
+              key={uuidv4()}
+              taskList = {this.props.taskList}
+              deleteHoursLog = {this.props.deleteHoursLog}
+            />
           </Col>
         </Row>
       </Container>

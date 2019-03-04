@@ -8,7 +8,7 @@ class TimerTask extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      isHidden: false
+      isHidden: true
     }
   }
 
@@ -37,6 +37,7 @@ class TimerTask extends React.Component {
             {!this.state.isHidden ?
               <ul>
                 {this.props.task.hoursLog.map((log, i) => {
+                  console.log('log.startTime', log.startTime)
                   const startTime = moment(log.startTime)
                   // console.log('startTime inside', JSON.stringify(startTime))
                   const stopTime = moment(log.stopTime)
@@ -46,7 +47,11 @@ class TimerTask extends React.Component {
                       <i className="fas fa-tag"></i>
                       {startTime.format('lll')} - {stopTime.format('lll')}
                       {milisecondsTimeDifference}
-                      <TimerTaskDropdown />
+                      <TimerTaskDropdown
+                        taskName={this.props.task.taskName}
+                        startTime={log.startTime}
+                        deleteHoursLog = {this.props.deleteHoursLog}
+                      />
                     </li>
                   )
               })}

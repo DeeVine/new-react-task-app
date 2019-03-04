@@ -16,6 +16,10 @@ export default class TimerTaskDropdown extends React.Component {
     }));
   }
 
+  checkStartTime = (startTime) => {
+    console.log('startTime', startTime)
+  }
+
   render () {
     return (
       <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
@@ -23,7 +27,9 @@ export default class TimerTaskDropdown extends React.Component {
           Dropdown
         </DropdownToggle>
         <DropdownMenu>
-          <DropdownItem onClick={() => this.props.sortFilter('ascending')}>Delete Time</DropdownItem>
+          <DropdownItem
+            onClick={() => this.props.deleteHoursLog(this.props.taskName, this.props.startTime)}
+          >Delete Time</DropdownItem>
         </DropdownMenu>
       </Dropdown>
     )

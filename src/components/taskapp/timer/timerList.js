@@ -14,7 +14,10 @@ class TimerList extends React.Component {
       {this.props.taskList.map((task) => {
         return (
          <div key={uuidv4()}>
-          <TimerTask task={task} />
+          <TimerTask
+            task={task}
+            deleteHoursLog = {this.props.deleteHoursLog}
+          />
          </div>
         )
       })}

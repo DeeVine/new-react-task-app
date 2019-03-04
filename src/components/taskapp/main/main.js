@@ -3,7 +3,7 @@ import SidePanel from '../sidepanel/sidePanel'
 import DropdownFilter from '../dropdownFilter/dropdownFilter'
 import TaskApp from '../tasks/taskapp'
 import Timer from '../timer/timer'
-import { Container, Row, Col} from 'reactstrap'
+import { Container, Row, Col, Button} from 'reactstrap'
 import '../main.css'
 import axios from 'axios'
 import moment from 'moment'
@@ -284,6 +284,23 @@ export default class Main extends React.Component {
     })
   }
 
+  deleteHoursLog = (taskName, startTime) => {
+    this.setState((currentState) => {
+      const taskList = currentState.taskList
+      const taskListItem = taskList.filter((taskListItem) => {
+        return taskListItem.taskName === taskName
+      })
+      const hoursLog = taskListItem[0].hoursLog
+      const filteredHoursLog = hoursLog.filter((hoursLogItem) => {
+        return hoursLogItem.startTime !== startTime
+      })
+      //find index of taskList item and update state
+      const taskListIndex = taskList.map((task) => { return task.taskName }).indexOf(taskName)
+      taskList[taskListIndex].hoursLog = filteredHoursLog
+      return { taskList }
+    })
+  }
+
   addHoursLog = taskTimeObject => (e) => {
     console.log('are we in here?')
     // e.preventDefault()
@@ -536,9 +553,11 @@ export default class Main extends React.Component {
 
     return (
       <Container className='main-grid' fluid={true}>
+        <Button onClick={this.deleteHoursLog}/>
         <Timer
           addHoursLog = {this.addHoursLog}
           taskList = {this.state.taskList}
+          deleteHoursLog = {this.deleteHoursLog}
         />
         <Row className='show-grid main-display'>
           <Col xs={12} sm={3} md={3} className='sidenav'>

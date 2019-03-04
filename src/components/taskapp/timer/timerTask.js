@@ -19,7 +19,9 @@ class TimerTask extends React.Component {
     if (savedState) {
       const isHidden = savedState.isHidden ? true : false
       this.setState({
-        isHidden: isHidden
+        isHidden,
+        taskName: savedState.taskName,
+        totalTime: this.totalTime()
       })
     }
   }
@@ -38,24 +40,48 @@ class TimerTask extends React.Component {
     const hours = Math.floor(ms / 3600000), // 1 Hour = 36000 Milliseconds
     minutes = Math.floor((ms % 3600000) / 60000), // 1 Minutes = 60000 Milliseconds
     seconds = Math.floor(((ms % 360000) % 60000) / 1000) // 1 Second = 1000 Milliseconds
-        return (
-          (hours < 10 ? ('0'+hours) : hours) + ":" +
-          (minutes < 10 ? ('0'+minutes) : minutes) + ":" +
-          (seconds < 10 ? ('0'+seconds) : seconds)
-        )
+    return (
+      (hours < 10 ? ('0'+hours) : hours) + ":" +
+      (minutes < 10 ? ('0'+minutes) : minutes) + ":" +
+      (seconds < 10 ? ('0'+seconds) : seconds)
+    )
+  }
+
+  totalTime = () => {
+    const hoursLog = this.props.task.hoursLog
+    if (hoursLog.length > 0) {
+      const generateMilisecondsArray = () => {
+        return hoursLog.map((log) => {
+          const milisecondsDifference = moment(log.stopTime).valueOf() - moment(log.startTime).valueOf()
+          return milisecondsDifference
+        })
+      }
+      const reducer = (accumulator, currentValue) => accumulator + currentValue
+      const totalMiliseconds = generateMilisecondsArray().reduce(reducer)
+      const convertedToDigitalClock = this.convertMillisecondsToDigitalClock(totalMiliseconds)
+      return convertedToDigitalClock
+    } else {
+      return '00:00:00'
+    }
   }
 
   render() {
     return (
       <div>
         <div className='timer-task' id={'timer-' + this.props.task.taskName}>
-            <div onClick={this.toggleList}><Badge color='info'>{this.props.task.hoursLog.length}</Badge> {this.props.task.taskName} </div>
+            <div>
+              <button onClick={this.totalTime} />
+              <Badge
+                color='info'
+                onClick={this.toggleList}
+              >{this.props.task.hoursLog.length}</Badge>
+              <span>{this.props.task.taskName} {this.state.totalTime ? this.state.totalTime : ''}</span>
+
+            </div>
             {!this.state.isHidden ?
               <ul>
-                {this.props.task.hoursLog.map((log, i) => {
-                  console.log('log.startTime', log.startTime)
+                {this.props.task.hoursLog.map((log) => {
                   const startTime = moment(log.startTime)
-                  // console.log('startTime inside', JSON.stringify(startTime))
                   const stopTime = moment(log.stopTime)
                   const milisecondsTimeDifference = this.convertMillisecondsToDigitalClock(moment(log.stopTime).valueOf() - moment(log.startTime).valueOf())
                   return (

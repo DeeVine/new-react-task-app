@@ -10,7 +10,8 @@ class TimerTask extends React.Component {
     super(props)
     this.state = {
       taskName: this.props.taskName,
-      isHidden: true
+      isHidden: true,
+      totalTime: this.totalTime()
     }
   }
 
@@ -70,7 +71,6 @@ class TimerTask extends React.Component {
       <div>
         <div className='timer-task' id={'timer-' + this.props.task.taskName}>
             <div>
-              <button onClick={this.totalTime} />
               <Badge
                 color='info'
                 onClick={this.toggleList}

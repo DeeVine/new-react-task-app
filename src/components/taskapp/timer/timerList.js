@@ -1,6 +1,5 @@
 import React from 'react'
 import TimerTask from './timerTask'
-const uuidv4 = require('uuid/v4');
 
 class TimerList extends React.Component {
   constructor(props){
@@ -12,11 +11,13 @@ class TimerList extends React.Component {
     return (
       <div>
       {this.props.taskList.map((task) => {
+        console.log('timerList', task.taskName)
         return (
-         <div key={uuidv4()}>
+         <div key={task.taskName}>
           <TimerTask
             task={task}
             deleteHoursLog = {this.props.deleteHoursLog}
+            createNewHoursLogTag = {this.props.createNewHoursLogTag}
           />
          </div>
         )

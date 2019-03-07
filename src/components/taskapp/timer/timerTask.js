@@ -4,7 +4,6 @@ import TagMenu from './tagMenu'
 import TimerTaskDropdown from './timerTaskDropdown'
 import { Badge } from 'reactstrap';
 import util from '../util'
-const uuidv4 = require('uuid/v4');
 
 class TimerTask extends React.Component {
   constructor(props) {
@@ -86,10 +85,11 @@ class TimerTask extends React.Component {
                   const stopTime = moment(log.stopTime)
                   const milisecondsTimeDifference = this.convertMillisecondsToDigitalClock(moment(log.stopTime).valueOf() - moment(log.startTime).valueOf())
                   return (
-                    <li key={uuidv4()} className = 'timer-task-hourslog'>
+                    <li key={this.props.task.taskName+'-'+index} className = 'timer-task-hourslog'>
                       <TagMenu
                         taskName={this.props.task.taskName}
                         index={index}
+                        createNewHoursLogTag = {this.props.createNewHoursLogTag}
                         //pass in function to add tags to hoursLog item
                       />
                       {startTime.format('lll')} - {stopTime.format('lll')}

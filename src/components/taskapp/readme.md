@@ -7,16 +7,17 @@ MVP:
 IDEAS:
 *subtasks should/could be tasks/links/notes/goals*
 
-DEBUG:
-[ ] find out why sidepanel rerenders due to 'sidePanelFocus' click handler
-[ ] cannot store moment objects in localStorage or fsFile --> moment object somehow converts to string date
-
 TODO:
-[x] calculate hours difference from start and end utilizing miliseconds conversion valueOf()
+[x] fix issue of 'id with spaces'
+[ ] timer to reset value on 'stop'
+[ ] timer to take on proper current time on page refresh --> calculate current time based on 'start time' and 'time now'
+[ ] apply flexbox to timerTask
 [ ] display tasks in toggle format
+  [x] total hours for tasks
   [x] collapsable time events like toggl
-    [ ] delete time event
+    [x] delete time event
     [ ] add tags to events
+      [ ] adjust popover to close on focus change
     [ ] add notes to events
   [ ] group events by date
   [ ] chart out events activity by date
@@ -55,11 +56,6 @@ TODO:
 [ ] Add testing framework
   [x] total hours
     [x] include array with hours and timestamps
-[x] save data to server *(utilizing node fs)*
-    [x] throttle post request, currently fires on every componentDidUpdate and causes server error since file write takes time
-
-[x] handle add hours
-[x] highlight active task in sidepanel
 [ ] determine when/if necessary to use functional set state of 'currentState' vs simply this.setState
 [ ] refactor name of 'tasks' to 'subTasks' so we can clearly differentiate between taskList and tasks
 [ ] refactor tasks under taskList
@@ -75,26 +71,36 @@ TODO:
  [ ] Add additional fields to form field
  [x] Input Validation
    [ ] More robust input check than just checking for " "
+[ ] Move to 'recycle'
+[ ] Permanently remove
+[ ] React Router Filters
+[x] save data to server *(utilizing node fs)*
+    [x] throttle post request, currently fires on every componentDidUpdate and causes server error since file write takes time
+[x] handle add hours
+[x] highlight active task in sidepanel
+[x] Separate namespace for each task
+[x] Utilize local storage
 [x] Toggle task
 [x] Toggle all tasks
 [x] Delete task
 [x] Delete all inactive task
-[ ] Move to 'recycle'
-[ ] Permanently remove
-[ ] React Router Filters
-[x] Utilize local storage
-[ ] Separate namespace for each task
 [x] Utilize database storage
 [x] Add scrollable
+[x] calculate hours difference from start and end utilizing miliseconds conversion valueOf()
 
 Backlog:
 [x] log hours to tasks
+[ ] animations
 [ ] Timestamp last edit
 [ ] tag tasks
   [ ] add notifications for timers*
 [ ] add timer to tasks
 [ ] Implement hi-charts/d3 to visualize data (hours spent, categories)
 [ ] Setup sql database
+
+DEBUG:
+[ ] find out why sidepanel rerenders due to 'sidePanelFocus' click handler
+[ ] cannot store moment objects in localStorage or fsFile --> moment object somehow converts to string date
 
 Optimizations:
 [ ] refactor 'taskInfo' to be more idiomatic

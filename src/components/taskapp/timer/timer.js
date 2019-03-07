@@ -4,7 +4,6 @@ import TimerList from './timerList'
 import util from '../util.js'
 import './timer.css'
 import { Container, Row, Col, Button } from 'reactstrap'
-const uuidv4 = require('uuid/v4');
 
 //LeftOff --> figuring out way to utilize callback/promise to createTaskTimeObject after stopTime setsState
 
@@ -38,6 +37,7 @@ export default class Timer extends React.Component {
 }
 
   componentDidMount = () => {
+    console.log('componentDidMount inside timer.js')
     const savedState = util.retrieveTasksFromLocalStorage('timer-data')
     if (savedState) {
       const timeStarted = savedState.timeStarted ? savedState.timeStarted : false
@@ -45,7 +45,7 @@ export default class Timer extends React.Component {
       this.setState({
         timeStarted: timeStarted,
         workingOnInput,
-        startTime, 
+        startTime,
         stopTime,
         currentTime: currentTime ? moment(currentTime) : moment().startOf("day")
       }, () => {
@@ -58,6 +58,7 @@ export default class Timer extends React.Component {
   }
 
   componentDidUpdate = () => {
+    console.log('componentDidUpdate inside timer.js')
     util.updateLocalStorage('timer-data', this.state)
   }
 
@@ -94,17 +95,11 @@ export default class Timer extends React.Component {
   }
 
   stopTime = () => {
-    console.log('stopTime')
     this.toggleTimer()
     this.setState({
-      // workingOnInput: '',
       stopTime: moment(),
-      // currentTime: moment().startOf("day"),
     }, () => {
-      console.log('callback after', this.createTaskTimeObject())
-      //addHours after time stops
       this.props.addHoursLog(this.createTaskTimeObject())()
-      // return this.createTaskTimeObject()
     })
     window.clearInterval(this.interval);
   }
@@ -120,7 +115,7 @@ export default class Timer extends React.Component {
 
   render () {
     return (
-      <Container className='timer-grid' fluid={true}>
+      <Container key='timer1' className='timer-grid' fluid={true}>
         <Row>
           <Col sm={12} className='timer-nav' >
             <input id='working-on-input' onChange={this.updateInput} value={this.state.workingOnInput} placeholder={'What are you working on?'}/>
@@ -133,9 +128,9 @@ export default class Timer extends React.Component {
           </Col>
           <Col sm={12} className='timer-time'>
             <TimerList
-              key={uuidv4()}
               taskList = {this.props.taskList}
               deleteHoursLog = {this.props.deleteHoursLog}
+              createNewHoursLogTag = {this.props.createNewHoursLogTag}
             />
           </Col>
         </Row>

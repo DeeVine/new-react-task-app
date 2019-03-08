@@ -10,6 +10,7 @@ IDEAS:
 TODO:
 *//
 [ ] add tags to events
+  [ ] create tag component to display tags in tagMenu
 [ ] apply flexbox to timerTask
 //*
   [ ] apply tags to individual hoursLog

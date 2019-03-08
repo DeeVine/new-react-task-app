@@ -88,6 +88,7 @@ class TimerTask extends React.Component {
                     <li key={this.props.task.taskName+'-'+index} className = 'timer-task-hourslog'>
                       <TagMenu
                         taskName={this.props.task.taskName}
+                        hoursLog={this.props.task.hoursLog[index]}
                         index={index}
                         createNewHoursLogTag = {this.props.createNewHoursLogTag}
                         //pass in function to add tags to hoursLog item

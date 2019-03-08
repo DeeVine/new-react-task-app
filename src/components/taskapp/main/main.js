@@ -251,8 +251,6 @@ export default class Main extends React.Component {
         hoursLog.tags = [tagValue]
       }
 
-
-
       return {
         tagInput: '',
         taskList: currentState.taskList

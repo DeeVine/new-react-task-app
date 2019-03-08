@@ -37,7 +37,6 @@ export default class Timer extends React.Component {
 }
 
   componentDidMount = () => {
-    console.log('componentDidMount inside timer.js')
     const savedState = util.retrieveTasksFromLocalStorage('timer-data')
     if (savedState) {
       const timeStarted = savedState.timeStarted ? savedState.timeStarted : false
@@ -49,7 +48,7 @@ export default class Timer extends React.Component {
         stopTime,
         currentTime: currentTime ? moment(currentTime) : moment().startOf("day")
       }, () => {
-        //callback after set set to set interval if timer has been started
+        //callback set interval if timer has been started
         if(this.state.timeStarted) {
           this.interval = window.setInterval(() => {this.setTimer()}, 1000)
         }
@@ -58,7 +57,6 @@ export default class Timer extends React.Component {
   }
 
   componentDidUpdate = () => {
-    console.log('componentDidUpdate inside timer.js')
     util.updateLocalStorage('timer-data', this.state)
   }
 

@@ -51,7 +51,6 @@ export default class TagMenu extends React.Component {
               <input onChange={this.updateTagInput} placeholder='add/filter tags' value={this.state.tagInput} />
               <input type='submit' value='submit'/>
             </form>
-            {/* {this.props.hoursLog.tags !== undefined ? console.log('this.props.hoursLog', this.props.hoursLog.tags[0]) : console.log('tags not defined')} */}
             {this.props.hoursLog.tags !== undefined ?
               this.props.hoursLog.tags.map((tag,i) => {
                 return (

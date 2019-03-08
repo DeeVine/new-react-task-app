@@ -9,12 +9,13 @@ IDEAS:
 
 TODO:
 *//
-[ ] add tags to events
+[+] add tags to events
   [ ] create tag component to display tags in tagMenu
 [ ] apply flexbox to timerTask
 //*
   [ ] apply tags to individual hoursLog
 [x] fix issue of 'id with spaces'
+[ ] bulk edit/removal for tags
 [ ] timer to reset value on 'stop'
 [ ] timer to take on proper current time on page refresh --> calculate current time based on 'start time' and 'time now'
 

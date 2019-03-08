@@ -11,7 +11,6 @@ class TimerList extends React.Component {
     return (
       <div>
       {this.props.taskList.map((task) => {
-        console.log('timerList', task.taskName)
         return (
          <div key={task.taskName}>
           <TimerTask

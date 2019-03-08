@@ -16,10 +16,6 @@ export default class TimerTaskDropdown extends React.Component {
     }));
   }
 
-  checkStartTime = (startTime) => {
-    console.log('startTime', startTime)
-  }
-
   render () {
     return (
       <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>

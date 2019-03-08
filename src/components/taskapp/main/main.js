@@ -239,21 +239,20 @@ export default class Main extends React.Component {
         return task.taskName === taskName
       })
       const taskIndex = taskList.map((task) => { return task.taskName }).indexOf(currentTask.taskName)
-      // currentState.taskList[taskIndex].tags.push(tagValue)
-      //1. need to grab hoursLog element and update
-      //2. should only push to array if tag doesn't exist
-
       const hoursLog = currentState.taskList[taskIndex].hoursLog[hoursLogIndex]
-      //check if tags array exists, otherwise initialize tag array with tagValue
-      if(hoursLog.tags) {
-        hoursLog.tags.push(tagValue)
-      } else {
-        hoursLog.tags = [tagValue]
-      }
 
-      return {
-        tagInput: '',
-        taskList: currentState.taskList
+      //TODO: is there a better way to handle checking for undefined?
+      if (typeof hoursLog.tags === 'undefined') {
+        console.log('hoursLog.tags', hoursLog.tags)
+        hoursLog.tags = []
+      }
+      //check if tag exists in array, else push new tagValue
+      if (!hoursLog.tags.includes(tagValue)) {
+        hoursLog.tags.push(tagValue)
+        return {
+          tagInput: '',
+          taskList: currentState.taskList
+        }
       }
     })
   }
@@ -313,7 +312,6 @@ export default class Main extends React.Component {
   }
 
   addHoursLog = taskTimeObject => (e) => {
-    console.log('are we in here?')
     // e.preventDefault()
     //TODO: milisecond conversion for hours from startTime and stopTime
     const { taskName, startTime, stopTime } = taskTimeObject
@@ -326,6 +324,7 @@ export default class Main extends React.Component {
 
     const hoursObj = {
       taskName,
+      tags: [],
       startTime: startTime,
       stopTime: stopTime
     }
@@ -504,12 +503,8 @@ export default class Main extends React.Component {
   }
 
   runMoment = (taskList) => {
-
     //iterrate over taskList and create hoursLog object for specific days
     const filterByDate = (arr, date) => {
-      // console.log('arr in filterByDate: ', arr)
-      // console.log('dateinFilter: ', date)
-      // console.log('date', date)
       return arr.filter((hoursLog) => {
         const format = "MMM Do YYYY"
         return moment(hoursLog.updated).format(format) === date

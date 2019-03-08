@@ -26,23 +26,7 @@ export default class Main extends React.Component {
       sidePanelFocus: '', //set sidepanel focus to taskName
       taskListIndex: 0, //may want to target by ID instead of index
       textEditorContentTest: 'testing testing',
-      taskList: [
-        // {
-        //   taskName: 'taskname1',
-        //   taskId: 'temp1',
-        //   tags: ['fun', 'productive', 'cool'],
-        //   percentComplete: '25',
-        //   tasks: [],
-        //   textEditorContent: ''
-        // },
-        // {
-        //   taskName: 'taskname2',
-        //   taskId: 'temp2',
-        //   tags: ['tasty', 'filling', 'pricey'],
-        //   percentComplete: '40',
-        //   tasks: []
-        // }
-      ],
+      taskList: [],
       }
     }
 
@@ -247,7 +231,7 @@ export default class Main extends React.Component {
     }
   }
 
-  createNewHoursLogTag = (taskName, tagValue) => {
+  createNewHoursLogTag = (taskName, tagValue, hoursLogIndex) => {
     //find task to update
     this.setState((currentState) => {
       const taskList = currentState.taskList
@@ -255,7 +239,20 @@ export default class Main extends React.Component {
         return task.taskName === taskName
       })
       const taskIndex = taskList.map((task) => { return task.taskName }).indexOf(currentTask.taskName)
-      currentState.taskList[taskIndex].tags.push(tagValue)
+      // currentState.taskList[taskIndex].tags.push(tagValue)
+      //1. need to grab hoursLog element and update
+      //2. should only push to array if tag doesn't exist
+
+      const hoursLog = currentState.taskList[taskIndex].hoursLog[hoursLogIndex]
+      //check if tags array exists, otherwise initialize tag array with tagValue
+      if(hoursLog.tags) {
+        hoursLog.tags.push(tagValue)
+      } else {
+        hoursLog.tags = [tagValue]
+      }
+
+
+
       return {
         tagInput: '',
         taskList: currentState.taskList

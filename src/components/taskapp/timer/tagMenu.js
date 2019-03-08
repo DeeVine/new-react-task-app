@@ -1,5 +1,4 @@
 import React from 'react'
-import util from '../util.js'
 import { Button, Popover, PopoverHeader, PopoverBody } from 'reactstrap'
 
 export default class TagMenu extends React.Component {
@@ -12,30 +11,10 @@ export default class TagMenu extends React.Component {
     }
   }
 
-  // componentDidMount = () => {
-  //   console.log('componentDidMount tagMenu')
-  //   const savedState = util.retrieveTasksFromLocalStorage('tag-menu-'+this.props.taskName)
-  //   if (savedState) {
-  //     // console.log('savedState in tagMenu')
-  //     const popoverOpen = savedState.popoverOpen ? true : false
-  //     this.setState({
-  //       popoverOpen,
-  //       tagInput: savedState.tagInput
-  //     })
-  //   }
-  // }
-  //
-  // componentDidUpdate = () => {
-  //   console.log('componenetDidUpdate tagMenu')
-  //   util.updateLocalStorage('tag-menu-'+this.props.taskName, this.state)
-  // }
-
   handleCreateNewHoursLogTag = (e) => {
     e.preventDefault()
     const tagValue = this.state.tagInput
-    // console.log('tagValue', tagValue)
-    this.props.createNewHoursLogTag(this.props.taskName, tagValue)
-    // console.log('beforeSetState in createNewHoursLogTag')
+    this.props.createNewHoursLogTag(this.props.taskName, tagValue, this.props.index)
     this.setState({ tagInput: ''})
   }
 
@@ -50,16 +29,6 @@ export default class TagMenu extends React.Component {
     this.setState(prevState => ({
       popoverOpen: !prevState.popoverOpen
     }));
-  }
-
-  checkStartTime = (startTime) => {
-    console.log('startTime', startTime)
-  }
-
-  createNewHoursLogTag = (e) => {
-    e.preventDefault()
-    console.log('this should create a new tag')
-
   }
 
   generatePopoverId = (taskName, index) => {

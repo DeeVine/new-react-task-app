@@ -8,15 +8,20 @@ IDEAS:
 *subtasks should/could be tasks/links/notes/goals*
 
 TODO:
+*//
+[ ] add tags to events
+[ ] apply flexbox to timerTask
+//*
+  [ ] apply tags to individual hoursLog
 [x] fix issue of 'id with spaces'
 [ ] timer to reset value on 'stop'
 [ ] timer to take on proper current time on page refresh --> calculate current time based on 'start time' and 'time now'
-[ ] apply flexbox to timerTask
+
 [ ] display tasks in toggle format
   [x] total hours for tasks
   [x] collapsable time events like toggl
     [x] delete time event
-    [ ] add tags to events
+
       [ ] adjust popover to close on focus change
     [ ] add notes to events
   [ ] group events by date

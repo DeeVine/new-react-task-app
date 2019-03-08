@@ -18,9 +18,9 @@ class TimerTask extends React.Component {
   componentDidMount = () => {
     const savedState = util.retrieveTasksFromLocalStorage('timer-task-'+this.props.task.taskName)
     if (savedState) {
-      const isHidden = savedState.isHidden ? true : false
+      // const isHidden = savedState.isHidden ? true : false
       this.setState({
-        isHidden,
+        // isHidden,
         taskName: savedState.taskName,
         totalTime: this.totalTime()
       })

@@ -26,9 +26,9 @@ export default class TimerTaskDropdown extends React.Component {
 
   render () {
     return (
-      <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
+      <Dropdown isOpen={this.state.dropdownOpen} size='sm' toggle={this.toggle}>
         <DropdownToggle caret>
-          Dropdown
+          Options
         </DropdownToggle>
         <DropdownMenu>
           <DropdownItem

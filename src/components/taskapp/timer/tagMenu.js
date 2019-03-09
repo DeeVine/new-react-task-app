@@ -1,5 +1,6 @@
 import React from 'react'
-import { Button, Popover, PopoverHeader, PopoverBody, Badge } from 'reactstrap'
+import moment from 'moment'
+import { Popover, PopoverHeader, PopoverBody, Badge } from 'reactstrap'
 
 export default class TagMenu extends React.Component {
   constructor(props){
@@ -31,10 +32,11 @@ export default class TagMenu extends React.Component {
     }));
   }
 
-  generatePopoverId = (taskName, index) => {
-    const splitTaskName = taskName.split(' ')
+  generatePopoverId = () => {
+    const splitTaskName = this.props.taskName.split(' ')
     const joinTaskName = splitTaskName.join('-')
-    const popoverId =  "Popover-" + joinTaskName + '-' + index
+    const startTime = moment(this.props.hoursLog.startTime).valueOf()
+    const popoverId =  "Popover-" + joinTaskName + '-' + startTime
     return popoverId
   }
 
@@ -44,8 +46,8 @@ export default class TagMenu extends React.Component {
         {/* <Button id={this.generatePopoverId(this.props.taskName, this.props.index)} type="button" size='sm'>
           Add Tag
         </Button> */}
-        <i className="fas fa-tag" id={this.generatePopoverId(this.props.taskName, this.props.index)} ></i>
-        <Popover placement="bottom" isOpen={this.state.popoverOpen} target={this.generatePopoverId(this.props.taskName, this.props.index)} toggle={this.toggle}>
+        <i className="fas fa-tag" id={this.generatePopoverId()} ></i>
+        <Popover placement="bottom" isOpen={this.state.popoverOpen} target={this.generatePopoverId()} toggle={this.toggle}>
           <PopoverHeader>Popover Title</PopoverHeader>
           <PopoverBody>
             <form onSubmit={this.handleCreateNewHoursLogTag}>
@@ -53,9 +55,9 @@ export default class TagMenu extends React.Component {
               <input type='submit' value='submit'/>
             </form>
             {this.props.hoursLog.tags !== undefined ?
-              this.props.hoursLog.tags.map((tag,i) => {
+              this.props.hoursLog.tags.map((tag) => {
                 return (
-                  <div key={'tag-badge-'+i}>
+                  <div key={'tag-badge-'+tag}>
                     <Badge color='success'>{tag}</Badge>
                   </div>
                 )

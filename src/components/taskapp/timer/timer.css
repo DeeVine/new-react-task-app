@@ -5,3 +5,7 @@
 .timer-task-hourslog {
   display: flex;
 }
+
+.timer-task-badge {
+  min-width: 24px;
+}

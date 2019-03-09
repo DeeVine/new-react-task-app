@@ -12,6 +12,7 @@ TODO:
 [+] add tags to events
   [ ] create tag component to display tags in tagMenu
 [ ] apply flexbox to timerTask
+[ ] handle rerendering after deleteHoursLog --> issue relates to timeList.js key={task.taskName+'-'+task.hoursLog.length}
 //*
   [ ] apply tags to individual hoursLog
 [x] fix issue of 'id with spaces'

@@ -41,9 +41,10 @@ export default class TagMenu extends React.Component {
   render () {
     return (
       <div>
-        <Button id={this.generatePopoverId(this.props.taskName, this.props.index)} type="button">
+        {/* <Button id={this.generatePopoverId(this.props.taskName, this.props.index)} type="button" size='sm'>
           Add Tag
-        </Button>
+        </Button> */}
+        <i className="fas fa-tag" id={this.generatePopoverId(this.props.taskName, this.props.index)} ></i>
         <Popover placement="bottom" isOpen={this.state.popoverOpen} target={this.generatePopoverId(this.props.taskName, this.props.index)} toggle={this.toggle}>
           <PopoverHeader>Popover Title</PopoverHeader>
           <PopoverBody>

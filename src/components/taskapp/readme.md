@@ -97,6 +97,7 @@ TODO:
 
 Backlog:
 [x] log hours to tasks
+[ ] add custom confirm dialogs for things such as task deletion
 [ ] animations
 [ ] Timestamp last edit
 [ ] tag tasks
@@ -110,6 +111,7 @@ DEBUG:
 [ ] cannot store moment objects in localStorage or fsFile --> moment object somehow converts to string date
 
 Optimizations:
+[ ] review/refactor folder/filing system of application
 [ ] refactor 'taskInfo' to be more idiomatic
 [ ] refactor individual state items into passing one state variable
 

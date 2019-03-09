@@ -31,7 +31,7 @@ export default class Timer extends React.Component {
       timeStarted: '',
       startTime: '',
       stopTime: '',
-      currentTime: moment().startOf("day"),
+      currentTimer: moment().startOf("day"),
       timer: '',
     }
 }
@@ -40,13 +40,14 @@ export default class Timer extends React.Component {
     const savedState = util.retrieveTasksFromLocalStorage('timer-data')
     if (savedState) {
       const timeStarted = savedState.timeStarted ? savedState.timeStarted : false
-      const {  workingOnInput, startTime, stopTime, currentTime } = savedState
+      const {  workingOnInput, startTime, stopTime, currentTimer } = savedState
       this.setState({
         timeStarted: timeStarted,
         workingOnInput,
         startTime,
         stopTime,
-        currentTime: currentTime ? moment(currentTime) : moment().startOf("day")
+        //should set currentTimer to moment().startOf("day")Timer, 'second')
+        currentTimer: currentTimer ? this.calculateCurrentTimer(moment(startTime)) : moment().startOf("day")
       }, () => {
         //callback set interval if timer has been started
         if(this.state.timeStarted) {
@@ -58,6 +59,13 @@ export default class Timer extends React.Component {
 
   componentDidUpdate = () => {
     util.updateLocalStorage('timer-data', this.state)
+  }
+
+  calculateCurrentTimer = (startTime) => {
+    const differenceInMiliseconds = moment().valueOf()-startTime.valueOf()
+    const timeInSeconds = differenceInMiliseconds / 1000
+    const currentTimer = moment().startOf("day").add(timeInSeconds, 'second')
+    return currentTimer
   }
 
   updateInput = (e) => {
@@ -75,7 +83,7 @@ export default class Timer extends React.Component {
 
   setTimer = () => {
     this.setState(prevState => ({
-      currentTime: prevState.currentTime.add(1, 'second'),
+      currentTimer: prevState.currentTimer.add(1, 'second'),
     }))
   }
 
@@ -108,6 +116,12 @@ export default class Timer extends React.Component {
       startTime: this.state.startTime,
       stopTime: this.state.stopTime,
     }
+    this.setState({
+      taskName: '',
+      startTime: '',
+      stopTime: '',
+      currentTimer: moment().startOf("day")
+    })
     return taskTimeObject
   }
 
@@ -117,12 +131,12 @@ export default class Timer extends React.Component {
         <Row>
           <Col sm={12} className='timer-nav' >
             <input id='working-on-input' onChange={this.updateInput} value={this.state.workingOnInput} placeholder={'What are you working on?'}/>
-            <span>{this.state.currentTime.format('HH:mm:ss')}</span>
+            <span>{this.state.currentTimer.format('HH:mm:ss')}</span>
             {!this.state.timeStarted
               ? <Button onClick={this.startTime} color="success">Start</Button>
               : <Button onClick={this.stopTime} color="danger">Stop</Button>
             }
-            <Button onClick={this.props.addHoursLog(this.createTaskTimeObject())} color="info">AddHoursLog</Button>
+            {/* <Button onClick={this.props.addHoursLog(this.createTaskTimeObject())} color="info">AddHoursLog</Button> */}
           </Col>
           <Col sm={12} className='timer-time'>
             <TimerList

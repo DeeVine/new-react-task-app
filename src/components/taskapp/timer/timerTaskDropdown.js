@@ -16,6 +16,14 @@ export default class TimerTaskDropdown extends React.Component {
     }));
   }
 
+  handleDeleteHoursLog = () => {
+    this.props.deleteHoursLog(this.props.taskName, this.props.startTime)
+    // if(window.confirm('please confirm you want to delete, deletion is irreversible')){
+    //   console.log('you confirmed deletion')
+    //   this.props.deleteHoursLog(this.props.taskName, this.props.startTime)
+    // } else { console.log('you backed out just in time')}
+  }
+
   render () {
     return (
       <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
@@ -24,7 +32,7 @@ export default class TimerTaskDropdown extends React.Component {
         </DropdownToggle>
         <DropdownMenu>
           <DropdownItem
-            onClick={() => this.props.deleteHoursLog(this.props.taskName, this.props.startTime)}
+            onClick={this.handleDeleteHoursLog}
           >Delete Time</DropdownItem>
         </DropdownMenu>
       </Dropdown>

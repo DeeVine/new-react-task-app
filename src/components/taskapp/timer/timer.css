@@ -2,8 +2,16 @@
     width: 300px;
 }
 
-.timer-task-hourslog {
+.timer-list-component, .time-section {
   display: flex;
+}
+
+.timer-list-component {
+  height: 40px;
+  line-height: 32px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  border-bottom: solid 1px #efefef
 }
 
 .timer-task-badge {

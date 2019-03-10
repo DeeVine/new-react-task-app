@@ -53,8 +53,8 @@ export default class TagMenu extends React.Component {
 
   render () {
     return (
-      <div>
-        <i className={(this.props.log.tags.length > 0 ? 'fas fa-tags tags-active' : 'fas fa-tag tags-inactive')}
+      <>
+        <i className={(this.props.log.tags.length > 0 ? 'fas fa-tags tags-active mr-2' : 'fas fa-tag tags-inactive mr-2')}
           id={this.generatePopoverId()}
         />
         <Popover placement="bottom" isOpen={this.state.popoverOpen} target={this.generatePopoverId()} toggle={this.toggle}>
@@ -75,7 +75,7 @@ export default class TagMenu extends React.Component {
             }
           </PopoverBody>
         </Popover>
-      </div>
+      </>
 
 
     )

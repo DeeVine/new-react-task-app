@@ -5,10 +5,6 @@ import moment from 'moment'
 
 const timerListComponent = (props) => {
   const { log, index, task }  = props
-  // console.log('props.task.hoursLog', props.task.hoursLog)
-  // console.log('index', index)
-  console.log('log', log)
-  console.log('task.hoursLog[index]', task.hoursLog[index])
   const startTime = moment(log.startTime)
   const stopTime = moment(log.stopTime)
   const milisecondsTimeDifference = props.convertMillisecondsToDigitalClock(moment(log.stopTime).valueOf() - moment(log.startTime).valueOf())

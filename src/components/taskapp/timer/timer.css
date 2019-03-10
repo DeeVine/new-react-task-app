@@ -9,3 +9,7 @@
 .timer-task-badge {
   min-width: 24px;
 }
+
+.tags-active {
+  color: #009823;
+}

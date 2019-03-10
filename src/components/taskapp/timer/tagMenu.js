@@ -12,6 +12,17 @@ export default class TagMenu extends React.Component {
     }
   }
 
+  componentDidMount = () => {
+    console.log('componentDidMount')
+    console.log('this.props', this.props)
+    console.log('logs.tags.lengt', this.props.taskName, this.props.log.tags.length)
+  }
+
+  componentDidUpdate = () => {
+    console.log('componentDidUpdate')
+    console.log('this.props', this.props)
+  }
+
   handleCreateNewHoursLogTag = (e) => {
     e.preventDefault()
     const tagValue = this.state.tagInput
@@ -43,26 +54,25 @@ export default class TagMenu extends React.Component {
   render () {
     return (
       <div>
-        {/* <Button id={this.generatePopoverId(this.props.taskName, this.props.index)} type="button" size='sm'>
-          Add Tag
-        </Button> */}
-        <i className="fas fa-tag" style={{color: '#009823'}} id={this.generatePopoverId()} ></i>
+        <i className={(this.props.log.tags.length > 0 ? 'fas fa-tags tags-active' : 'fas fa-tag tags-inactive')}
+          id={this.generatePopoverId()}
+        />
         <Popover placement="bottom" isOpen={this.state.popoverOpen} target={this.generatePopoverId()} toggle={this.toggle}>
-          <PopoverHeader>Popover Title</PopoverHeader>
+          <PopoverHeader>Tags</PopoverHeader>
           <PopoverBody>
             <form onSubmit={this.handleCreateNewHoursLogTag}>
               <input onChange={this.updateTagInput} placeholder='add/filter tags' value={this.state.tagInput} />
               <input type='submit' value='submit'/>
             </form>
-            {this.props.log.tags !== undefined ?
+            {typeof this.props.log.tags !== 'undefined' ?
               this.props.log.tags.map((tag) => {
                 return (
                   <div key={'tag-badge-'+tag}>
                     <Badge color='success'>{tag}</Badge>
                   </div>
                 )
-              }) :
-              ''}
+              }) : null
+            }
           </PopoverBody>
         </Popover>
       </div>

@@ -4,23 +4,26 @@ import TimerTaskDropdown from './timerTaskDropdown'
 import moment from 'moment'
 
 const timerListComponent = (props) => {
-  const { log, index }  = props
+  const { log, index, task }  = props
+  // console.log('props.task.hoursLog', props.task.hoursLog)
+  // console.log('index', index)
+  console.log('log', log)
+  console.log('task.hoursLog[index]', task.hoursLog[index])
   const startTime = moment(log.startTime)
   const stopTime = moment(log.stopTime)
   const milisecondsTimeDifference = props.convertMillisecondsToDigitalClock(moment(log.stopTime).valueOf() - moment(log.startTime).valueOf())
   return (
-    <li key={props.task.taskName+'-'+index} className = 'timer-task-hourslog'>
+    <li key={task.taskName+'-'+log.startTime} className = 'timer-task-hourslog'>
       <TagMenu
-        taskName={props.task.taskName}
-        hoursLog={props.task.hoursLog[index]}
+        taskName={task.taskName}
+        log={log}
         index={index}
         createNewHoursLogTag = {props.createNewHoursLogTag}
-        //pass in function to add tags to hoursLog item
       />
       {startTime.format('lll')} - {stopTime.format('lll')}
       {milisecondsTimeDifference}
       <TimerTaskDropdown
-        taskName={props.task.taskName}
+        taskName={task.taskName}
         startTime={log.startTime}
         deleteHoursLog = {props.deleteHoursLog}
       />

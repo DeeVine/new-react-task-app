@@ -241,6 +241,8 @@ export default class Main extends React.Component {
       const taskIndex = taskList.map((task) => { return task.taskName }).indexOf(currentTask.taskName)
       const hoursLog = currentState.taskList[taskIndex].hoursLog[hoursLogIndex]
 
+      //TODO: find hoursLogIndex utilizing startTime instead of relying on passing index props
+
       //TODO: is there a better way to handle checking for undefined?
       if (typeof hoursLog.tags === 'undefined') {
         console.log('hoursLog.tags', hoursLog.tags)

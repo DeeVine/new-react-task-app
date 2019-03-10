@@ -35,7 +35,7 @@ export default class TagMenu extends React.Component {
   generatePopoverId = () => {
     const splitTaskName = this.props.taskName.split(' ')
     const joinTaskName = splitTaskName.join('-')
-    const startTime = moment(this.props.hoursLog.startTime).valueOf()
+    const startTime = moment(this.props.log.startTime).valueOf()
     const popoverId =  "Popover-" + joinTaskName + '-' + startTime
     return popoverId
   }
@@ -46,7 +46,7 @@ export default class TagMenu extends React.Component {
         {/* <Button id={this.generatePopoverId(this.props.taskName, this.props.index)} type="button" size='sm'>
           Add Tag
         </Button> */}
-        <i className="fas fa-tag" id={this.generatePopoverId()} ></i>
+        <i className="fas fa-tag" style={{color: '#009823'}} id={this.generatePopoverId()} ></i>
         <Popover placement="bottom" isOpen={this.state.popoverOpen} target={this.generatePopoverId()} toggle={this.toggle}>
           <PopoverHeader>Popover Title</PopoverHeader>
           <PopoverBody>
@@ -54,8 +54,8 @@ export default class TagMenu extends React.Component {
               <input onChange={this.updateTagInput} placeholder='add/filter tags' value={this.state.tagInput} />
               <input type='submit' value='submit'/>
             </form>
-            {this.props.hoursLog.tags !== undefined ?
-              this.props.hoursLog.tags.map((tag) => {
+            {this.props.log.tags !== undefined ?
+              this.props.log.tags.map((tag) => {
                 return (
                   <div key={'tag-badge-'+tag}>
                     <Badge color='success'>{tag}</Badge>

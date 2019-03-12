@@ -72,6 +72,7 @@ class TimerTask extends React.Component {
                 {this.props.task.hoursLog.length}
               </Badge>
               <span>{this.props.task.taskName} {this.state.totalTime ? this.state.totalTime : ''}</span>
+
             </div>
             {!this.state.isHidden ?
               <ul>

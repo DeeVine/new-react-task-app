@@ -14,7 +14,8 @@ const timerListComponent = (props) => {
         <div className='start-end-times'>
           <TagMenu
             taskName={task.taskName}
-            log={log}
+            tags={log.tags}
+            startTime = {startTime}
             index={index}
             createNewHoursLogTag = {props.createNewHoursLogTag}
           />

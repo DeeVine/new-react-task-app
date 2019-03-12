@@ -1,6 +1,7 @@
 import React from 'react'
 import moment from 'moment'
 import { Popover, PopoverHeader, PopoverBody, Badge } from 'reactstrap'
+import PropTypes from 'prop-types'
 
 export default class TagMenu extends React.Component {
   constructor(props){
@@ -13,14 +14,11 @@ export default class TagMenu extends React.Component {
   }
 
   componentDidMount = () => {
-    console.log('componentDidMount')
-    console.log('this.props', this.props)
-    console.log('logs.tags.lengt', this.props.taskName, this.props.log.tags.length)
+
   }
 
   componentDidUpdate = () => {
-    console.log('componentDidUpdate')
-    console.log('this.props', this.props)
+
   }
 
   handleCreateNewHoursLogTag = (e) => {
@@ -43,10 +41,11 @@ export default class TagMenu extends React.Component {
     }));
   }
 
+  //requires taskName and startTime in miliseconds
   generatePopoverId = () => {
     const splitTaskName = this.props.taskName.split(' ')
     const joinTaskName = splitTaskName.join('-')
-    const startTime = moment(this.props.log.startTime).valueOf()
+    const startTime = moment(this.props.startTime).valueOf()
     const popoverId =  "Popover-" + joinTaskName + '-' + startTime
     return popoverId
   }
@@ -54,7 +53,7 @@ export default class TagMenu extends React.Component {
   render () {
     return (
       <>
-        <i className={(this.props.log.tags.length > 0 ? 'fas fa-tags tags-active mr-2' : 'fas fa-tag tags-inactive mr-2')}
+        <i className={(this.props.tags.length > 0 ? 'fas fa-tags tags-active mr-2' : 'fas fa-tag tags-inactive mr-2')}
           id={this.generatePopoverId()}
         />
         <Popover placement="bottom" isOpen={this.state.popoverOpen} target={this.generatePopoverId()} toggle={this.toggle}>
@@ -64,8 +63,8 @@ export default class TagMenu extends React.Component {
               <input onChange={this.updateTagInput} placeholder='add/filter tags' value={this.state.tagInput} />
               <input type='submit' value='submit'/>
             </form>
-            {typeof this.props.log.tags !== 'undefined' ?
-              this.props.log.tags.map((tag) => {
+            {typeof this.props.tags !== 'undefined' ?
+              this.props.tags.map((tag) => {
                 return (
                   <div key={'tag-badge-'+tag}>
                     <Badge color='success'>{tag}</Badge>
@@ -76,9 +75,15 @@ export default class TagMenu extends React.Component {
           </PopoverBody>
         </Popover>
       </>
-
-
     )
   }
 
+}
+
+TagMenu.propTypes = {
+  taskName: PropTypes.string,
+  tags: PropTypes.array,
+  startTime: PropTypes.object, //moment object
+  index: PropTypes.number,
+  createNewHoursLogTag: PropTypes.func
 }

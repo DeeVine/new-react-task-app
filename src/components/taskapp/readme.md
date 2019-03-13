@@ -12,7 +12,7 @@ TODO:
 [+] add tags to events
   [x] create tag component to display tags in tagMenu
   [ ] handle tag deletion
-[ ] apply flexbox to timerTask
+[x] apply flexbox to timerTask
 [ ] handle rerendering after deleteHoursLog --> issue relates to timeList.js key={task.taskName+'-'+task.hoursLog.length}
 //*
 [ ] update editable field to inputs

@@ -10,9 +10,9 @@ const timerListComponent = (props) => {
   const stopTime = moment(log.stopTime)
   const milisecondsTimeDifference = props.convertMillisecondsToDigitalClock(moment(log.stopTime).valueOf() - moment(log.startTime).valueOf())
   return (
-    <li key={task.taskName+'-'+log.startTime} className = 'timer-list-component'>
+    <li key={task.taskName+'-'+log.startTime} className = 'timer-list-container'>
       <div className='time-section'>
-        <div className='start-end-times'>
+        <div className='timer-list-tag-menu'>
           <TagMenu
             taskName={task.taskName}
             tags={log.tags}
@@ -20,6 +20,8 @@ const timerListComponent = (props) => {
             index={index}
             createNewTag = {props.createNewHoursLogTag}
           />
+        </div>
+        <div className='timer-list-start-end-time mr-2'>
           {startTime.format('lll')} - {stopTime.format('lll')}
         </div>
         <div className='total-time-seconds ml-2'>

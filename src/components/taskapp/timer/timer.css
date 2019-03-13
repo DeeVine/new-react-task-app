@@ -2,12 +2,19 @@
     width: 300px;
 }
 
-.timer-task-container, .timer-list-component, .time-section {
+.timer-task-container, .timer-list-container, .time-section, .timer-nav-container {
   display: flex;
 }
 
-.timer-task-container {
+.timer-task-container, .timer-nav-container {
   align-items: baseline;
+}
+
+.timer-nav-container {
+  height: 44px;
+  -webkit-box-shadow:0px 1px 1px #e8e8e8;
+  -moz-box-shadow:0px 1px 1px #e8e8e8;
+  box-shadow:0px 1px 1px #e8e8e8;
 }
 
 .timer-task-taskname {
@@ -18,12 +25,24 @@
   width: 70px;
 }
 
-.timer-list-component {
+.timer-list-container {
   height: 40px;
   line-height: 32px;
   padding-top: 2px;
   padding-bottom: 2px;
   border-bottom: solid 1px #efefef
+}
+
+.timer-list-tag-menu {
+  width: 35px;
+}
+
+.timer-list-start-end-time {
+  width: 380px;
+}
+
+.timer-task-badge, .tags-active {
+  cursor: pointer
 }
 
 .timer-task-badge {

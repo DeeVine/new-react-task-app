@@ -106,6 +106,9 @@ export default class Timer extends React.Component {
       stopTime: moment(),
     }, () => {
       this.props.addHoursLog(this.createTaskTimeObject())()
+      this.setState({
+        workingOnInput: ''
+      })
     })
     window.clearInterval(this.interval);
   }
@@ -129,12 +132,12 @@ export default class Timer extends React.Component {
     return (
       <Container key='timer1' className='timer-grid' fluid={true}>
         <Row>
-          <Col sm={12} className='timer-nav' >
-            <input id='working-on-input' onChange={this.updateInput} value={this.state.workingOnInput} placeholder={'What are you working on?'}/>
-            <span>{this.state.currentTimer.format('HH:mm:ss')}</span>
+          <Col sm={12} className='timer-nav-container' >
+            <input className='timer-nav-input mr-3' id='working-on-input' onChange={this.updateInput} value={this.state.workingOnInput} placeholder={'What are you working on?'}/>
+            <div className='timer-nav-current-timer mr-3'>{this.state.currentTimer.format('HH:mm:ss')}</div>
             {!this.state.timeStarted
-              ? <Button onClick={this.startTime} color="success">Start</Button>
-              : <Button onClick={this.stopTime} color="danger">Stop</Button>
+              ? <Button className='start-timer-btn' size='sm' onClick={this.startTime} color="success">Start</Button>
+              : <Button className='stop-timer-btn' size='sm' onClick={this.stopTime} color="danger">Stop</Button>
             }
             {/* <Button onClick={this.props.addHoursLog(this.createTaskTimeObject())} color="info">AddHoursLog</Button> */}
           </Col>

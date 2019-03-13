@@ -4,6 +4,7 @@ import TimerTaskDropdown from './timerTaskDropdown'
 import moment from 'moment'
 
 const timerListComponent = (props) => {
+
   const { log, index, task }  = props
   const startTime = moment(log.startTime)
   const stopTime = moment(log.stopTime)
@@ -17,7 +18,7 @@ const timerListComponent = (props) => {
             tags={log.tags}
             startTime = {startTime}
             index={index}
-            createNewHoursLogTag = {props.createNewHoursLogTag}
+            createNewTag = {props.createNewHoursLogTag}
           />
           {startTime.format('lll')} - {stopTime.format('lll')}
         </div>

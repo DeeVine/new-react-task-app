@@ -21,10 +21,15 @@ export default class TagMenu extends React.Component {
 
   }
 
-  handleCreateNewHoursLogTag = (e) => {
+  // handleCreateNewHoursLogTag = (e) => {
+  //   e.preventDefault()
+  //   const tagValue = this.state.tagInput
+  //   this.props.createNewHoursLogTag(this.props.taskName, tagValue, this.props.index)
+  //   this.setState({ tagInput: ''})
+  // }
+  handleCreate = (taskName, tagValue, index) => (e) => {
     e.preventDefault()
-    const tagValue = this.state.tagInput
-    this.props.createNewHoursLogTag(this.props.taskName, tagValue, this.props.index)
+    this.props.createNewTag(taskName, tagValue, index)
     this.setState({ tagInput: ''})
   }
 
@@ -59,7 +64,7 @@ export default class TagMenu extends React.Component {
         <Popover placement="bottom" isOpen={this.state.popoverOpen} target={this.generatePopoverId()} toggle={this.toggle}>
           <PopoverHeader>Tags</PopoverHeader>
           <PopoverBody>
-            <form onSubmit={this.handleCreateNewHoursLogTag}>
+            <form onSubmit={this.handleCreate(this.props.taskName, this.state.tagInput, this.props.index)}>
               <input onChange={this.updateTagInput} placeholder='add/filter tags' value={this.state.tagInput} />
               <input type='submit' value='submit'/>
             </form>
@@ -85,5 +90,5 @@ TagMenu.propTypes = {
   tags: PropTypes.array,
   startTime: PropTypes.object, //moment object
   index: PropTypes.number,
-  createNewHoursLogTag: PropTypes.func
+  createNewHoursLogTag: PropTypes.func //requires (taskName, tagValue, index)
 }

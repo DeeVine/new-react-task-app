@@ -143,6 +143,7 @@ export default class Timer extends React.Component {
               taskList = {this.props.taskList}
               deleteHoursLog = {this.props.deleteHoursLog}
               createNewHoursLogTag = {this.props.createNewHoursLogTag}
+              createParentHoursLogTag = {this.props.createParentHoursLogTag}
             />
           </Col>
         </Row>

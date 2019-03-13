@@ -259,6 +259,28 @@ export default class Main extends React.Component {
     })
   }
 
+  createParentHoursLogTag = (taskName, tagValue) => {
+    this.setState((currentState) => {
+      const taskList = currentState.taskList
+      const taskIndex = taskList.map((task) => { return task.taskName }).indexOf(taskName)
+      const currentTask = taskList[taskIndex]
+
+      //TODO: is there a better way to handle checking for undefined?
+      if (typeof currentTask.tags === 'undefined') {
+        console.log('currentTask.tags', currentTask.tags)
+        currentTask.tags = []
+      }
+      //check if tag exists in array, else push new tagValue
+      if (!currentTask.tags.includes(tagValue)) {
+        currentTask.tags.push(tagValue)
+        return {
+          tagInput: '',
+          taskList: currentState.taskList
+        }
+      }
+    })
+  }
+
   handleCreateNewTag = taskName => (e) => {
     e.preventDefault()
     const tagText = this.state.tagInput.trim()
@@ -565,6 +587,7 @@ export default class Main extends React.Component {
           taskList = {this.state.taskList}
           deleteHoursLog = {this.deleteHoursLog}
           createNewHoursLogTag = {this.createNewHoursLogTag}
+          createParentHoursLogTag = {this.createParentHoursLogTag}
         />
         <Row className='show-grid main-display'>
           <Col xs={12} sm={3} md={3} className='sidenav'>

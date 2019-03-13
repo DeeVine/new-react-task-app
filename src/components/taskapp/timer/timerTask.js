@@ -3,6 +3,7 @@ import TimerListComponent from './timerListComponent'
 import { Badge } from 'reactstrap';
 import moment from 'moment'
 import util from '../util'
+import TagMenu from './tagMenu'
 
 class TimerTask extends React.Component {
   constructor(props) {
@@ -72,7 +73,12 @@ class TimerTask extends React.Component {
                 {this.props.task.hoursLog.length}
               </Badge>
               <span>{this.props.task.taskName} {this.state.totalTime ? this.state.totalTime : ''}</span>
-
+              <TagMenu
+                taskName={this.props.task.taskName}
+                tags={this.props.task.tags}
+                startTime = {this.props.task.lastUpdated}
+                createNewTag = {this.props.createParentHoursLogTag}
+              />
             </div>
             {!this.state.isHidden ?
               <ul>

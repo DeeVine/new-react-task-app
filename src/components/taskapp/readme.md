@@ -10,11 +10,15 @@ IDEAS:
 TODO:
 *//
 [+] add tags to events
-  [ ] create tag component to display tags in tagMenu
+  [x] create tag component to display tags in tagMenu
+  [ ] handle tag deletion
 [ ] apply flexbox to timerTask
 [ ] handle rerendering after deleteHoursLog --> issue relates to timeList.js key={task.taskName+'-'+task.hoursLog.length}
 //*
-  [ ] apply tags to individual hoursLog
+[ ] update editable field to inputs
+[x] handle editing time
+  [ ] implement calendar api for times
+  [x] apply tags to individual hoursLog
 [x] fix issue of 'id with spaces'
 [ ] bulk edit/removal for tags
 [ ] timer to reset value on 'stop'

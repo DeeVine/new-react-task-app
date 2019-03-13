@@ -16,6 +16,7 @@ export default class Main extends React.Component {
     super(props)
 
     this.state = {
+      toggleMainSection: false,
       inputNewTask: '',
       inputTaskFilter: '',
       subTaskInput: '',
@@ -63,6 +64,15 @@ export default class Main extends React.Component {
     // util.updateLocalStorage('taskList-data', this.state.taskList)
     this.runMoment(this.state.taskList)
     // this.filterByDateHoursLog()
+  }
+
+  toggleMainSection = (e) => {
+    e.preventDefault()
+    this.setState(currentState => {
+      return {
+        toggleMainSection: !currentState.toggleMainSection
+      }
+    })
   }
 
   //pass in ascending/descending argument
@@ -245,7 +255,6 @@ export default class Main extends React.Component {
 
       //TODO: is there a better way to handle checking for undefined?
       if (typeof hoursLog.tags === 'undefined') {
-        console.log('hoursLog.tags', hoursLog.tags)
         hoursLog.tags = []
       }
       //check if tag exists in array, else push new tagValue
@@ -267,7 +276,6 @@ export default class Main extends React.Component {
 
       //TODO: is there a better way to handle checking for undefined?
       if (typeof currentTask.tags === 'undefined') {
-        console.log('currentTask.tags', currentTask.tags)
         currentTask.tags = []
       }
       //check if tag exists in array, else push new tagValue
@@ -582,6 +590,7 @@ export default class Main extends React.Component {
 
     return (
       <Container className='main-grid' fluid={true}>
+        <JSONTree data={this.state} shouldExpandNode={() => false} />
         <Timer
           addHoursLog = {this.addHoursLog}
           taskList = {this.state.taskList}
@@ -589,71 +598,76 @@ export default class Main extends React.Component {
           createNewHoursLogTag = {this.createNewHoursLogTag}
           createParentHoursLogTag = {this.createParentHoursLogTag}
         />
-        <Row className='show-grid main-display'>
-          <Col xs={12} sm={3} md={3} className='sidenav'>
-            <JSONTree data={this.state} shouldExpandNode={() => false} />
-            <DropdownFilter
-              sortFilter = {this.sortTaskList}
-            />
-            <div className='side-panel'>
-              <form onSubmit={this.handleCreateNewTask}>
-                <input onChange={this.updateNewTaskInput} id='task-text' value={this.state.inputNewTask} placeholder='create new task' />
-                <input type='submit' value='submit'/>
-              </form>
-              <input onChange={this.updateInputTaskFilter} id='task-filter' value={this.state.inputTaskFilter} placeholder='filter by task name' />
-              <h4>Activities & Tasks</h4>
-              {this.filterByTaskName(this.state.taskList, this.state.inputTaskFilter).map((task, index) => {
-                return (
-                  <div key={uuidv4()}>
-                    <SidePanel
-                      className={this.state.taskListIndex === index? 'side-panel-active': ''}
-                      task={task}
-                      sidePanelFocus={this.sidePanelFocus}
-                      onHandleDeleteTask={()=> this.handleDeleteTaskApp(task.taskName)}
-                    />
-                  </div>
-                )
-              })}
-            </div>
 
-          </Col>
-          <Col xs={12} sm={9} md={9} className='task-center'>
-            {typeof this.state.taskList[0] !== 'undefined' ?
-            <TaskApp
-              taskInfo={
-                this.state.taskListIndex !== '' ?
-                this.state.taskList[this.state.taskListIndex] :
-                this.state.taskList[0]
-              }
-              appState = {this.state}
-              tasks = {this.state.taskList[this.state.taskListIndex].tasks}
-              updateTaskTitle = {this.updateTaskTitle}
-              textEditorContent = {this.state.taskList[this.state.taskListIndex].textEditorContent}
-              subTaskInput = {this.state.subTaskInput}
-              updateSubTaskInput = {this.updateSubTaskInput}
-              handleCreateSubTask = {this.handleCreateSubTask}
-              handleDeleteSubTask = {this.handleDeleteSubTask}
-              tagInput = {this.state.tagInput}
-              updateTagInput = {this.updateTagInput}
-              handleCreateNewTag = {this.handleCreateNewTag}
-              hoursInput = {this.state.hoursInput}
-              updateHoursInput = {this.updateHoursInput}
-              handleAddHours = {this.handleAddHours}
-              updateAddNoteInput = {this.updateAddNoteInput}
-              handleAddNote = {this.handleAddNote}
-              handleToggleAll = {this.handleToggleAll}
-              handleDeleteAllTasks = {this.handleDeleteAllTasks}
-              handleDeleteTaskApp = {() => this.handleDeleteTaskApp(this.state.sidePanelFocus.taskName)}
-              handleToggleTask = {this.handleToggleTask}
-              handleFocusTask = {this.handleFocusTask}
-              handleUpdateTextEditor = {this.handleUpdateTextEditor}
-              focusedTask = {this.state.focusedTask}
-              updateTaskInput = {this.updateTaskInput}
-              taskListIndex = {this.state.taskListIndex}
-            />
-            : <h1>Add a task and click on task in the left panel</h1>}
-          </Col>
-        </Row>
+        <button onClick={this.toggleMainSection}>Toggle Main Section</button>
+        {this.state.toggleMainSection ?
+          <Row className='show-grid main-display'>
+            <Col xs={12} sm={3} md={3} className='sidenav'>
+              <DropdownFilter
+                sortFilter = {this.sortTaskList}
+              />
+              <div className='side-panel'>
+                <form onSubmit={this.handleCreateNewTask}>
+                  <input onChange={this.updateNewTaskInput} id='task-text' value={this.state.inputNewTask} placeholder='create new task' />
+                  <input type='submit' value='submit'/>
+                </form>
+                <input onChange={this.updateInputTaskFilter} id='task-filter' value={this.state.inputTaskFilter} placeholder='filter by task name' />
+                <h4>Activities & Tasks</h4>
+                {this.filterByTaskName(this.state.taskList, this.state.inputTaskFilter).map((task, index) => {
+                  return (
+                    <div key={uuidv4()}>
+                      <SidePanel
+                        className={this.state.taskListIndex === index? 'side-panel-active': ''}
+                        task={task}
+                        sidePanelFocus={this.sidePanelFocus}
+                        onHandleDeleteTask={()=> this.handleDeleteTaskApp(task.taskName)}
+                      />
+                    </div>
+                  )
+                })}
+              </div>
+
+            </Col>
+            <Col xs={12} sm={9} md={9} className='task-center'>
+              {typeof this.state.taskList[0] !== 'undefined' ?
+              <TaskApp
+                taskInfo={
+                  this.state.taskListIndex !== '' ?
+                  this.state.taskList[this.state.taskListIndex] :
+                  this.state.taskList[0]
+                }
+                appState = {this.state}
+                tasks = {this.state.taskList[this.state.taskListIndex].tasks}
+                updateTaskTitle = {this.updateTaskTitle}
+                textEditorContent = {this.state.taskList[this.state.taskListIndex].textEditorContent}
+                subTaskInput = {this.state.subTaskInput}
+                updateSubTaskInput = {this.updateSubTaskInput}
+                handleCreateSubTask = {this.handleCreateSubTask}
+                handleDeleteSubTask = {this.handleDeleteSubTask}
+                tagInput = {this.state.tagInput}
+                updateTagInput = {this.updateTagInput}
+                handleCreateNewTag = {this.handleCreateNewTag}
+                hoursInput = {this.state.hoursInput}
+                updateHoursInput = {this.updateHoursInput}
+                handleAddHours = {this.handleAddHours}
+                updateAddNoteInput = {this.updateAddNoteInput}
+                handleAddNote = {this.handleAddNote}
+                handleToggleAll = {this.handleToggleAll}
+                handleDeleteAllTasks = {this.handleDeleteAllTasks}
+                handleDeleteTaskApp = {() => this.handleDeleteTaskApp(this.state.sidePanelFocus.taskName)}
+                handleToggleTask = {this.handleToggleTask}
+                handleFocusTask = {this.handleFocusTask}
+                handleUpdateTextEditor = {this.handleUpdateTextEditor}
+                focusedTask = {this.state.focusedTask}
+                updateTaskInput = {this.updateTaskInput}
+                taskListIndex = {this.state.taskListIndex}
+              />
+              : <h1>Add a task and click on task in the left panel</h1>}
+            </Col>
+          </Row>
+          : null
+        }
+
       </Container>
     )
   }

@@ -68,11 +68,13 @@ class TimerTask extends React.Component {
     return (
       <div>
         <div className='timer-task' id={'timer-' + this.props.task.taskName}>
-            <div>
-              <Badge className='timer-task-badge' color='info' onClick={this.toggleList}>
+            <div className='timer-task-container'>
+              <Badge className='timer-task-badge mr-2' color='info' onClick={this.toggleList}>
                 {this.props.task.hoursLog.length}
               </Badge>
-              <span>{this.props.task.taskName} {this.state.totalTime ? this.state.totalTime : ''}</span>
+              <div className='timer-task-taskname'>{this.props.task.taskName}</div>
+              <div className='timer-task-totaltime'>{this.state.totalTime ? this.state.totalTime : ''}</div>
+
               <TagMenu
                 taskName={this.props.task.taskName}
                 tags={this.props.task.tags}

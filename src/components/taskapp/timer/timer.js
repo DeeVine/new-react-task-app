@@ -1,6 +1,7 @@
 import React from 'react'
 import moment from 'moment'
 import TimerList from './timerList'
+import TagMenu from './tagMenu'
 import util from '../util.js'
 import './timer.css'
 import { Container, Row, Col, Button } from 'reactstrap'
@@ -28,6 +29,7 @@ export default class Timer extends React.Component {
     super(props)
     this.state = {
       workingOnInput: '',
+      optionalTagArray: ['test'],
       timeStarted: '',
       startTime: '',
       stopTime: '',
@@ -40,10 +42,11 @@ export default class Timer extends React.Component {
     const savedState = util.retrieveTasksFromLocalStorage('timer-data')
     if (savedState) {
       const timeStarted = savedState.timeStarted ? savedState.timeStarted : false
-      const {  workingOnInput, startTime, stopTime, currentTimer } = savedState
+      const {  workingOnInput, optionalTagArray, startTime, stopTime, currentTimer } = savedState
       this.setState({
         timeStarted: timeStarted,
         workingOnInput,
+        optionalTagArray,
         startTime,
         stopTime,
         //should set currentTimer to moment().startOf("day")Timer, 'second')
@@ -66,6 +69,16 @@ export default class Timer extends React.Component {
     const timeInSeconds = differenceInMiliseconds / 1000
     const currentTimer = moment().startOf("day").add(timeInSeconds, 'second')
     return currentTimer
+  }
+
+  createOptionalTags = (taskName, tagValue) => {
+    this.setState(currentState => {
+      const optionalTagArray = currentState.optionalTagArray
+      optionalTagArray.push(tagValue)
+      return {
+        optionalTagArray
+      }
+    })
   }
 
   updateInput = (e) => {
@@ -101,21 +114,40 @@ export default class Timer extends React.Component {
   }
 
   stopTime = () => {
+    const that = this
     this.toggleTimer()
     this.setState({
       stopTime: moment(),
     }, () => {
       this.props.addHoursLog(this.createTaskTimeObject())()
-      this.setState({
-        workingOnInput: ''
+      this.setState({ //this set state is to ensure new props.taskList is retrieved after addHoursLog has completed
+      }, () => {
+        window.clearInterval(this.interval);
+        if(this.state.optionalTagArray.length > 0) {
+          that.pushTagsFromOptionalTagsArray()
+        }
+        this.setState({
+          workingOnInput: '',
+          optionalTagArray: []
+        })
       })
     })
-    window.clearInterval(this.interval);
+  }
+
+  pushTagsFromOptionalTagsArray = () => {
+    const taskName = this.state.workingOnInput
+    const currentTask = this.props.taskList.find((task) => {
+      return task.taskName === taskName
+    })
+    const lastIndex = currentTask.hoursLog.length-1
+    this.state.optionalTagArray.map(tagValue => {
+      return this.props.createNewHoursLogTag(taskName, tagValue, lastIndex)
+    })
   }
 
   createTaskTimeObject = () => {
     const taskTimeObject = {
-      taskName: this.state.workingOnInput,
+      taskName: this.state.workingOnInput.trim(),
       startTime: this.state.startTime,
       stopTime: this.state.stopTime,
     }
@@ -134,6 +166,14 @@ export default class Timer extends React.Component {
         <Row>
           <Col sm={12} className='timer-nav-container' >
             <input className='timer-nav-input mr-3' id='working-on-input' onChange={this.updateInput} value={this.state.workingOnInput} placeholder={'What are you working on?'}/>
+            <div className='timer-nav-optional-tag mr-3'>
+            <TagMenu
+              taskName = 'tbd'
+              tags = {this.state.optionalTagArray}
+              startTime = {moment('1552537388945')}
+              createNewTag = {this.createOptionalTags}
+            />
+            </div>
             <div className='timer-nav-current-timer mr-3'>{this.state.currentTimer.format('HH:mm:ss')}</div>
             {!this.state.timeStarted
               ? <Button className='start-timer-btn' size='sm' onClick={this.startTime} color="success">Start</Button>

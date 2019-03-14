@@ -15,7 +15,10 @@ TODO:
 [x] apply flexbox to timerTask
 [ ] handle rerendering after deleteHoursLog --> issue relates to timeList.js key={task.taskName+'-'+task.hoursLog.length}
 //*
+[ ] add optional tag field next to timer input
 [ ] update editable field to inputs
+[ ] create 'break' option
+  [ ] should add a break to current in progress event
 [x] handle editing time
   [ ] implement calendar api for times
   [x] apply tags to individual hoursLog

@@ -17,6 +17,10 @@
   box-shadow:0px 1px 1px #e8e8e8;
 }
 
+.timer-nav-current-timer {
+  width: 66px;
+}
+
 .timer-task-taskname {
   width: 300px;
 }
@@ -51,4 +55,9 @@
 
 .tags-active {
   color: #009823;
+}
+
+.tags-popover-body {
+  max-height: 200px;
+  overflow: scroll;
 }

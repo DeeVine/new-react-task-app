@@ -64,6 +64,17 @@ class TimerTask extends React.Component {
     }
   }
 
+  hoursLogSortedDescending = () => {
+    const hoursLog = this.props.task.hoursLog
+    const sortedDescending = hoursLog.sort(function(a,b) {
+      const startTime = moment(a.startTime).valueOf()
+      const stopTime = moment(b.stopTime).valueOf()
+      return stopTime-startTime
+    })
+    return sortedDescending
+  }
+
+
   render() {
     return (
       <div>
@@ -77,13 +88,13 @@ class TimerTask extends React.Component {
               <TagMenu
                 taskName={this.props.task.taskName}
                 tags={this.props.task.tags}
-                startTime = {this.props.task.lastUpdated}
+                startTime = {moment(this.props.task.lastUpdated)}
                 createNewTag = {this.props.createParentHoursLogTag}
               />
             </div>
             {!this.state.isHidden ?
               <ul>
-                {this.props.task.hoursLog.map((log, index) => {
+                {this.hoursLogSortedDescending().map((log, index) => {
                   return (
                     <TimerListComponent
                       key={this.props.task.taskName+'-'+log.startTime}

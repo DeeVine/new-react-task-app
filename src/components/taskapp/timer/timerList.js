@@ -12,7 +12,7 @@ class TimerList extends React.Component {
       <div>
         {this.props.taskList.map((task) => {
           return (
-           <div key={'timer-list-'+task.taskName}>
+           <div className='parent-timer-list-container' key={'timer-list-'+task.taskName}>
             <TimerTask
               key={task.taskName+'-'+task.hoursLog.length}
               task={task}

@@ -29,7 +29,11 @@ export default class TagMenu extends React.Component {
     } else {
       alert('please input a tag')
     }
+  }
 
+  handleDelete = (taskName, tagValue, index) => (e) => {
+    e.preventDefault()
+    this.props.deleteHoursLogTag(taskName, tagValue, index)
   }
 
   updateTagInput = (e) => {
@@ -72,6 +76,9 @@ export default class TagMenu extends React.Component {
                 return (
                   <div key={'tag-badge-'+tag}>
                     <Badge color='success'>{tag}</Badge>
+                    <i className="fas fa-times ml-1"
+                      onClick={this.handleDelete(this.props.taskName, tag, this.props.index)}
+                    />
                   </div>
                 )
               }) : null

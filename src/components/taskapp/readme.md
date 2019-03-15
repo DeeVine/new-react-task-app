@@ -6,6 +6,9 @@ MVP:
 
 IDEAS:
 *subtasks should/could be tasks/links/notes/goals*
+*quick tips/notes in top navigation*
+*productive fun --> 'look up hiking trails, workout, play/listen to music, talk to a friend'*
+
 
 TODO:
 *//
@@ -14,13 +17,17 @@ TODO:
   [ ] handle tag deletion
 [x] apply flexbox to timerTask
 [ ] handle rerendering after deleteHoursLog --> issue relates to timeList.js key={task.taskName+'-'+task.hoursLog.length}
+[ ] add bulk edit/deletion
+[ ] time format options
 //*
+
+[ ] 'settings options' such as time format, time events open/closed on page load
 [ ] adjust popover to close on focus change
 [ ] create top nav / basic webapp UI layout
 [ ] create todolist, optional checkoff/apply of todoitem in 'what are you working on'
 [ ] filter by Tags
 [ ] filter by tasks *refactor main component function into timer.js*
-[x] add optional tag field next to timer input
+[x] add optional tag field next to timer inputde
   [ ] 'favorite' / 'bulk' add tags
 [ ] list of premade tasks/activities
 [ ] delete parent task menu

@@ -241,7 +241,7 @@ export default class Main extends React.Component {
     }
   }
 
-  createNewHoursLogTag = (taskName, tagValue, hoursLogIndex) => {
+  createChildHoursLogTag = (taskName, tagValue, hoursLogIndex) => {
     //find task to update
     this.setState((currentState) => {
       const taskList = currentState.taskList
@@ -268,7 +268,25 @@ export default class Main extends React.Component {
     })
   }
 
+  deleteHoursLogTag = (taskName, tagValue, hoursLogIndex) => {
+    this.setState((currentState) => {
+      const taskList = currentState.taskList
+      const currentTask = taskList.find((task) => {
+        return task.taskName === taskName
+      })
+      const hoursLog = currentTask.hoursLog[hoursLogIndex]
+      const filteredTags = hoursLog.tags.filter(tag => {
+        return tag !== tagValue
+      })
+      hoursLog.tags = filteredTags
+      return {
+        taskList
+      }
+    })
+  }
+
   createParentHoursLogTag = (taskName, tagValue) => {
+    console.log('tagValue inside createParentHoursLogTag', tagValue)
     this.setState((currentState) => {
       const taskList = currentState.taskList
       const taskIndex = taskList.map((task) => { return task.taskName }).indexOf(taskName)
@@ -278,6 +296,7 @@ export default class Main extends React.Component {
       if (typeof currentTask.tags === 'undefined') {
         currentTask.tags = []
       }
+      console.log('currentTask.tags', currentTask.tags)
       //check if tag exists in array, else push new tagValue
       if (!currentTask.tags.includes(tagValue)) {
         currentTask.tags.push(tagValue)
@@ -285,6 +304,22 @@ export default class Main extends React.Component {
           tagInput: '',
           taskList: currentState.taskList
         }
+      }
+    })
+  }
+
+  deleteParentHoursLogTag = (taskName, tagValue) => {
+    this.setState((currentState) => {
+      const taskList = currentState.taskList
+      const currentTask = taskList.find((task) => {
+        return task.taskName === taskName
+      })
+      const filteredTags = currentTask.tags.filter(tag => {
+        return tag !== tagValue
+      })
+      currentTask.tags = filteredTags
+      return {
+        taskList
       }
     })
   }
@@ -595,8 +630,10 @@ export default class Main extends React.Component {
           addHoursLog = {this.addHoursLog}
           taskList = {this.state.taskList}
           deleteHoursLog = {this.deleteHoursLog}
-          createNewHoursLogTag = {this.createNewHoursLogTag}
+          createChildHoursLogTag = {this.createChildHoursLogTag}
+          deleteHoursLogTag = {this.deleteHoursLogTag}
           createParentHoursLogTag = {this.createParentHoursLogTag}
+          deleteParentHoursLogTag = {this.deleteParentHoursLogTag}
         />
 
         <button onClick={this.toggleMainSection}>Toggle Main Section</button>

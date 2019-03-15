@@ -90,6 +90,7 @@ class TimerTask extends React.Component {
                 tags={this.props.task.tags}
                 startTime = {moment(this.props.task.lastUpdated)}
                 createNewTag = {this.props.createParentHoursLogTag}
+                deleteHoursLogTag = {this.props.deleteParentHoursLogTag}
               />
             </div>
             {!this.state.isHidden ?
@@ -102,8 +103,9 @@ class TimerTask extends React.Component {
                       index={index}
                       convertMillisecondsToDigitalClock = {this.convertMillisecondsToDigitalClock}
                       task={this.props.task}
-                      createNewHoursLogTag={this.props.createNewHoursLogTag}
+                      createChildHoursLogTag={this.props.createChildHoursLogTag}
                       deleteHoursLog = {this.props.deleteHoursLog}
+                      deleteHoursLogTag = {this.props.deleteHoursLogTag}
                     />
                   )
                 })}

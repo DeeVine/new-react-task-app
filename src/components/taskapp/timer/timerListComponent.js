@@ -18,7 +18,8 @@ const timerListComponent = (props) => {
             tags={log.tags}
             startTime = {startTime}
             index={index}
-            createNewTag = {props.createNewHoursLogTag}
+            createNewTag = {props.createChildHoursLogTag}
+            deleteHoursLogTag = {props.deleteHoursLogTag}
           />
         </div>
         <div className='timer-list-start-end-time mr-2'>

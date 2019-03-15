@@ -17,8 +17,10 @@ class TimerList extends React.Component {
               key={task.taskName+'-'+task.hoursLog.length}
               task={task}
               deleteHoursLog = {this.props.deleteHoursLog}
-              createNewHoursLogTag = {this.props.createNewHoursLogTag}
+              createChildHoursLogTag = {this.props.createChildHoursLogTag}
+              deleteHoursLogTag = {this.props.deleteHoursLogTag}
               createParentHoursLogTag = {this.props.createParentHoursLogTag}
+              deleteParentHoursLogTag = {this.props.deleteParentHoursLogTag}
             />
            </div>
           )

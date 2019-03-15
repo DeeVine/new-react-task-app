@@ -74,9 +74,23 @@ export default class Timer extends React.Component {
   createOptionalTags = (taskName, tagValue) => {
     this.setState(currentState => {
       const optionalTagArray = currentState.optionalTagArray
-      optionalTagArray.push(tagValue)
+      if (!optionalTagArray.includes(tagValue)) {
+        optionalTagArray.push(tagValue)
+        return {
+          optionalTagArray
+        }
+      }
+    })
+  }
+
+  deleteOptionalTagArray = (taskNameNotRequired, tagValue) => {
+    this.setState(currentState => {
+      const optionalTagArray = currentState.optionalTagArray
+      const filteredArray = optionalTagArray.filter(tag => {
+        return tag !== tagValue
+      })
       return {
-        optionalTagArray
+        optionalTagArray: filteredArray
       }
     })
   }
@@ -135,15 +149,12 @@ export default class Timer extends React.Component {
 
   pushTagsFromOptionalTagsArray = () => {
     const taskName = this.state.workingOnInput.trim()
-    console.log('taskName', taskName)
-    console.log('this.props.taskList', this.props.taskList)
     const currentTask = this.props.taskList.find((task) => {
       return task.taskName === taskName
     })
-    console.log('currentTask', currentTask)
     const lastIndex = currentTask.hoursLog.length-1
     this.state.optionalTagArray.map(tagValue => {
-      return this.props.createNewHoursLogTag(taskName, tagValue, lastIndex)
+      return this.props.createChildHoursLogTag(taskName, tagValue, lastIndex)
     })
   }
 
@@ -169,11 +180,12 @@ export default class Timer extends React.Component {
           <Col sm={12} className='timer-nav-container' >
             <input className='timer-nav-input mr-3' id='working-on-input' onChange={this.updateInput} value={this.state.workingOnInput} placeholder={'What are you working on?'}/>
             <div className='timer-nav-optional-tag mr-3'>
-            <TagMenu
+            <TagMenu //values in this TagMenu are being utilized in pushTagsFromOptionalTagsArray
               taskName = 'tbd'
               tags = {this.state.optionalTagArray}
               startTime = {moment('1552537388945')}
               createNewTag = {this.createOptionalTags}
+              deleteHoursLogTag = {this.deleteOptionalTagArray}
             />
             </div>
             <div className='timer-nav-current-timer mr-3'>{this.state.currentTimer.format('HH:mm:ss')}</div>
@@ -187,8 +199,10 @@ export default class Timer extends React.Component {
             <TimerList
               taskList = {this.props.taskList}
               deleteHoursLog = {this.props.deleteHoursLog}
-              createNewHoursLogTag = {this.props.createNewHoursLogTag}
+              createChildHoursLogTag = {this.props.createChildHoursLogTag}
+              deleteHoursLogTag = {this.props.deleteHoursLogTag}
               createParentHoursLogTag = {this.props.createParentHoursLogTag}
+              deleteParentHoursLogTag = {this.props.deleteParentHoursLogTag}
             />
           </Col>
         </Row>

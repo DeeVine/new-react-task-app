@@ -29,7 +29,7 @@ export default class Timer extends React.Component {
     super(props)
     this.state = {
       workingOnInput: '',
-      optionalTagArray: ['test'],
+      optionalTagArray: [],
       timeStarted: '',
       startTime: '',
       stopTime: '',
@@ -114,7 +114,6 @@ export default class Timer extends React.Component {
   }
 
   stopTime = () => {
-    const that = this
     this.toggleTimer()
     this.setState({
       stopTime: moment(),
@@ -124,7 +123,7 @@ export default class Timer extends React.Component {
       }, () => {
         window.clearInterval(this.interval);
         if(this.state.optionalTagArray.length > 0) {
-          that.pushTagsFromOptionalTagsArray()
+          this.pushTagsFromOptionalTagsArray()
         }
         this.setState({
           workingOnInput: '',
@@ -135,10 +134,13 @@ export default class Timer extends React.Component {
   }
 
   pushTagsFromOptionalTagsArray = () => {
-    const taskName = this.state.workingOnInput
+    const taskName = this.state.workingOnInput.trim()
+    console.log('taskName', taskName)
+    console.log('this.props.taskList', this.props.taskList)
     const currentTask = this.props.taskList.find((task) => {
       return task.taskName === taskName
     })
+    console.log('currentTask', currentTask)
     const lastIndex = currentTask.hoursLog.length-1
     this.state.optionalTagArray.map(tagValue => {
       return this.props.createNewHoursLogTag(taskName, tagValue, lastIndex)

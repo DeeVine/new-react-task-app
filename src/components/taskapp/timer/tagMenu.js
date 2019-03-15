@@ -1,6 +1,6 @@
 import React from 'react'
 import moment from 'moment'
-import { Popover, PopoverHeader, PopoverBody, Badge } from 'reactstrap'
+import { UncontrolledPopover, PopoverHeader, PopoverBody, Badge } from 'reactstrap'
 import PropTypes from 'prop-types'
 
 export default class TagMenu extends React.Component {
@@ -60,7 +60,7 @@ export default class TagMenu extends React.Component {
         <i className={(this.props.tags.length > 0 ? 'fas fa-tags tags-active mr-2' : 'fas fa-tag tags-inactive mr-2')}
           id={this.generatePopoverId()}
         />
-        <Popover placement="bottom" isOpen={this.state.popoverOpen} target={this.generatePopoverId()} toggle={this.toggle}>
+        <UncontrolledPopover trigger="legacy" placement="left" target={this.generatePopoverId()}>
           <PopoverHeader>Tags</PopoverHeader>
           <PopoverBody className='tags-popover-body'>
             <form onSubmit={this.handleCreate(this.props.taskName, this.state.tagInput, this.props.index)}>
@@ -77,11 +77,10 @@ export default class TagMenu extends React.Component {
               }) : null
             }
           </PopoverBody>
-        </Popover>
+        </UncontrolledPopover>
       </>
     )
   }
-
 }
 
 TagMenu.propTypes = {

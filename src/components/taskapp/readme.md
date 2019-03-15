@@ -15,7 +15,15 @@ TODO:
 [x] apply flexbox to timerTask
 [ ] handle rerendering after deleteHoursLog --> issue relates to timeList.js key={task.taskName+'-'+task.hoursLog.length}
 //*
-[ ] add optional tag field next to timer input
+[ ] adjust popover to close on focus change
+[ ] create top nav / basic webapp UI layout
+[ ] create todolist, optional checkoff/apply of todoitem in 'what are you working on'
+[ ] filter by Tags
+[ ] filter by tasks *refactor main component function into timer.js*
+[x] add optional tag field next to timer input
+  [ ] 'favorite' / 'bulk' add tags
+[ ] list of premade tasks/activities
+[ ] delete parent task menu
 [ ] update editable field to inputs
 [ ] create 'break' option
   [ ] should add a break to current in progress event
@@ -32,7 +40,7 @@ TODO:
   [x] collapsable time events like toggl
     [x] delete time event
 
-      [ ] adjust popover to close on focus change
+
     [ ] add notes to events
   [ ] group events by date
   [ ] chart out events activity by date

@@ -11,9 +11,9 @@ export default class TimerTaskDropdown extends React.Component {
 }
 
   toggle = () => {
-    this.setState(prevState => ({
-      dropdownOpen: !prevState.dropdownOpen
-    }));
+    this.setState({
+      dropdownOpen: !this.state.dropdownOpen
+    });
   }
 
   handleDeleteHoursLog = () => {
@@ -27,10 +27,16 @@ export default class TimerTaskDropdown extends React.Component {
   render () {
     return (
       <Dropdown isOpen={this.state.dropdownOpen} size='sm' toggle={this.toggle}>
-        <DropdownToggle caret>
-          Options
+        <DropdownToggle
+          // tag="span"
+          // onClick={this.toggle}
+          // data-toggle="dropdown"
+          // aria-expanded={this.state.dropdownOpen}
+          caret >
+          Dropdown
         </DropdownToggle>
         <DropdownMenu>
+          {/* <div onClick={this.toggle}>Custom item</div> */}
           <DropdownItem
             onClick={this.handleDeleteHoursLog}
           >Delete Time</DropdownItem>

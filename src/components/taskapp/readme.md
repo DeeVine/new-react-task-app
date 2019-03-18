@@ -21,12 +21,20 @@ TODO:
 [ ] time format options
 //*
 
+[ ] implement timer vs manual mode
+[+] make dropdown in navigation
+  [ ] update to relevant content in dropdown
+[ ] add option to rate tags 1-5
+[ ] add days column to time
 [ ] 'settings options' such as time format, time events open/closed on page load
 [ ] adjust popover to close on focus change
 [ ] create top nav / basic webapp UI layout
 [ ] create todolist, optional checkoff/apply of todoitem in 'what are you working on'
 [ ] filter by Tags
 [ ] filter by tasks *refactor main component function into timer.js*
+[ ] toggle draft js from note icons
+[ ] load/save state for each note (https://hashnode.com/post/what-is-the-recommended-way-of-storing-the-content-from-draftjs-in-a-database-cj2zw3sxn002uelk8k9sr51xe)
+  [ ] saved state must be contained in parent component
 [x] add optional tag field next to timer inputde
   [ ] 'favorite' / 'bulk' add tags
 [ ] list of premade tasks/activities
@@ -58,7 +66,6 @@ TODO:
     [ ] clickable calendar to select comparison ranges
 [ ] ability to update/modify hour entries
 [ ] last updated should change every time task is modified/added to
-[ ] implement timer vs manual mode
 [+] filter tasks by name
   [ ] utilize router to load filtered state
   [ ] use regex/fuzzysearch so 'exact' taskName isn't required'

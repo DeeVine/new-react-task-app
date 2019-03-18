@@ -1,4 +1,6 @@
 import React from 'react'
+import MainNav from './mainNav'
+import RichEditorExample from './myEditor'
 import SidePanel from '../sidepanel/sidePanel'
 import DropdownFilter from '../dropdownFilter/dropdownFilter'
 import TaskApp from '../tasks/taskapp'
@@ -625,7 +627,7 @@ export default class Main extends React.Component {
 
     return (
       <Container className='main-grid' fluid={true}>
-        <JSONTree data={this.state} shouldExpandNode={() => false} />
+        <MainNav />
         <Timer
           addHoursLog = {this.addHoursLog}
           taskList = {this.state.taskList}
@@ -704,7 +706,7 @@ export default class Main extends React.Component {
           </Row>
           : null
         }
-
+        <JSONTree data={this.state} shouldExpandNode={() => false} />        
       </Container>
     )
   }

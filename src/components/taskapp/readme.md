@@ -21,8 +21,13 @@ TODO:
 [ ] time format options
 //*
 
-[ ] refactor index search to be DRY
 [ ] implement timer vs manual mode
+[ ] refactor index search to be DRY
+[ ] implement calendar api for times
+[ ] Filters
+  [ ] by date
+  [ ] by Tags
+  [ ] filter by tasks *refactor main component function into timer.js*
 [ ] implement 'dev' (save my data for real use) vs 'production'
 [+] make dropdown in navigation
   [ ] update to relevant content in dropdown
@@ -32,13 +37,13 @@ TODO:
 [ ] implement 'auto-complete' recommendations based on existing tags
   [ ] check if child tags are new and push to parent task
     [ ] 'all time tags' at top level for search/recommendations
+      [ ] sort recommendations by most 'used'
 [ ] add days column to time
 [ ] resolve moment deprecation warning
 [ ] 'settings options' such as time format, time events open/closed on page load
 [ ] create top nav / basic webapp UI layout
 [ ] create todolist, optional checkoff/apply of todoitem in 'what are you working on'
-[ ] filter by Tags
-[ ] filter by tasks *refactor main component function into timer.js*
+
 [ ] toggle draft js from note icons
 [ ] load/save state for each note (https://hashnode.com/post/what-is-the-recommended-way-of-storing-the-content-from-draftjs-in-a-database-cj2zw3sxn002uelk8k9sr51xe)
   [ ] saved state must be contained in parent component
@@ -50,7 +55,6 @@ TODO:
 [ ] create 'break' option
   [ ] should add a break to current in progress event
 [x] handle editing time
-  [ ] implement calendar api for times
   [x] apply tags to individual hoursLog
 [x] fix issue of 'id with spaces'
 [ ] bulk edit/removal for tags

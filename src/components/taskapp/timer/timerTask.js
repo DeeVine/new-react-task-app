@@ -94,7 +94,7 @@ class TimerTask extends React.Component {
               />
             </div>
             {!this.state.isHidden ?
-              <ul>
+              <ul className='timer-task-ul'>
                 {this.hoursLogSortedDescending().map((log, index) => {
                   return (
                     <TimerListComponent

@@ -1,7 +1,8 @@
 import React from 'react'
 import moment from 'moment'
-import { UncontrolledPopover, PopoverHeader, PopoverBody, Badge } from 'reactstrap'
+import { UncontrolledPopover, PopoverHeader, PopoverBody } from 'reactstrap'
 import PropTypes from 'prop-types'
+import TagRatings from './tagRatings/tagRatings'
 
 export default class TagMenu extends React.Component {
   constructor(props){
@@ -74,8 +75,11 @@ export default class TagMenu extends React.Component {
             {typeof this.props.tags !== 'undefined' ?
               this.props.tags.map((tag) => {
                 return (
-                  <div key={'tag-badge-'+tag}>
-                    <Badge color='success'>{tag}</Badge>
+                  <div className='tag-menu-badge' key={'tag-badge-'+tag}>
+                    <TagRatings
+                      dropdownName={tag}
+                    />
+                    {/* <Badge color='success'>{tag}</Badge> */}
                     <i className="fas fa-times ml-1"
                       onClick={this.handleDelete(this.props.taskName, tag, this.props.index)}
                     />

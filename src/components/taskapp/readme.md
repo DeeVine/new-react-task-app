@@ -14,20 +14,27 @@ TODO:
 *//
 [+] add tags to events
   [x] create tag component to display tags in tagMenu
-  [ ] handle tag deletion
+  [x] handle tag deletion
 [x] apply flexbox to timerTask
 [ ] handle rerendering after deleteHoursLog --> issue relates to timeList.js key={task.taskName+'-'+task.hoursLog.length}
 [ ] add bulk edit/deletion
 [ ] time format options
 //*
 
+[ ] refactor index search to be DRY
 [ ] implement timer vs manual mode
+[ ] implement 'dev' (save my data for real use) vs 'production'
 [+] make dropdown in navigation
   [ ] update to relevant content in dropdown
 [ ] add option to rate tags 1-5
+  [ ] add tag percentages (calculate number of milliseconds from the respective time log)
+  [ ] implement function to update tag rating --> may need to change tags into object {tagName: '', tagRating ''}
+[ ] implement 'auto-complete' recommendations based on existing tags
+  [ ] check if child tags are new and push to parent task
+    [ ] 'all time tags' at top level for search/recommendations
 [ ] add days column to time
+[ ] resolve moment deprecation warning
 [ ] 'settings options' such as time format, time events open/closed on page load
-[ ] adjust popover to close on focus change
 [ ] create top nav / basic webapp UI layout
 [ ] create todolist, optional checkoff/apply of todoitem in 'what are you working on'
 [ ] filter by Tags
@@ -98,6 +105,7 @@ TODO:
 [ ] refactor tasks under taskList
   [ ] check that components are taking correct props after refactor
 [ ] Filters --> All, Active, Completed
+[x] adjust popover to close on focus change
 [x] utilize sidePanel to control active task
 [x] figure out where to store state --> move all back to taskApp?
 [x] Move individual components into module exports

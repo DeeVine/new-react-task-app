@@ -1,0 +1,7 @@
+.todo-list-ul {
+  list-style: none;
+}
+
+.completed-todo {
+  text-decoration: line-through;
+}

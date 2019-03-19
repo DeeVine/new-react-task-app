@@ -2,11 +2,11 @@
     width: 300px;
 }
 
-.timer-task-container, .timer-list-container, .time-section, .timer-nav-container {
+.timer-task-container, .timer-list-container, .time-section, .timer-nav-container, .tag-menu-badge {
   display: flex;
 }
 
-.timer-task-container, .timer-nav-container {
+.timer-task-container, .timer-nav-container, .tag-menu-badge {
   align-items: baseline;
 }
 

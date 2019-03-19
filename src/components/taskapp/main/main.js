@@ -64,7 +64,7 @@ export default class Main extends React.Component {
     })
     /******* Fallback code utlizing local storage *******/
     // util.updateLocalStorage('taskList-data', this.state.taskList)
-    this.runMoment(this.state.taskList)
+    // this.runMoment(this.state.taskList)
     // this.filterByDateHoursLog()
   }
 
@@ -382,14 +382,14 @@ export default class Main extends React.Component {
 
   addHoursLog = taskTimeObject => (e) => {
     // e.preventDefault()
-    //TODO: milisecond conversion for hours from startTime and stopTime
+    //TODO: millisecond conversion for hours from startTime and stopTime
     const { taskName, startTime, stopTime } = taskTimeObject
-    const timeInMiliseconds = {
-      startTime: moment(startTime).valueOf(),
-      stopTime: moment(stopTime).valueOf()
-    }
-
-    console.log('timeInMiliseconds', timeInMiliseconds)
+    // const timeInMilliSeconds = {
+    //   startTime: moment(startTime).valueOf(),
+    //   stopTime: moment(stopTime).valueOf()
+    // }
+    //
+    // console.log('timeInMilliSeconds', timeInMilliSeconds)
 
     const hoursObj = {
       taskName,
@@ -706,7 +706,7 @@ export default class Main extends React.Component {
           </Row>
           : null
         }
-        <JSONTree data={this.state} shouldExpandNode={() => false} />        
+        <JSONTree data={this.state} shouldExpandNode={() => false} />
       </Container>
     )
   }

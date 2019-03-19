@@ -1,0 +1,13 @@
+.tag-ratings-dropdown {
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  margin: auto;
+  padding: 0;
+  width: 126px;
+  font-size: 13px;
+}
+
+/* .dropdown-menu {
+  min-width: 60px !important;
+} */

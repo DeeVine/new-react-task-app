@@ -3,7 +3,6 @@ import Navigation from './components/navigation'
 import TaskList from './components/taskList'
 import TaskDisplay from './components/taskDisplay'
 import TinyMce from './components/tinymce'
-import BarChart from './components/d3'
 import { Grid, Row} from 'react-bootstrap'
 import JSONTree from 'react-json-tree'
 

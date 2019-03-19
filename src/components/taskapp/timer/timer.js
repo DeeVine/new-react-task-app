@@ -183,7 +183,7 @@ export default class Timer extends React.Component {
             <TagMenu //values in this TagMenu are being utilized in pushTagsFromOptionalTagsArray
               taskName = 'tbd'
               tags = {this.state.optionalTagArray}
-              startTime = {moment('1552537388945')}
+              startTime = {moment(1552537388945)}
               createNewTag = {this.createOptionalTags}
               deleteHoursLogTag = {this.deleteOptionalTagArray}
             />

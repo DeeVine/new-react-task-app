@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import {
   Collapse,
   Navbar,
@@ -8,11 +7,10 @@ import {
   Nav,
   NavItem,
   NavLink,
-  UncontrolledDropdown,
   Dropdown,
   DropdownToggle,
   DropdownMenu,
-  DropdownItem } from 'reactstrap';
+} from 'reactstrap';
 
 
 export default class MainNav extends React.Component {
@@ -22,20 +20,28 @@ export default class MainNav extends React.Component {
     this.toggleNavbar = this.toggleNavbar.bind(this);
     this.state = {
       collapsed: true,
-      dropdownOpen: false
-    };
+      dropdownOpen: false,
+      number: '',
+    }
   }
 
   toggleNavbar() {
     this.setState({
       collapsed: !this.state.collapsed
-    });
+    })
   }
 
   toggle = () => {
     this.setState({
       dropdownOpen: !this.state.dropdownOpen
-    });
+    })
+  }
+
+  clickable = (e) => {
+    const number = e.target.value
+    this.setState({
+      number
+    })
   }
 
   render() {
@@ -57,6 +63,13 @@ export default class MainNav extends React.Component {
                     Dropdown
                   </DropdownToggle>
                   <DropdownMenu>
+                    <ul>
+                      <li onClick={this.clickable} value={1}>1</li>
+                      <li onClick={this.clickable} value={2}>2</li>
+                      <li onClick={this.clickable} value={3}>3</li>
+                      <li onClick={this.clickable} value={4}>4</li>
+                      <li onClick={this.clickable} value={5}>5</li>
+                    </ul>
                     <div onClick={this.toggle}>Custom item</div>
                   </DropdownMenu>
                 </Dropdown>

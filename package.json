@@ -12,6 +12,7 @@
     "prop-types": "^15.7.2",
     "react": "^16.7.0",
     "react-bootstrap": "^0.32.4",
+    "react-datetime-picker": "^2.2.1",
     "react-dom": "^16.7.0",
     "react-json-tree": "^0.11.2",
     "react-router-dom": "^4.3.1",

@@ -1,6 +1,7 @@
 import React from 'react'
 import TagMenu from './tagMenu'
 import TimerTaskDropdown from './timerTaskDropdown'
+import DTP from '../dateTimePicker/dateTimePicker'
 import moment from 'moment'
 
 const timerListComponent = (props) => {
@@ -24,6 +25,10 @@ const timerListComponent = (props) => {
         </div>
         <div className='timer-list-start-end-time mr-2'>
           {startTime.format('lll')} - {stopTime.format('lll')}
+          {/* <DTP
+            startTime={startTime}
+            stopTime={stopTime}
+          /> */}
         </div>
         <div className='total-time-seconds ml-2'>
           {milisecondsTimeDifference}

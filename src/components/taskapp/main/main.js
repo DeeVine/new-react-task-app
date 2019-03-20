@@ -81,7 +81,7 @@ export default class Main extends React.Component {
   sortTaskList = (filterBy) => {
     this.setState((currentState) => {
       const taskList = currentState.taskList
-      const sortedAscending = taskList.sort(function(a,b) {
+      const sortedAscending = taskList.sort((a,b) => {
         const date1 = moment(a.lastUpdated).valueOf()
         const date2 = moment(b.lastUpdated).valueOf()
         if(filterBy === 'ascending') {

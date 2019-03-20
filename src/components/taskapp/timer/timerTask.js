@@ -36,10 +36,12 @@ class TimerTask extends React.Component {
   }
 
   convertMillisecondsToDigitalClock = (ms) => {
-    const hours = Math.floor(ms / 3600000), // 1 Hour = 36000 Milliseconds
+    const days = Math.floor(ms / 86400000),
+    hours = Math.floor(ms / 3600000), // 1 Hour = 36000 Milliseconds
     minutes = Math.floor((ms % 3600000) / 60000), // 1 Minutes = 60000 Milliseconds
     seconds = Math.floor(((ms % 360000) % 60000) / 1000) // 1 Second = 1000 Milliseconds
     return (
+      (days < 10 ? ('0'+days) : days) + ":" +
       (hours < 10 ? ('0'+hours) : hours) + ":" +
       (minutes < 10 ? ('0'+minutes) : minutes) + ":" +
       (seconds < 10 ? ('0'+seconds) : seconds)
@@ -71,7 +73,9 @@ class TimerTask extends React.Component {
       const stopTime = moment(b.stopTime).valueOf()
       return stopTime-startTime
     })
-    return sortedDescending
+    const slicedSort = sortedDescending.slice(0,10)
+    return slicedSort
+    // return sortedDescending
   }
 
 

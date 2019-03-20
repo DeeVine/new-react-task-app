@@ -31,6 +31,7 @@
 .timer-task-ul {
   width: 660px;
   max-height: 320px;
+  margin-bottom: 0px;
   overflow-y: scroll;
 }
 
@@ -41,7 +42,7 @@
 }
 
 .timer-task-totaltime {
-  width: 70px;
+  width: 90px;
 }
 
 .timer-list-container {

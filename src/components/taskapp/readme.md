@@ -9,13 +9,10 @@ IDEAS:
 *quick tips/notes in top navigation*
 *productive fun --> 'look up hiking trails, workout, play/listen to music, talk to a friend'*
 
+*Daily report/summary*
 
 TODO:
 *//
-[+] add tags to events
-  [x] create tag component to display tags in tagMenu
-  [x] handle tag deletion
-[x] apply flexbox to timerTask
 [ ] handle rerendering after deleteHoursLog --> issue relates to timeList.js key={task.taskName+'-'+task.hoursLog.length}
 [ ] add bulk edit/deletion
 [ ] time format options
@@ -24,10 +21,14 @@ TODO:
 [ ] implement timer vs manual mode
 [ ] refactor index search to be DRY
 [ ] implement calendar api for times
+[ ] styling
+  [ ] horizontal space usage
+  [ ] navigation/header
 [ ] Filters
   [ ] by date
   [ ] by Tags
   [ ] filter by tasks *refactor main component function into timer.js*
+
 [ ] implement 'dev' (save my data for real use) vs 'production'
 [+] make dropdown in navigation
   [ ] update to relevant content in dropdown
@@ -136,6 +137,10 @@ TODO:
 [x] Utilize database storage
 [x] Add scrollable
 [x] calculate hours difference from start and end utilizing miliseconds conversion valueOf()
+[+] add tags to events
+  [x] create tag component to display tags in tagMenu
+  [x] handle tag deletion
+[x] apply flexbox to timerTask
 
 Backlog:
 [x] log hours to tasks

@@ -33,7 +33,7 @@ export default class TimerTaskDropdown extends React.Component {
           // data-toggle="dropdown"
           // aria-expanded={this.state.dropdownOpen}
           caret >
-          Dropdown
+          Menu
         </DropdownToggle>
         <DropdownMenu>
           {/* <div onClick={this.toggle}>Custom item</div> */}

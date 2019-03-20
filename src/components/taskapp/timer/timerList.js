@@ -7,10 +7,18 @@ class TimerList extends React.Component {
     this.state = {}
   }
 
+  sortedTaskList = () => {
+    const taskList = this.props.taskList
+    const sortedTaskList = taskList.sort((a,b) => {
+      return b.hoursLog.length-a.hoursLog.length
+    })
+    return sortedTaskList
+  }
+
   render() {
     return (
-      <div>
-        {this.props.taskList.map((task) => {
+      <>
+        {this.sortedTaskList().map((task) => {
           return (
            <div className='parent-timer-list-container' key={'timer-list-'+task.taskName}>
             <TimerTask
@@ -25,7 +33,7 @@ class TimerList extends React.Component {
            </div>
           )
         })}
-      </div>
+      </>
     )
   }
 }

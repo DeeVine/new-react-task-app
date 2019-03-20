@@ -36,13 +36,25 @@ class TimerTask extends React.Component {
   }
 
   convertMillisecondsToDigitalClock = (ms) => {
-    const days = Math.floor(ms / 86400000),
-    hours = Math.floor(ms / 3600000), // 1 Hour = 36000 Milliseconds
+    const hours = Math.floor(ms / 3600000), // 1 Hour = 36000 Milliseconds
     minutes = Math.floor((ms % 3600000) / 60000), // 1 Minutes = 60000 Milliseconds
     seconds = Math.floor(((ms % 360000) % 60000) / 1000) // 1 Second = 1000 Milliseconds
+    // days = Math.floor(ms / 86400000),
+
+    const hoursFormat = () => {
+      if (hours < 10) {
+        return '000'+hours
+      } else if (hours < 100) {
+        return '00'+hours
+      } else if (hours < 1000){
+        return '0'+hours
+      } else {
+        return hours
+      }
+    }
+
     return (
-      (days < 10 ? ('0'+days) : days) + ":" +
-      (hours < 10 ? ('0'+hours) : hours) + ":" +
+      hoursFormat() + ":" +
       (minutes < 10 ? ('0'+minutes) : minutes) + ":" +
       (seconds < 10 ? ('0'+seconds) : seconds)
     )

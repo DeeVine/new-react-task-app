@@ -39,7 +39,6 @@ TODO:
   [ ] check if child tags are new and push to parent task
     [ ] 'all time tags' at top level for search/recommendations
       [ ] sort recommendations by most 'used'
-[ ] add days column to time
 [ ] resolve moment deprecation warning
 [ ] 'settings options' such as time format, time events open/closed on page load
 [ ] create top nav / basic webapp UI layout
@@ -141,6 +140,8 @@ TODO:
   [x] create tag component to display tags in tagMenu
   [x] handle tag deletion
 [x] apply flexbox to timerTask
+[x] add days column to time
+
 
 Backlog:
 [x] log hours to tasks

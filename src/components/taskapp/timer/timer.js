@@ -1,7 +1,7 @@
 import React from "react";
 import moment from "moment";
 import TimerList from "./timerList";
-import TagMenu from "./tagMenu";
+import TimerNav from "./timerNav";
 import util from "../util.js";
 import "./timer.css";
 import { Container, Row, Col, Button } from "reactstrap";
@@ -202,46 +202,18 @@ export default class Timer extends React.Component {
     return (
       <Container key="timer1" className="timer-grid" fluid={true}>
         <Row>
-          <Col sm={12} className="timer-nav-container">
-            <input
-              className="timer-nav-input mr-3"
-              id="working-on-input"
-              onChange={this.updateInput}
-              value={this.state.workingOnInput}
-              placeholder={"What are you working on?"}
+          <Col sm={12} className="timer-nav_container">
+            <TimerNav
+              workingOnInput={this.state.workingOnInput}
+              optionalTagArray={this.state.optionalTagArray}
+              currentTimer={this.state.currentTimer}
+              timeStarted={this.state.timeStarted}
+              createNewTag={this.createOptionalTags}
+              updateInput={this.updateInput}
+              deleteHoursLogTag={this.deleteOptionalTagArray}
+              startTime={this.startTime}
+              stopTime={this.stopTime}
             />
-            <div className="timer-nav-optional-tag mr-3">
-              <TagMenu //values in this TagMenu are being utilized in pushTagsFromOptionalTagsArray
-                taskName="tbd"
-                tags={this.state.optionalTagArray}
-                startTime={moment(1552537388945)}
-                createNewTag={this.createOptionalTags}
-                deleteHoursLogTag={this.deleteOptionalTagArray}
-              />
-            </div>
-            <div className="timer-nav-current-timer mr-3">
-              {this.state.currentTimer.format("HH:mm:ss")}
-            </div>
-            {!this.state.timeStarted ? (
-              <Button
-                className="start-timer-btn"
-                size="sm"
-                onClick={this.startTime}
-                color="success"
-              >
-                Start
-              </Button>
-            ) : (
-              <Button
-                className="stop-timer-btn"
-                size="sm"
-                onClick={this.stopTime}
-                color="danger"
-              >
-                Stop
-              </Button>
-            )}
-            {/* <Button onClick={this.props.addHoursLog(this.createTaskTimeObject())} color="info">AddHoursLog</Button> */}
           </Col>
           <Col sm={12} className="timer-time">
             <TimerList

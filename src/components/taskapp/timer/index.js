@@ -1,1 +1,1 @@
-export {default} from './timer.js'
+export { default } from "./timer.js";

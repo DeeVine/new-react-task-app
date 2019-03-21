@@ -1,12 +1,18 @@
 #working-on-input {
-    width: 300px;
+  width: 300px;
 }
 
-.timer-task-container, .timer-list-container, .time-section, .timer-nav-container, .tag-menu-badge {
+.timer-task-container,
+.timer-list-container,
+.time-section,
+.timer-nav_container,
+.tag-menu-badge {
   display: flex;
 }
 
-.timer-task-container, .timer-nav-container, .tag-menu-badge {
+.timer-task-container,
+.timer-nav_container,
+.tag-menu-badge {
   align-items: baseline;
 }
 
@@ -17,14 +23,16 @@
   border-bottom: 1px solid #d7c9aa70;
 }
 
-.timer-nav-container {
+.timer-nav_container {
   height: 44px;
-  -webkit-box-shadow:0px 1px 1px #e8e8e8;
-  -moz-box-shadow:0px 1px 1px #e8e8e8;
-  box-shadow:0px 1px 1px #e8e8e8;
+  -webkit-box-shadow: 0px 1px 1px #e8e8e8;
+  -moz-box-shadow: 0px 1px 1px #e8e8e8;
+  box-shadow: 0px 1px 1px #e8e8e8;
 }
 
-.timer-nav-current-timer, .total-time-seconds, .timer-task-totaltime {
+.timer-nav-current-timer,
+.total-time-seconds,
+.timer-task-totaltime {
   width: 90px;
 }
 
@@ -46,7 +54,7 @@
   line-height: 32px;
   padding-top: 2px;
   padding-bottom: 2px;
-  border-bottom: solid 1px #efefef
+  border-bottom: solid 1px #efefef;
 }
 
 .timer-list-tag-menu {
@@ -57,8 +65,9 @@
   width: 380px;
 }
 
-.timer-task-badge, .tags-active {
-  cursor: pointer
+.timer-task-badge,
+.tags-active {
+  cursor: pointer;
 }
 
 .timer-task-badge {

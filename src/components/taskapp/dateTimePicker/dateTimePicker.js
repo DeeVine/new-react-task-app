@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
-import DateTimePicker from 'react-datetime-picker';
-import moment from 'moment'
+import React, { Component } from "react";
+import DateTimePicker from "react-datetime-picker";
+import moment from "moment";
 
 export default class DTP extends Component {
   state = {
     startTime: moment()._d,
-    stopTime: ''
-  }
+    stopTime: ""
+  };
 
   // componentDidMount = () => {
   //   this.setState({
@@ -16,11 +16,11 @@ export default class DTP extends Component {
 
   onChange = date => {
     this.setState({ date }, () => {
-      console.log('this.state', this.state)
-      console.log('this.state.date', this.state.date)
-      console.log('moment()', moment())
-    })
-  }
+      console.log("this.state", this.state);
+      console.log("this.state.date", this.state.date);
+      console.log("moment()", moment());
+    });
+  };
 
   render() {
     return (

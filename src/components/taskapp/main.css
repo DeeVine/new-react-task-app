@@ -1,4 +1,7 @@
-body, html {height: 100%; }
+body,
+html {
+  height: 100%;
+}
 
 .bar:hover {
   fill: brown;
@@ -49,8 +52,8 @@ body, html {height: 100%; }
 }
 
 .task-item {
- height: 150px;
- border-bottom: 1px solid black;
+  height: 150px;
+  border-bottom: 1px solid black;
 }
 
 .task-item-delete-button {

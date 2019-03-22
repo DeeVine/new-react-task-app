@@ -24,7 +24,7 @@ _//
 [ ] refactor index search to be DRY
 [ ] implement calendar api for times
 [ ] styling
-[ ] horizontal space usage
+[ ] horizontal space usage [css]
 [ ] navigation/header
 [ ] Filters
 [ ] by date

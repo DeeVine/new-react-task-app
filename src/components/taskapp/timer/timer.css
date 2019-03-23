@@ -30,6 +30,10 @@
   box-shadow: 0px 1px 1px #e8e8e8;
 }
 
+.time-container {
+  width: 380px;
+}
+
 .timer-nav-current-timer,
 .total-time-seconds,
 .timer-task-totaltime {

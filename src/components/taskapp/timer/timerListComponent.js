@@ -27,13 +27,25 @@ const timerListComponent = props => {
             deleteHoursLogTag={props.deleteHoursLogTag}
           />
         </div>
-        <div className="timer-list-start-end-time mr-2">
-          {startTime.format("lll")} - {stopTime.format("lll")}
-          {/* <DTP
+        {props.timeEditable === true ?
+          <DTP
             startTime={startTime}
             stopTime={stopTime}
-          /> */}
+          />
+        :
+        <div onClick={props.retrieveComponentTime} className="timer-list-start-end-time mr-2">
+          <div className='timer-list-start-time mr-1' value={startTime.format("lll")}>
+            {startTime.format("lll")}
+          </div>
+          -
+          <div className='timer-list-stop-time ml-1' value={stopTime.format("lll")}>
+            {stopTime.format("lll")}
+          </div>
+
+
         </div>
+        }
+
         <div className="total-time-seconds ml-2">
           {milisecondsTimeDifference}
         </div>

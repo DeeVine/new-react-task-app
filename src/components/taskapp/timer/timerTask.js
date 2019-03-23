@@ -11,7 +11,8 @@ class TimerTask extends React.Component {
     this.state = {
       taskName: this.props.taskName,
       isHidden: true,
-      totalTime: this.totalTime()
+      totalTime: this.totalTime(),
+      componentTime: ''
     };
   }
 
@@ -22,7 +23,7 @@ class TimerTask extends React.Component {
     if (savedState) {
       this.setState({
         taskName: savedState.taskName,
-        totalTime: this.totalTime()
+        totalTime: this.totalTime(),
       });
     }
   };
@@ -100,6 +101,20 @@ class TimerTask extends React.Component {
     // return sortedDescending
   };
 
+  retrieveComponentTime = (e) => {
+    const timeStamp = moment(e.target.innerHTML).format('lll')
+    console.log('timeStamp', timeStamp)
+    console.log('this.componentTime', this.state.componentTime)
+    if (this.state.componentTime === timeStamp) {
+      console.log('time is equal')
+    } else {
+      console.log('time is not eqaul')
+    }
+    this.setState({
+      componentTime: timeStamp
+    })
+  }
+
   render() {
     return (
       <div>
@@ -129,11 +144,18 @@ class TimerTask extends React.Component {
           {!this.state.isHidden ? (
             <ul className="timer-task-ul">
               {this.hoursLogSortedDescending().map((log, index) => {
+                // console.log('log.startTime',log.startTime)
+                // console.log('log.startTime.format', moment(log.startTime).format('lll'))
                 return (
                   <TimerListComponent
-                    key={this.props.task.taskName + "-" + log.startTime}
+                    key={log.startTime}
                     log={log}
                     index={index}
+                    retrieveComponentTime={this.retrieveComponentTime}
+                    timeEditable={
+                      this.state.componentTime === moment(log.startTime).format('lll') ||
+                      this.state.componentTime === moment(log.stopTime).format('lll')
+                     ? true : false}
                     convertMillisecondsToDigitalClock={
                       this.convertMillisecondsToDigitalClock
                     }

@@ -34,6 +34,11 @@
 .total-time-seconds,
 .timer-task-totaltime {
   width: 90px;
+  font-size: 15px;
+}
+
+.timer-task-totaltime {
+  font-weight: bold;
 }
 
 .timer-task-ul {
@@ -62,6 +67,7 @@
 }
 
 .timer-list-start-end-time {
+  display: flex;
   width: 380px;
 }
 

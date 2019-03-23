@@ -18,11 +18,14 @@ _//
 [ ] time format options
 //_
 
-[ ] move task-nav to it's own component
+[+] implement calendar api for times
+  [ ] implement function to update times from DateTimePicker
+[ ] convert to editable input
+[ ] button to 'show more/show older' than 10 items
+[x] move task-nav to it's own component
 [ ] add menu button to top nav
 [ ] implement timer vs manual mode
 [ ] refactor index search to be DRY
-[ ] implement calendar api for times
 [ ] styling
 [ ] horizontal space usage [css]
 [ ] navigation/header

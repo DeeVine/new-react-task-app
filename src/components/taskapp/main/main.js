@@ -406,16 +406,8 @@ export default class Main extends React.Component {
   };
 
   addHoursLog = taskTimeObject => e => {
-    // e.preventDefault()
     //TODO: millisecond conversion for hours from startTime and stopTime
     const { taskName, startTime, stopTime } = taskTimeObject;
-    // const timeInMilliSeconds = {
-    //   startTime: moment(startTime).valueOf(),
-    //   stopTime: moment(stopTime).valueOf()
-    // }
-    //
-    // console.log('timeInMilliSeconds', timeInMilliSeconds)
-
     const hoursObj = {
       taskName,
       tags: [],
@@ -493,6 +485,11 @@ export default class Main extends React.Component {
       alert("must input numbers only");
     }
   };
+
+  modifyHoursLog = (taskName, time) => {
+
+  }
+
 
   handleDeleteTaskApp = name => {
     this.setState(currentState => {

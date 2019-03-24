@@ -4,28 +4,27 @@ import moment from "moment";
 
 export default class DTP extends Component {
   state = {
-    startTime: moment()._d,
+    startTime: "",
     stopTime: ""
   };
 
-  // componentDidMount = () => {
-  //   this.setState({
-  //     date: this.props.date
-  //   })
-  // }
+  componentDidMount = () => {
+    // this.setState({
+    //   date: this.props.date
+    // })
+    console.log('this.props.startTime', this.props.startTime)
+  }
 
   onChange = date => {
-    this.setState({ date }, () => {
-      console.log("this.state", this.state);
-      console.log("this.state.date", this.state.date);
-      console.log("moment()", moment());
-    });
+    console.log('date', date)
+    this.setState({ date: moment(date).format() });
   };
 
   render() {
     return (
       <div>
         <DateTimePicker
+          isCalendarOpen={false}
           calendarIcon={null}
           clearIcon={null}
           disableClock={true}
@@ -33,6 +32,7 @@ export default class DTP extends Component {
           value={this.props.startTime._d}
         />
         <DateTimePicker
+          isCalendarOpen={false}
           calendarIcon={null}
           clearIcon={null}
           disableClock={true}

@@ -8,8 +8,9 @@ const timerListComponent = props => {
   const { log, index, task } = props;
   const startTime = moment(log.startTime);
   const stopTime = moment(log.stopTime);
+  // console.log('stopTime', stopTime);
   const milisecondsTimeDifference = props.convertMillisecondsToDigitalClock(
-    moment(log.stopTime).valueOf() - moment(log.startTime).valueOf()
+    stopTime.valueOf() - startTime.valueOf()
   );
   return (
     <li
@@ -32,6 +33,7 @@ const timerListComponent = props => {
             <DTP
               startTime={startTime}
               stopTime={stopTime}
+              taskName={task.taskName}
             />
           :
           <div onClick={props.retrieveComponentTime} className="timer-list-start-end-time mr-2">
@@ -42,12 +44,9 @@ const timerListComponent = props => {
             <div className='timer-list-stop-time ml-1' value={stopTime.format("lll")}>
               {stopTime.format("lll")}
             </div>
-
           </div>
           }
         </div>
-
-
         <div className="total-time-seconds ml-2">
           {milisecondsTimeDifference}
         </div>

@@ -103,13 +103,6 @@ class TimerTask extends React.Component {
 
   retrieveComponentTime = (e) => {
     const timeStamp = moment(e.target.innerHTML).format('lll')
-    console.log('timeStamp', timeStamp)
-    console.log('this.componentTime', this.state.componentTime)
-    if (this.state.componentTime === timeStamp) {
-      console.log('time is equal')
-    } else {
-      console.log('time is not eqaul')
-    }
     this.setState({
       componentTime: timeStamp
     })
@@ -144,8 +137,6 @@ class TimerTask extends React.Component {
           {!this.state.isHidden ? (
             <ul className="timer-task-ul">
               {this.hoursLogSortedDescending().map((log, index) => {
-                // console.log('log.startTime',log.startTime)
-                // console.log('log.startTime.format', moment(log.startTime).format('lll'))
                 return (
                   <TimerListComponent
                     key={log.startTime}

@@ -11,6 +11,13 @@ _productive fun --> 'look up hiking trails, workout, play/listen to music, talk 
 
 _Daily report/summary_
 
+Launch Items:
+[ ] deploy to heroku  
+[ ] save/export data file
+
+High level secondary:
+[ ] user login to load/save data
+
 TODO:
 _//
 [ ] handle rerendering after deleteHoursLog --> issue relates to timeList.js key={task.taskName+'-'+task.hoursLog.length}
@@ -18,17 +25,23 @@ _//
 [ ] time format options
 //_
 
+Bugs:
+[ ] parent total time not updating on DTP change
+[ ] edit time through DTP component doesn't take seconds
+
 [+] implement calendar api for times
-  [ ] implement function to update times from DateTimePicker
-[ ] convert to editable input
+[ ] implement function to update times from DateTimePicker
+[ ] fix z-index
+**[ ] work on modifyHoursLog**
+[ ] update tags to include number of tags or display first few tags (i.e 'coding, fun, +7 more')
+[ ] convert taskNames to editable input
 [ ] button to 'show more/show older' than 10 items
 [x] move task-nav to it's own component
 [ ] add menu button to top nav
 [ ] implement timer vs manual mode
 [ ] refactor index search to be DRY
 [ ] styling
-[ ] horizontal space usage [css]
-[ ] navigation/header
+[ ] horizontal space usage [css][ ] navigation/header
 [ ] Filters
 [ ] by date
 [ ] by Tags

@@ -8,7 +8,6 @@ const timerListComponent = props => {
   const { log, index, task } = props;
   const startTime = moment(log.startTime);
   const stopTime = moment(log.stopTime);
-  // console.log('stopTime', stopTime);
   const milisecondsTimeDifference = props.convertMillisecondsToDigitalClock(
     stopTime.valueOf() - startTime.valueOf()
   );
@@ -28,24 +27,32 @@ const timerListComponent = props => {
             deleteHoursLogTag={props.deleteHoursLogTag}
           />
         </div>
-        <div className='time-container'>
-          {props.timeEditable === true ?
+        <div className="time-container">
+          {props.timeEditable === true ? (
             <DTP
               startTime={startTime}
               stopTime={stopTime}
               taskName={task.taskName}
+              index={index}
+              modifyHoursLog={props.modifyHoursLog}
             />
-          :
-          <div onClick={props.retrieveComponentTime} className="timer-list-start-end-time mr-2">
-            <div className='timer-list-start-time mr-1' value={startTime.format("lll")}>
-              {startTime.format("lll")}
+          ) : (
+            <div
+              onClick={props.retrieveComponentTime}
+              className="timer-list-start-end-time mr-2"
+            >
+              <div
+                className="timer-list-start-time mr-1"
+                data-value={startTime}
+              >
+                {startTime.format("lll")}
+              </div>
+              -
+              <div className="timer-list-stop-time ml-1" data-value={stopTime}>
+                {stopTime.format("lll")}
+              </div>
             </div>
-            -
-            <div className='timer-list-stop-time ml-1' value={stopTime.format("lll")}>
-              {stopTime.format("lll")}
-            </div>
-          </div>
-          }
+          )}
         </div>
         <div className="total-time-seconds ml-2">
           {milisecondsTimeDifference}

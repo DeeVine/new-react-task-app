@@ -12,7 +12,7 @@ class TimerTask extends React.Component {
       taskName: this.props.taskName,
       isHidden: true,
       totalTime: this.totalTime(),
-      componentTime: ''
+      componentTime: ""
     };
   }
 
@@ -24,6 +24,7 @@ class TimerTask extends React.Component {
       this.setState({
         taskName: savedState.taskName,
         totalTime: this.totalTime(),
+        isHidden: savedState.isHidden
       });
     }
   };
@@ -101,12 +102,14 @@ class TimerTask extends React.Component {
     // return sortedDescending
   };
 
-  retrieveComponentTime = (e) => {
-    const timeStamp = moment(e.target.innerHTML).format('lll')
+  retrieveComponentTime = e => {
+    const time = e.target.getAttribute("data-value");
+    const momentTime = moment(parseInt(time));
+    const timeStamp = momentTime.format("lll");
     this.setState({
       componentTime: timeStamp
-    })
-  }
+    });
+  };
 
   render() {
     return (
@@ -144,13 +147,18 @@ class TimerTask extends React.Component {
                     index={index}
                     retrieveComponentTime={this.retrieveComponentTime}
                     timeEditable={
-                      this.state.componentTime === moment(log.startTime).format('lll') ||
-                      this.state.componentTime === moment(log.stopTime).format('lll')
-                     ? true : false}
+                      this.state.componentTime ===
+                        moment(log.startTime).format("lll") ||
+                      this.state.componentTime ===
+                        moment(log.stopTime).format("lll")
+                        ? true
+                        : false
+                    }
                     convertMillisecondsToDigitalClock={
                       this.convertMillisecondsToDigitalClock
                     }
                     task={this.props.task}
+                    modifyHoursLog={this.props.modifyHoursLog}
                     createChildHoursLogTag={this.props.createChildHoursLogTag}
                     deleteHoursLog={this.props.deleteHoursLog}
                     deleteHoursLogTag={this.props.deleteHoursLogTag}

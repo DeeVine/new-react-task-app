@@ -223,6 +223,7 @@ export default class Timer extends React.Component {
               deleteHoursLogTag={this.props.deleteHoursLogTag}
               createParentHoursLogTag={this.props.createParentHoursLogTag}
               deleteParentHoursLogTag={this.props.deleteParentHoursLogTag}
+              modifyHoursLog={this.props.modifyHoursLog}
             />
           </Col>
         </Row>

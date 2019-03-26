@@ -248,22 +248,22 @@ export default class Main extends React.Component {
     }
   };
 
+  findHoursLog = (taskList, taskName, hoursLogIndex) => {
+    const currentTask = taskList.find(task => {
+      return task.taskName === taskName;
+    });
+    const hoursLog = currentTask.hoursLog[hoursLogIndex];
+    return hoursLog;
+  };
+
   createChildHoursLogTag = (taskName, tagValue, hoursLogIndex) => {
-    //find task to update
+    //TODO: find hoursLogIndex utilizing startTime instead of relying on passing index props
     this.setState(currentState => {
-      const taskList = currentState.taskList;
-      const currentTask = taskList.find(task => {
-        return task.taskName === taskName;
-      });
-      const taskIndex = taskList
-        .map(task => {
-          return task.taskName;
-        })
-        .indexOf(currentTask.taskName);
-      const hoursLog = currentState.taskList[taskIndex].hoursLog[hoursLogIndex];
-
-      //TODO: find hoursLogIndex utilizing startTime instead of relying on passing index props
-
+      const hoursLog = this.findHoursLog(
+        currentState.taskList,
+        taskName,
+        hoursLogIndex
+      );
       //TODO: is there a better way to handle checking for undefined?
       if (typeof hoursLog.tags === "undefined") {
         hoursLog.tags = [];
@@ -276,6 +276,23 @@ export default class Main extends React.Component {
           taskList: currentState.taskList
         };
       }
+    });
+  };
+
+  modifyHoursLog = (taskName, time, hoursLogIndex) => {
+    const { startTime, stopTime } = time;
+    this.setState(currentState => {
+      const hoursLog = this.findHoursLog(
+        currentState.taskList,
+        taskName,
+        hoursLogIndex
+      );
+      hoursLog.startTime = startTime;
+      hoursLog.stopTime = stopTime;
+      return {
+        tagInput: "",
+        taskList: currentState.taskList
+      };
     });
   };
 
@@ -297,21 +314,15 @@ export default class Main extends React.Component {
   };
 
   createParentHoursLogTag = (taskName, tagValue) => {
-    console.log("tagValue inside createParentHoursLogTag", tagValue);
     this.setState(currentState => {
       const taskList = currentState.taskList;
-      const taskIndex = taskList
-        .map(task => {
-          return task.taskName;
-        })
-        .indexOf(taskName);
-      const currentTask = taskList[taskIndex];
-
+      const currentTask = taskList.find(task => {
+        return task.taskName === taskName;
+      });
       //TODO: is there a better way to handle checking for undefined?
       if (typeof currentTask.tags === "undefined") {
         currentTask.tags = [];
       }
-      console.log("currentTask.tags", currentTask.tags);
       //check if tag exists in array, else push new tagValue
       if (!currentTask.tags.includes(tagValue)) {
         currentTask.tags.push(tagValue);
@@ -485,11 +496,6 @@ export default class Main extends React.Component {
       alert("must input numbers only");
     }
   };
-
-  modifyHoursLog = (taskName, time) => {
-
-  }
-
 
   handleDeleteTaskApp = name => {
     this.setState(currentState => {
@@ -677,6 +683,7 @@ export default class Main extends React.Component {
         <Timer
           addHoursLog={this.addHoursLog}
           taskList={this.state.taskList}
+          modifyHoursLog={this.modifyHoursLog}
           deleteHoursLog={this.deleteHoursLog}
           createChildHoursLogTag={this.createChildHoursLogTag}
           deleteHoursLogTag={this.deleteHoursLogTag}

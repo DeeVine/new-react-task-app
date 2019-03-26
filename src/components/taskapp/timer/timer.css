@@ -31,13 +31,13 @@
 }
 
 .time-container {
-  width: 380px;
+  width: 480px;
 }
 
 .timer-nav-current-timer,
 .total-time-seconds,
 .timer-task-totaltime {
-  width: 90px;
+  width: 130px;
   font-size: 15px;
 }
 
@@ -46,7 +46,7 @@
 }
 
 .timer-task-ul {
-  width: 660px;
+  /* width: 860px; */
   max-height: 320px;
   margin-bottom: 0px;
   overflow-y: scroll;
@@ -91,4 +91,8 @@
 .tags-popover-body {
   max-height: 200px;
   overflow: scroll;
+}
+
+.dtp-picker {
+  display: flex;
 }

@@ -9,7 +9,7 @@ class App extends Component {
       // Must wrap in BrowserRouter to utlize react-router-dom
       <BrowserRouter>
         <div>
-          <Route exact path="/" component={Main} />
+          <Route path={process.env.PUBLIC_URL + "/"} component={Main} />
         </div>
       </BrowserRouter>
     );

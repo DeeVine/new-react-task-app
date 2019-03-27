@@ -2,6 +2,7 @@
   "name": "reactintro",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://deevine.github.io/new-react-task-app/",
   "dependencies": {
     "@tinymce/tinymce-react": "^2.5.0",
     "axios": "^0.18.0",
@@ -39,6 +40,5 @@
     "not ie <= 11",
     "not op_mini all"
   ],
-  "proxy": "http://localhost:3001/",
-  "homepage": "https://deevine.github.io/new-react-task-app/"
+  "proxy": "http://localhost:3001/"
 }

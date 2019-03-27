@@ -26,8 +26,8 @@ _//
 //_
 
 Bugs:
-[ ] parent total time not updating on DTP change
 [ ] edit time through DTP component doesn't take seconds
+[x] parent total time not updating on DTP change
 
 [+] implement calendar api for times
 [ ] implement function to update times from DateTimePicker

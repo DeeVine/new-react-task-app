@@ -21,6 +21,8 @@
     "uuid": "^3.3.2"
   },
   "scripts": {
+    // "predeploy": "npm run build",
+    // "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -36,5 +38,6 @@
     "not ie <= 11",
     "not op_mini all"
   ],
-  "proxy": "http://localhost:3001/"
+  "proxy": "http://localhost:3001/",
+  "homepage": "https://deevine.github.io/new-react-task-app/"
 }

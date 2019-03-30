@@ -215,7 +215,7 @@ export default class Timer extends React.Component {
               stopTime={this.stopTime}
             />
           </Col>
-          <Col sm={12} className="timer-time">
+          <Col sm={12} className="timer-time_container">
             <TimerList
               taskList={this.props.taskList}
               deleteHoursLog={this.props.deleteHoursLog}

@@ -33,13 +33,12 @@ export default class TimerTaskDropdown extends React.Component {
     return (
       <Dropdown isOpen={this.state.dropdownOpen} size="sm" toggle={this.toggle}>
         <DropdownToggle
-          // tag="span"
-          // onClick={this.toggle}
-          // data-toggle="dropdown"
-          // aria-expanded={this.state.dropdownOpen}
-          caret
+          tag="span"
+          onClick={this.toggle}
+          data-toggle="dropdown"
+          aria-expanded={this.state.dropdownOpen}
         >
-          Menu
+          <i className="fas fa-ellipsis-v" />
         </DropdownToggle>
         <DropdownMenu>
           {/* <div onClick={this.toggle}>Custom item</div> */}

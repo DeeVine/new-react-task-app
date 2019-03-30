@@ -50,7 +50,9 @@ export default class DTP extends Component {
           onChange={this.changeStopTime}
           value={this.props.stopTime._d}
         />
-        <Button onClick={this.modifyHoursLog}>update time</Button>
+        <Button size="sm" onClick={this.modifyHoursLog}>
+          update time
+        </Button>
       </div>
     );
   }

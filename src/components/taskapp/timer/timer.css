@@ -2,6 +2,19 @@
   width: 300px;
 }
 
+.timer-grid {
+  background-color: #ffffff;
+  max-height: 100vh;
+}
+
+.fa-ellipsis-v {
+  color: #7a7a7a;
+}
+
+.fa-ellipsis-v:hover {
+  color: #383838;
+}
+
 .timer-task-container,
 .timer-list-container,
 .time-section,
@@ -19,19 +32,22 @@
 .timer-task-container {
   height: 40px;
   line-height: 40px;
-  background-color: #f5f5f5;
+  background-color: #f3f3f3;
   border-bottom: 1px solid #d7c9aa70;
-}
-
-.timer-nav_container {
-  height: 44px;
-  -webkit-box-shadow: 0px 1px 1px #e8e8e8;
-  -moz-box-shadow: 0px 1px 1px #e8e8e8;
-  box-shadow: 0px 1px 1px #e8e8e8;
+  padding: 0px 10px;
 }
 
 .time-container {
   width: 480px;
+}
+
+.timer-nav_container {
+  height: 44px;
+  border-bottom: 2px solid #6969696e;
+}
+
+.timer-time_container {
+  padding: 0px;
 }
 
 .timer-nav-current-timer,
@@ -76,12 +92,28 @@
 }
 
 .timer-task-badge,
-.tags-active {
+.fas {
   cursor: pointer;
+}
+
+.fa-tag {
+  color: #6c757d;
+}
+
+.fa-tag:hover {
+  color: #343a40;
+}
+
+.fa-tags:hover {
+  color: #005f16;
 }
 
 .timer-task-badge {
   min-width: 30px;
+}
+
+.timer-task-badge:hover {
+  background-color: #0e6471;
 }
 
 .tags-active {
@@ -95,4 +127,6 @@
 
 .dtp-picker {
   display: flex;
+  align-items: baseline;
+  justify-content: space-evenly;
 }

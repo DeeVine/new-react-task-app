@@ -3,8 +3,17 @@ html {
   height: 100%;
 }
 
+.main-grid {
+  background-color: #404040;
+  height: 100vh;
+}
+
 .bar:hover {
   fill: brown;
+}
+
+.navbar {
+  background-color: #ffffff;
 }
 
 .task-navigation-form {
@@ -13,13 +22,13 @@ html {
 
 .task-center {
   height: 100vh;
-  background-color: #ededed;
+  background-color: #ffffff;
   padding-left: 0px;
   padding-right: 0px;
 }
 
 .taskapp_container {
-  background-color: #ededed;
+  background-color: #ffffff;
 }
 
 .tasks_container {

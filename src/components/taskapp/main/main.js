@@ -691,7 +691,7 @@ export default class Main extends React.Component {
           deleteParentHoursLogTag={this.deleteParentHoursLogTag}
         />
 
-        <button onClick={this.toggleMainSection}>Toggle Main Section</button>
+        {/* <button onClick={this.toggleMainSection}>Toggle Main Section</button> */}
         {this.state.toggleMainSection ? (
           <Row className="show-grid main-display">
             <Col xs={12} sm={3} md={3} className="sidenav">
@@ -781,7 +781,7 @@ export default class Main extends React.Component {
             </Col>
           </Row>
         ) : null}
-        <JSONTree data={this.state} shouldExpandNode={() => false} />
+        {/* <JSONTree data={this.state} shouldExpandNode={() => false} /> */}
       </Container>
     );
   }

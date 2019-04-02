@@ -6,6 +6,7 @@ html {
 .main-grid {
   background-color: #404040;
   height: 100vh;
+  overflow: auto;
 }
 
 .bar:hover {
@@ -14,6 +15,11 @@ html {
 
 .navbar {
   background-color: #ffffff;
+}
+
+.navbar-brand {
+  font-family: archivo;
+  font-size: 30px;
 }
 
 .task-navigation-form {

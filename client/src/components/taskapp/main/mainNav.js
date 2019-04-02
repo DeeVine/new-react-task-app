@@ -48,11 +48,11 @@ export default class MainNav extends React.Component {
       <div>
         <Navbar color="faded" light expand="md">
           <NavbarBrand href="/" className="mr-auto">
-            TrackerApp
+            ReactTrackerApp
           </NavbarBrand>
           <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
           <Collapse isOpen={!this.state.collapsed} navbar>
-            <Nav className="ml-auto" navbar>
+            {/* <Nav className="ml-auto" navbar>
               <NavItem>
                 <Dropdown
                   isOpen={this.state.dropdownOpen}
@@ -93,7 +93,7 @@ export default class MainNav extends React.Component {
               <NavItem>
                 <NavLink href="/">link1</NavLink>
               </NavItem>
-            </Nav>
+            </Nav> */}
           </Collapse>
         </Navbar>
       </div>

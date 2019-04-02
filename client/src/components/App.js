@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import "./bootcamp/App.css";
 import Main from "./taskapp/main/main.js";
 import { BrowserRouter, Route } from "react-router-dom";
 
